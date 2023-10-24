@@ -85,26 +85,17 @@ namespace Engine
         /// <summary>
         /// Gets the width of a single sprite in this sprite sheet.
         /// </summary>
-        public int Width
-        {
-            get { return sprite.Width / sheetColumns; }
-        }
+        public int Width => sprite.Width / sheetColumns;
 
         /// <summary>
         /// Gets the height of a single sprite in this sprite sheet.
         /// </summary>
-        public int Height
-        {
-            get { return sprite.Height / sheetRows; }
-        }
+        public int Height => sprite.Height / sheetRows;
 
         /// <summary>
         /// Gets a vector that represents the center of a single sprite in this sprite sheet.
         /// </summary>
-        public Vector2 Center
-        {
-            get { return new Vector2(Width, Height) / 2; }
-        }
+        public Vector2 Center => new Vector2(Width, Height) / 2;
 
         /// <summary>
         /// Gets or sets the sprite index within this sprite sheet to use. 
@@ -112,7 +103,7 @@ namespace Engine
         /// </summary>
         public int SheetIndex
         {
-            get { return sheetIndex; }
+            get => sheetIndex;
             set
             {
                 if (value < NumberOfSheetElements && value >= 0)
@@ -130,21 +121,12 @@ namespace Engine
         /// <summary>
         /// Gets a Rectangle that represents the bounds of a single sprite in this sprite sheet.
         /// </summary>
-        public Rectangle Bounds
-        {
-            get
-            {
-                return new Rectangle(0, 0, Width, Height);
-            }
-        }
+        public Rectangle Bounds => new(0, 0, Width, Height);
 
         /// <summary>
         /// Gets the total number of elements in this sprite sheet.
         /// </summary>
-        public int NumberOfSheetElements
-        {
-            get { return sheetColumns * sheetRows; }
-        }
+        public int NumberOfSheetElements => sheetColumns * sheetRows;
 
         /// <summary>
         /// Returns whether or not the pixel at a given coordinate is transparent.

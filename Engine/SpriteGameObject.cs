@@ -23,8 +23,8 @@ namespace Engine
         /// </summary>
         public int SheetIndex
         {
-            get { return sprite.SheetIndex; }
-            set { sprite.SheetIndex = value; }
+            get => sprite.SheetIndex;
+            set => sprite.SheetIndex = value;
         }
 
         /// <summary>
