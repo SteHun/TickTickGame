@@ -1,0 +1,6 @@
+Engine
+| AssetManager: A glorified wrapper for content.Load methods. It has a static member that's used across the game. 
+| ExtendedGame: The base game class where you can find the Update, Draw, etc. methods. TickTick.TickTick inherits from this. 
+| GameObject: Seems be be the generic base class for a bunch of game objects. It contains a basic velocity system and can have a parent to base its position of. 
+| GameObjectList: Seems to be a GameObject which contains other GameObjects as children. Inherits from GameObject. 
+| GameState: An abstract class. It contains the root GameObjectList wich contains all current GameObjects. It doesn't seem to do much more than this. 
