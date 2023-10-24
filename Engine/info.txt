@@ -18,3 +18,7 @@ Engine
 | Levels -> LevelButton: Is a Button (from UI folder) holds a value for its index (what level it is), its status (levelStatus) and a label (which is a string that is printed if not null)
 | Levels -> IPlayingState: Interface for LoadLevel and LevelCompleted used in ExtendedGameWithLevels
 | Levels -> ExtendedGameWithLevels: An abstract class. Holds all the levels in a list with their statuses.
+| CollisionDetection -> Circle: Holds a center and radius variable of a circle, used in CollisionDetection.cs
+| CollisionDetection -> CollisionDetection: Holds a few static functions used to calculate if two circles or rectangles overlap.
+| Animation -> Animation: Used to let an animation play a certain amount of frames in a certain amount of seconds. Has functionality for looping.
+| Animation -> AnimatedGameObject: Class to represent multiple animated sprites. Holds animations in dictionary. Implements the methods of the animation class.
