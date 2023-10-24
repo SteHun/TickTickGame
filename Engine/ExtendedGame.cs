@@ -44,7 +44,7 @@ namespace Engine
         /// </summary>
         public static GameStateManager GameStateManager { get; private set; }
 
-        public static string ContentRootDirectory { get { return "Content"; } }
+        public static string ContentRootDirectory => "Content";
 
         /// <summary>
         /// Creates a new ExtendedGame object.
@@ -104,7 +104,7 @@ namespace Engine
                 Exit();
 
             // toggle full-screen mode when the player presses F5
-            if (inputHelper.KeyPressed(Keys.F5))
+            if (inputHelper.KeyPressed(Keys.F11))
                 FullScreen = !FullScreen;
 
             GameStateManager.HandleInput(inputHelper);
