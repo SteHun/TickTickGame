@@ -2,7 +2,8 @@
 using Microsoft.Xna.Framework;
 
 /// <summary>
-/// Represents the "Sparky" enemy that can drop down and electrocute the player.
+/// Represents the "Sparky" enemy that can drop down and electrocute the player.<br/>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> Sparky
 /// </summary>
 class Sparky : AnimatedGameObject
 {

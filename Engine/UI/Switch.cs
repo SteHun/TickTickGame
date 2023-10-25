@@ -2,7 +2,8 @@
 {
     /// <summary>
     /// A class that can represent a UI switch that can be turned on or off.
-    /// It's essentially a button with an extra state that says whether it's turned on.
+    /// It's essentially a button with an extra state that says whether it's turned on.<br/>
+    /// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> Button -> Switch
     /// </summary>
     public class Switch : Button
     {

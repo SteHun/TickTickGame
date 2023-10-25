@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine;
-
+/// <summary>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject
+/// </summary>
 public class UISpriteGameObject : SpriteGameObject
 {
     public UISpriteGameObject(string spriteName, float depth, int sheetIndex = 0) : base(spriteName,depth,sheetIndex)

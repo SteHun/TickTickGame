@@ -2,7 +2,8 @@
 using Microsoft.Xna.Framework;
 
 /// <summary>
-/// A variant of PatrollingEnemy that follows the player whenever the player moves.
+/// A variant of PatrollingEnemy that follows the player whenever the player moves.<br/>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> PatrollingEnemy -> PlayerFollowingEnemy
 /// </summary>
 class PlayerFollowingEnemy : PatrollingEnemy
 {

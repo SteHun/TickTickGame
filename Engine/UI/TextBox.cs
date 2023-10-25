@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine.UI;
 
 /// <summary>
-/// A class that can represent a text with a box around it in game.
+/// A class that can represent a text with a box around it in game.<br/>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> TextBox
 /// </summary>
 public class TextBox : UISpriteGameObject
 {

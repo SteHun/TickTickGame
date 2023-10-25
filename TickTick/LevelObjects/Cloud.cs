@@ -1,6 +1,9 @@
 ﻿using Engine;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> Cloud
+/// </summary>
 class Cloud : SpriteGameObject
 {
     Level level;

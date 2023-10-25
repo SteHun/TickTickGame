@@ -2,6 +2,9 @@
 using Engine.UI;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// IGameLoopObject -> GameState -> LevelMenuState
+/// </summary>
 class LevelMenuState : GameState
 {
     Button backButton;

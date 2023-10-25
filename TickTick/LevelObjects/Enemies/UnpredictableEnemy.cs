@@ -3,7 +3,8 @@ using Engine;
 using Microsoft.Xna.Framework;
 
 /// <summary>
-/// A variant of PatrollingEnemy that turns around at random moments.
+/// A variant of PatrollingEnemy that turns around at random moments.<br/>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> PatrollingEnemy -> UnpredicableEnemy
 /// </summary>
 class UnpredictableEnemy : PatrollingEnemy
 {

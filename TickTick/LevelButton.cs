@@ -1,6 +1,9 @@
 using Engine;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> Button -> (Engine.UI.)LevelButton -> LevelButton
+/// </summary>
 class LevelButton : Engine.UI.LevelButton
 {
     public LevelButton(int levelIndex, LevelStatus startStatus)

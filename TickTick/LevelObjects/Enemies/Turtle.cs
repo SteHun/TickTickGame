@@ -3,7 +3,8 @@ using Microsoft.Xna.Framework;
 
 /// <summary>
 /// Represents a turtle enemy that sneezes periodically.
-/// It can be used as a trampoline whenever it's not sneezing.
+/// It can be used as a trampoline whenever it's not sneezing.<br/>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> Turtle
 /// </summary>
 class Turtle : AnimatedGameObject
 {

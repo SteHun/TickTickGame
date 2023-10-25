@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework;
 using Engine;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> WaterDrop
+/// </summary>
 class WaterDrop : SpriteGameObject
 {
     Level level;

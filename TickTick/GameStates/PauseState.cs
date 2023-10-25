@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+/// <summary>
+/// IGameLoopObject -> GameState -> PauseState
+/// </summary>
 class PauseState : GameState
 {
     Button resumeButton, quitButton;

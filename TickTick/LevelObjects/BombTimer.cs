@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework;
 using System;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> GameObjectList -> BombTimer
+/// </summary>
 class BombTimer : GameObjectList
 {
     double timeLeft;

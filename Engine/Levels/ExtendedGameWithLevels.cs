@@ -4,7 +4,8 @@ using System.IO;
 namespace Engine
 {
     /// <summary>
-    /// An abstract class that represents a game with multiple levels and their statuses.
+    /// An abstract class that represents a game with multiple levels and their statuses.<br/>
+    /// Game(MonoGame) -> ExtendedGame -> ExtendedGameWithLevels
     /// </summary>
     public abstract class ExtendedGameWithLevels : ExtendedGame
     {

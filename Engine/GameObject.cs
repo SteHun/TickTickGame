@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine
 {
+    /// <summary>
+    /// IGameLoopObject -> GameObject
+    /// </summary>
     public class GameObject : IGameLoopObject
     {
         /// <summary>

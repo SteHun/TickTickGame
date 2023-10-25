@@ -2,6 +2,9 @@
 
 namespace Engine.UI
 {
+    /// <summary>
+    /// IGameLoopObject -> GameObject -> GameObjectList -> Slider
+    /// </summary>
     public class Slider : GameObjectList
     {
         // The sprites for the background and foreground of this slider.

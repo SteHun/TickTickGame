@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework;
 
 namespace Engine
 {
+    /// <summary>
+    /// SpriteSheet -> Animation
+    /// </summary>
     public class Animation : SpriteSheet
     {
         /// <summary>

@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine.UI
 {
     /// <summary>
-    /// A class that can represent a single button on a level selection screen.
+    /// A class that can represent a single button on a level selection screen.<br/>
+    /// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> Button -> LevelButton
     /// </summary>
     public class LevelButton : Button
     {

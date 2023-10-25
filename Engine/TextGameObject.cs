@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine
 {
     /// <summary>
-    /// A game object that shows text (instead of an image).
+    /// A game object that shows text (instead of an image).<br/>
+    /// IGameLoopObject -> GameObject -> TextGameObject
     /// </summary>
     public class TextGameObject : GameObject
     {

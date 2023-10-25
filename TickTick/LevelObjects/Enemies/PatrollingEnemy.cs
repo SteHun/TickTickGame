@@ -2,7 +2,8 @@
 using Microsoft.Xna.Framework;
 
 /// <summary>
-/// An enemy that patrols back and forth on a platform.
+/// An enemy that patrols back and forth on a platform.<br/>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> PatrollingEnemy
 /// </summary>
 class PatrollingEnemy : AnimatedGameObject
 {

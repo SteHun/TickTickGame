@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> Player
+/// </summary>
 class Player : AnimatedGameObject
 {
     const float walkingSpeed = 400; // Standard walking speed, in game units per second.

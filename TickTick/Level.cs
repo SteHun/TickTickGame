@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> GameObjectList -> Level
+/// </summary>
 partial class Level : GameObjectList
 {
     public const int TileWidth = 72;

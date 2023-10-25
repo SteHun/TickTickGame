@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> Title
+/// </summary>
 class Tile : GameObject
 {
     public enum Type { Empty, Wall, Platform };

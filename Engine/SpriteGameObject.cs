@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine
 {
     /// <summary>
-    /// A class that can represent a game object with a sprite.
+    /// A class that can represent a game object with a sprite.<br/>
+    /// IGameLoopObject -> GameObject -> SpriteGameObject
     /// </summary>
     public class SpriteGameObject : GameObject
     {

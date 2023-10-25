@@ -2,6 +2,9 @@ using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> Goal
+/// </summary>
 public class Goal : SpriteGameObject
 {
     public bool active { get; set; }
@@ -12,10 +15,10 @@ public class Goal : SpriteGameObject
             return;
 
         // draw the sprite at its *global* position in the game world
-        float opacity = 0.5f;
+        float flagOpacity = 0.5f;
         if (active)
-            opacity = 1;
+            flagOpacity = 1;
         if (sprite != null)
-            sprite.Draw(spriteBatch, GlobalPosition - Camera.position, Origin, opacity);
+            sprite.Draw(spriteBatch, GlobalPosition - Camera.position, Origin, flagOpacity);
     }
 }

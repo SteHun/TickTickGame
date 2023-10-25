@@ -3,7 +3,8 @@
 namespace Engine
 {
     /// <summary>
-    /// An object that can make another object visible for a certain amount of time.
+    /// An object that can make another object visible for a certain amount of time.<br/>
+    /// IGameLoopObject -> GameObject -> VisibilityTimer
     /// </summary>
     public class VisibilityTimer : GameObject
     {

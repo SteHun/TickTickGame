@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine
 {
     /// <summary>
-    /// A class that manages all objects belonging to a single game state.
+    /// A class that manages all objects belonging to a single game state.<br/>
+    /// IGameLoopObject -> GameState
     /// </summary>
     public abstract class GameState : IGameLoopObject
     {

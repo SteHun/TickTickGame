@@ -6,7 +6,8 @@ namespace Engine
 {
     /// <summary>
     /// A class that contains all game states of the game, and that makes sure
-    /// that the currently active game state updates and draws itself.
+    /// that the currently active game state updates and draws itself.<br/>
+    /// IGameLoopObject -> GameStateManager
     /// </summary>
     public class GameStateManager : IGameLoopObject
     {

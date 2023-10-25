@@ -2,6 +2,9 @@
 using Engine.UI;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// IGameLoopObject -> GameState -> TitleMenuState
+/// </summary>
 class TitleMenuState : GameState
 {
     Button playButton, helpButton;

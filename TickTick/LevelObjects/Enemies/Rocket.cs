@@ -2,7 +2,8 @@
 using Microsoft.Xna.Framework;
 
 /// <summary>
-/// Represents a rocket enemy that flies horizontally through the screen.
+/// Represents a rocket enemy that flies horizontally through the screen.<br/>
+/// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> Rocket
 /// </summary>
 class Rocket : AnimatedGameObject
 {

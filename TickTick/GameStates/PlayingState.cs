@@ -4,6 +4,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+/// <summary>
+/// IGameLoopObject -> GameState -> PlayingState<br/>
+/// IPlayingState -> PlayingState
+/// </summary>
 class PlayingState : GameState, IPlayingState
 {
     Level level;

@@ -5,7 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine
 {
     /// <summary>
-    /// A non-visual game object that has a list of game objects as its children.
+    /// A non-visual game object that has a list of game objects as its children.<br/>
+    /// IGameLoopObject -> GameObject -> GameObjectList
     /// </summary>
     public class GameObjectList : GameObject
     {

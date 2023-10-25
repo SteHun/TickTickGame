@@ -2,6 +2,9 @@
 using Engine.UI;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// IGameLoopObject -> GameState -> HelpState
+/// </summary>
 class HelpState : GameState
 {
     Button backButton;

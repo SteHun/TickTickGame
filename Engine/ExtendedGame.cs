@@ -5,6 +5,9 @@ using System;
 
 namespace Engine
 {
+    /// <summary>
+    /// Game(MonoGame) -> ExtendedGame
+    /// </summary>
     public abstract class ExtendedGame : Game
     {
         // standard MonoGame objects for graphics and sprites

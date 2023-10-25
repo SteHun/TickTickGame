@@ -4,6 +4,9 @@ using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Game(MonoGame) -> ExtendedGame -> ExtendedGameWithLevels -> TickTick
+/// </summary>
 class TickTick : ExtendedGameWithLevels
 {
     public const float Depth_Background = 0; // for background images
