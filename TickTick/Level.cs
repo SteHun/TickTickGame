@@ -12,9 +12,9 @@ partial class Level : GameObjectList
     List<WaterDrop> waterDrops;
 
     public Player Player { get; private set; }
+    private Goal goal;
     public int LevelIndex { get; private set; }
 
-    SpriteGameObject goal;
     BombTimer timer;
 
     bool completionDetected;
@@ -107,6 +107,7 @@ partial class Level : GameObjectList
     {
         base.Update(gameTime);
 
+        goal.active = AllDropsCollected;
         // check if we've finished the level
         if (!completionDetected && AllDropsCollected && Player.HasPixelPreciseCollision(goal) && Player.IsAlive)
         {

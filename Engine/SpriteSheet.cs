@@ -71,14 +71,15 @@ namespace Engine
         /// <param name="spriteBatch">The SpriteBatch object used for drawing sprites.</param>
         /// <param name="position">A position in the game world.</param>
         /// <param name="origin">An origin that should be subtracted from the drawing position.</param>
-        public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin)
+        /// <param name="opacity">The opacity of the drawn sprite. </param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, float opacity = 1)
         {
             // mirror the sprite?
             SpriteEffects spriteEffects = SpriteEffects.None;
             if (Mirror)
                 spriteEffects = SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(sprite, position, spriteRectangle, Color.White,
+            spriteBatch.Draw(sprite, position, spriteRectangle, Color.White * opacity,
                 0.0f, origin, 1.0f, spriteEffects, depth);
         }
 

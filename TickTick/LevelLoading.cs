@@ -138,7 +138,7 @@ partial class Level : GameObjectList
     void LoadGoal(int x, int y)
     {
         // create the exit object
-        goal = new SpriteGameObject("Sprites/LevelObjects/spr_goal", TickTick.Depth_LevelObjects);
+        goal = new Goal("Sprites/LevelObjects/spr_goal", TickTick.Depth_LevelObjects);
         // make sure it's standing exactly on the tile below
         goal.LocalPosition = GetCellPosition(x, y+1);
         goal.Origin = new Vector2(0, goal.Height);
