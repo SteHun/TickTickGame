@@ -1,6 +1,8 @@
 using Engine;
 using Microsoft.Xna.Framework;
 using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework.Graphics;
 
 class TickTick : ExtendedGameWithLevels
 {
@@ -10,6 +12,8 @@ class TickTick : ExtendedGameWithLevels
     public const float Depth_LevelTiles = 0.5f; // for tiles in the level
     public const float Depth_LevelObjects = 0.6f; // for all game objects except the player
     public const float Depth_LevelPlayer = 0.7f; // for the player
+
+    private SpriteFont spriteFont;
 
 
     [STAThread]
@@ -27,6 +31,8 @@ class TickTick : ExtendedGameWithLevels
     protected override void LoadContent()
     {
         base.LoadContent();
+
+        spriteFont = Content.Load<SpriteFont>("Fonts/HintFont");
 
         // set a custom world and window size
         worldSize = new Point(1440, 825);
@@ -46,6 +52,7 @@ class TickTick : ExtendedGameWithLevels
         GameStateManager.AddGameState(StateName_LevelSelect, new LevelMenuState());
         GameStateManager.AddGameState(StateName_Help, new HelpState());
         GameStateManager.AddGameState(StateName_Playing, new PlayingState());
+        GameStateManager.AddGameState(StateName_Pause, new PauseState(spriteFont));
 
         // start at the title screen
         GameStateManager.SwitchTo(StateName_Title);
