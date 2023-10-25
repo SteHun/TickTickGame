@@ -106,7 +106,7 @@ class Player : AnimatedGameObject
         {
             timeSinceLastGrounded = coyoteTime;
             desiredHorizontalSpeed = 0;
-            if (isGrounded)
+            if (isGrounded && !isJumping)
                 PlayAnimation("idle");
         }
 
@@ -120,8 +120,8 @@ class Player : AnimatedGameObject
         }
 
         // falling?
-        if (!isGrounded && !canJump)
-            PlayAnimation("jump", false, 8);
+        if (!isGrounded && !canJump && !isJumping)
+            PlayAnimation("jump", true, 8);
 
         // set the origin to the character's feet
         SetOriginToBottomCenter();
@@ -135,7 +135,7 @@ class Player : AnimatedGameObject
         isJumping = true;
         velocity.Y = -speed;
         // play the jump animation; always make sure that the animation restarts
-        PlayAnimation("jump", true);
+        PlayAnimation("jump", true, 0);
         // play a sound
         ExtendedGame.AssetManager.PlaySoundEffect("Sounds/snd_player_jump");
     }
@@ -317,6 +317,7 @@ class Player : AnimatedGameObject
 
     public void Die()
     {
+        timeSinceLastAirborneJumpPress = jumpBufferTime;
         IsAlive = false;
         PlayAnimation("die");
         velocity = new Vector2(0, -jumpSpeed);
