@@ -24,7 +24,7 @@ class PlayingState : GameState, IPlayingState
 
     SpriteGameObject AddOverlay(string spriteName)
     {
-        SpriteGameObject result = new SpriteGameObject(spriteName, 1);
+        SpriteGameObject result = new UISpriteGameObject(spriteName, 1);
         result.SetOriginToCenter();
         result.LocalPosition = new Vector2(720, 412);
         gameObjects.AddChild(result);

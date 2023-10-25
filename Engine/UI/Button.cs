@@ -3,7 +3,7 @@
     /// <summary>
     /// A class that can represent a UI button in the game.
     /// </summary>
-    public class Button : SpriteGameObject
+    public class Button : UISpriteGameObject
     {
         /// <summary>
         /// Whether this button has been pressed (clicked) in the current frame.

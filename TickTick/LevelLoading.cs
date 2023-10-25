@@ -39,13 +39,13 @@ partial class Level : GameObjectList
 
     void AddLevelInfoObjects(string description)
     {
-        // - background box
-        SpriteGameObject frame = new SpriteGameObject("Sprites/UI/spr_frame_hint", TickTick.Depth_UIBackground);
+        // - hint background box
+        SpriteGameObject frame = new UISpriteGameObject("Sprites/UI/spr_frame_hint", TickTick.Depth_UIBackground);
         frame.SetOriginToCenter();
         frame.LocalPosition = new Vector2(720, 50);
         AddChild(frame);
 
-        // - text
+        // - hint text
         TextGameObject hintText = new TextGameObject("Fonts/HintFont", TickTick.Depth_UIForeground, Color.Black, TextGameObject.Alignment.Left);
         hintText.Text = description;
         hintText.LocalPosition = new Vector2(510, 40);

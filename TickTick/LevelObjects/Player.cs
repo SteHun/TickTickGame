@@ -167,6 +167,7 @@ class Player : AnimatedGameObject
         if (!isExploding)
             ApplyGravity(gameTime);
 
+        Camera.Update(localPosition);
         base.Update(gameTime);
 
         if (IsAlive)
