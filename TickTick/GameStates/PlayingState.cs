@@ -83,6 +83,10 @@ class PlayingState : GameState, IPlayingState
     public void LoadLevel(int levelIndex)
     {
         level = new Level(levelIndex, ExtendedGame.ContentRootDirectory + "/Levels/level" + levelIndex + ".txt");
+        
+        //Pass the size of the level so the camera knows where the edges are
+        Camera.levelSize.X = level.BoundingBox.Width;
+        Camera.levelSize.Y = level.BoundingBox.Height;
 
         // hide the overlay images
         completedOverlay.Visible = false;
