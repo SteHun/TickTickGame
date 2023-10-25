@@ -108,7 +108,7 @@ partial class Level : GameObjectList
         base.Update(gameTime);
 
         // check if we've finished the level
-        if (!completionDetected && AllDropsCollected && Player.HasPixelPreciseCollision(goal))
+        if (!completionDetected && AllDropsCollected && Player.HasPixelPreciseCollision(goal) && Player.IsAlive)
         {
             completionDetected = true;
             ExtendedGameWithLevels.GetPlayingState().LevelCompleted(LevelIndex);
