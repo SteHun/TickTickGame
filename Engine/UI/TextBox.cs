@@ -9,28 +9,7 @@ namespace Engine.UI;
 /// </summary>
 public class TextBox : UISpriteGameObject
 {
-    /// <summary>
-    /// The text that is displayed
-    /// </summary>
-    private string text;
-
-    /// <summary>
-    /// The color of the text that is displayed
-    /// </summary>
-    private Color color;
-
-    private SpriteFont spriteFont;
-    
-    public TextBox(string assetName, float depth, SpriteFont spriteFont, Color color, string text) : base(assetName, depth)
+    public TextBox(string assetName, float depth) : base(assetName, depth)
     {
-        this.text = text;
-        this.spriteFont = spriteFont;
-        this.color = color;
-    }
-
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-    {
-        base.Draw(gameTime, spriteBatch);
-        spriteBatch.DrawString(spriteFont, text, GlobalPosition, color);
     }
 }
