@@ -37,11 +37,11 @@ class Tile : GameObject
             image.Parent = this;
     }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
         // draw the image if it exists
         if (image != null)
-            image.Draw(gameTime, spriteBatch);
+            image.Draw(gameTime, spriteBatch, opacity);
     }
 
     public Type TileType

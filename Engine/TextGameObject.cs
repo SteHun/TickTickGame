@@ -68,7 +68,7 @@ namespace Engine
         /// </summary>
         /// <param name="gameTime">An object containing information about the time that has passed in the game.</param>
         /// <param name="spriteBatch">A sprite batch object used for drawing sprites.</param>
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
         {
             if (!Visible)
                 return;
@@ -78,7 +78,7 @@ namespace Engine
 
             // draw the text
             spriteBatch.DrawString(font, Text, GlobalPosition,
-                Color, 0f, origin, 1, SpriteEffects.None, depth);
+                Color * opacity, 0f, origin, 1, SpriteEffects.None, depth);
         }
 
         /// <summary>

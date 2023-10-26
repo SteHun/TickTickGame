@@ -28,9 +28,9 @@ public class TextBox : UISpriteGameObject
         this.color = color;
     }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
-        base.Draw(gameTime, spriteBatch);
-        spriteBatch.DrawString(spriteFont, text, GlobalPosition, color);
+        base.Draw(gameTime, spriteBatch, opacity);
+        spriteBatch.DrawString(spriteFont, text, GlobalPosition, color * opacity);
     }
 }

@@ -45,9 +45,10 @@ namespace Engine
         /// </summary>
         /// <param name="gameTime">An object containing information about the time that has passed in the game.</param>
         /// <param name="spriteBatch">A sprite batch object used for drawing sprites.</param>
-        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        /// <param name="opacity">The opacity of the drawn sprite</param>
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
         {
-            gameObjects.Draw(gameTime, spriteBatch);
+            gameObjects.Draw(gameTime, spriteBatch, opacity);
         }
 
         /// <summary>

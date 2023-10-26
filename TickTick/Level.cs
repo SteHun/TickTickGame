@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// IGameLoopObject -> GameObject -> GameObjectList -> Level
@@ -19,6 +20,10 @@ partial class Level : GameObjectList
     public int LevelIndex { get; private set; }
 
     BombTimer timer;
+
+    private UISpriteGameObject hotOverlay;
+    private float hotOverlayOpacity;
+    private const float hotOverlayOpacitySpeed = 2; // opacity change in 1 second
 
     bool completionDetected;
 
@@ -40,7 +45,11 @@ partial class Level : GameObjectList
         // add the timer
         timer = new BombTimer();
         AddChild(timer);
-
+        
+        // add hot overlay
+        hotOverlay = new UISpriteGameObject("Sprites/UI/spr_hot_overlay", 0.75f);
+        
+        
         // add mountains in the background
         for (int i = 0; i < 4; i++)
         {
@@ -109,9 +118,18 @@ partial class Level : GameObjectList
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-
         goal.active = AllDropsCollected;
         // check if we've finished the level
+        if (timer.Multiplier > 1 && Player.IsAlive)
+        {
+            hotOverlayOpacity = MathHelper.Min(
+                (float)(hotOverlayOpacity + hotOverlayOpacitySpeed * gameTime.ElapsedGameTime.TotalSeconds), 1);
+        }
+        else
+        {
+            hotOverlayOpacity = MathHelper.Max(
+                (float)(hotOverlayOpacity - hotOverlayOpacitySpeed * gameTime.ElapsedGameTime.TotalSeconds), 0);
+        }
         if (!completionDetected && AllDropsCollected && Player.HasPixelPreciseCollision(goal) && Player.IsAlive)
         {
             completionDetected = true;
@@ -121,12 +139,17 @@ partial class Level : GameObjectList
             // stop the timer
             timer.Running = false;
         }
-
         // check if the timer has passed
         else if (Player.IsAlive && timer.HasPassed)
         {
             Player.Explode();
         }
+    }
+
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
+    {
+        base.Draw(gameTime, spriteBatch, opacity);
+        hotOverlay.Draw(gameTime, spriteBatch, hotOverlayOpacity);
     }
 
     /// <summary>

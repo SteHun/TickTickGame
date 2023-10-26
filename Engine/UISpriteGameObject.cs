@@ -18,13 +18,13 @@ public class UISpriteGameObject : SpriteGameObject
     /// </summary>
     /// <param name="gameTime">An object containing information about the time that has passed in the game.</param>
     /// <param name="spriteBatch">A sprite batch object used for drawing sprites.</param>
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
         if (!Visible)
             return;
 
         // draw the sprite at its *global* position in the game world
         if (sprite != null)
-            sprite.Draw(spriteBatch, GlobalPosition, Origin);
+            sprite.Draw(spriteBatch, GlobalPosition, Origin, opacity);
     }
 }
