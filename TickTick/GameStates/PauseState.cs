@@ -10,17 +10,22 @@ using Microsoft.Xna.Framework.Input;
 class PauseState : GameState
 {
     Button resumeButton, quitButton;
-    private TextBox pauseTextBox;
 
-    public PauseState(SpriteFont spriteFont)
+    public PauseState()
     {
         // add a background
         gameObjects.AddChild(new SpriteGameObject("Sprites/Backgrounds/spr_help", 0));
-        
-        // add pause text
-        pauseTextBox = new TextBox("Sprites/UI/spr_frame_text", 0.9f, spriteFont, Color.Black, "Game is paused");
+
+        // add text box for pause
+        TextBox pauseTextBox = new TextBox("Sprites/UI/spr_frame_text", TickTick.Depth_UIBackground);
         pauseTextBox.LocalPosition = new Vector2(720, 200);
         gameObjects.AddChild(pauseTextBox);
+        
+        // add pause text
+        TextGameObject hintText = new TextGameObject("Fonts/HintFont", TickTick.Depth_UIForeground, Color.Black);
+        hintText.Text = "Game is paused";
+        hintText.LocalPosition = new Vector2(720, 200) + new Vector2(25, 20);
+        gameObjects.AddChild(hintText);
         
         // add a "resume" button
         resumeButton = new Button("Sprites/UI/spr_button_quit", 1);
