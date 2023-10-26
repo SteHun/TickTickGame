@@ -17,7 +17,7 @@ class PauseState : GameState
         gameObjects.AddChild(new SpriteGameObject("Sprites/Backgrounds/spr_help", 0));
 
         // add text box for pause
-        TextBox pauseTextBox = new TextBox("Sprites/UI/spr_frame_text", TickTick.Depth_UIBackground);
+        UISpriteGameObject pauseTextBox = new UISpriteGameObject("Sprites/UI/spr_frame_text", TickTick.Depth_UIBackground);
         pauseTextBox.LocalPosition = new Vector2(720, 200);
         gameObjects.AddChild(pauseTextBox);
         
