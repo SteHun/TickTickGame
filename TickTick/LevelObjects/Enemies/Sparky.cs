@@ -69,7 +69,7 @@ class Sparky : AnimatedGameObject
                 Reset();
 
             // electrocute the player?
-            if (IsDeadly && level.Player.CanCollideWithObjects && HasPixelPreciseCollision(level.Player))
+            if (IsDeadly && level.Player.CanCollideWithObjects && ForgivingHitboxCollision(level.Player, 0.45f))
                 level.Player.Die();
         }
     }

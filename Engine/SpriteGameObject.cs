@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine
@@ -162,6 +164,24 @@ namespace Engine
 
             // otherwise, there is no collision
             return false;
+        }
+
+        public bool ForgivingHitboxCollision(SpriteGameObject other, float tolerance)
+        {
+            tolerance = MathHelper.Clamp(tolerance, 0, 1);
+            
+            int horizontalCenter = other.BoundingBox.X + other.BoundingBox.Width / 2;
+            int verticalCenter = other.BoundingBox.Y + other.BoundingBox.Height / 2;
+            float width = other.BoundingBox.Width * tolerance;
+            float height = other.BoundingBox.Height * tolerance;
+            float x = horizontalCenter-width/2;
+            float y = verticalCenter-width/2;
+
+            Rectangle otherBoundingBox = new Rectangle((int)x, (int)y, (int)width, (int)height);
+            Rectangle b = CollisionDetection.CalculateIntersection(BoundingBox, otherBoundingBox);
+            
+            //Return false if width and height is 0, else return true
+            return b is not { Width: 0, Height: 0 };
         }
     }
 }

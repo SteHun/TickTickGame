@@ -58,7 +58,7 @@ class Rocket : AnimatedGameObject
         if (!isActive)
             return;
 
-        // if the rocket touches the player, the player dies
+        //If the player jumps on the rocket
         if (level.Player.CanCollideWithObjects && HasPixelPreciseCollision(level.Player))
         {
             //Check if player jumped on rocket
@@ -76,10 +76,14 @@ class Rocket : AnimatedGameObject
                     level.Player.Jump(600f);
                 }
             }
-            else //If hit somewhere else the player dies
-            {
-                level.Player.Die();
-            }
+
+            return;
+        }
+
+        // if the rocket touches the player, the player dies
+        if (level.Player.CanCollideWithObjects && ForgivingHitboxCollision(level.Player, 0.45f))
+        {
+            level.Player.Die();
         }
     }
 

@@ -61,7 +61,7 @@ partial class Level : GameObjectList
                 TickTick.Depth_Background + 0.01f * (float)ExtendedGame.Random.NextDouble());
 
             mountain.LocalPosition = new Vector2(mountain.Width * (i-1) * 0.4f, 
-                BoundingBox.Height - mountain.Height);
+                BoundingBox.Top + mountain.Height);
 
             backgrounds.AddChild(mountain);
         }
