@@ -471,6 +471,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/UI/spr_button_back.png
 
+#begin Sprites/UI/spr_button_begin.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/UI/spr_button_begin.png
+
 #begin Sprites/UI/spr_button_editor.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -483,6 +495,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/UI/spr_button_editor.png
 
+#begin Sprites/UI/spr_button_emptyt.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/UI/spr_button_emptyt.png
+
+#begin Sprites/UI/spr_button_end.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/UI/spr_button_end.png
+
 #begin Sprites/UI/spr_button_help.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -494,6 +530,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/UI/spr_button_help.png
+
+#begin Sprites/UI/spr_button_middle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/UI/spr_button_middle.png
 
 #begin Sprites/UI/spr_button_play.png
 /importer:TextureImporter

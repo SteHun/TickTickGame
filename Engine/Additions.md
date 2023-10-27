@@ -9,3 +9,5 @@
 * Added parallax.
 * Cloud count is now based on level width.
 * Can jump on rockets to destroy them, holding space gives a bigger bounce.
+* 2nd line in level data is now reserved for time the player has to complete the level.
+* Made a different collision detection, where you can decide how forgiving it should be (implemented on enemies).
