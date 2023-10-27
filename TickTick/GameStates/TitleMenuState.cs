@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 /// </summary>
 class TitleMenuState : GameState
 {
-    Button playButton, helpButton;
+    Button playButton, editorButton, helpButton;
 
     public TitleMenuState()
     {
@@ -19,10 +19,15 @@ class TitleMenuState : GameState
         playButton = new Button("Sprites/UI/spr_button_play", TickTick.Depth_UIForeground);
         playButton.LocalPosition = new Vector2(600, 540);
         gameObjects.AddChild(playButton);
+        
+        // add a editor button
+        editorButton = new Button("Sprites/UI/spr_button_editor", TickTick.Depth_UIForeground);
+        editorButton.LocalPosition = new Vector2(600, 600);
+        gameObjects.AddChild(editorButton);
 
         // add a help button
         helpButton = new Button("Sprites/UI/spr_button_help", TickTick.Depth_UIForeground);
-        helpButton.LocalPosition = new Vector2(600, 600);
+        helpButton.LocalPosition = new Vector2(600, 660);
         gameObjects.AddChild(helpButton);
     }
 
