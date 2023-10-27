@@ -14,7 +14,7 @@ namespace Engine
         /// <summary>
         /// The sprite that this object can draw on the screen.
         /// </summary>
-        protected SpriteSheet sprite;
+        public SpriteSheet sprite;
 
         /// <summary>
         /// The origin ('offset') to use when drawing the sprite on the screen.
@@ -102,6 +102,12 @@ namespace Engine
             }
         }
 
+        public Rectangle HitBox
+        {
+            get;
+            protected set;
+        }
+
         /// <summary>
         /// Checks and returns if this <see cref="SpriteGameObject"/> 
         /// has at least one non-transparent pixel inside the given rectangle.
@@ -166,22 +172,12 @@ namespace Engine
             return false;
         }
 
-        public bool ForgivingHitboxCollision(SpriteGameObject other, float tolerance)
+        public bool HitBoxCollision(SpriteGameObject other)
         {
-            tolerance = MathHelper.Clamp(tolerance, 0, 1);
+            Rectangle positionRectangle = new Rectangle(GlobalPosition.ToPoint() + HitBox.Location, HitBox.Size);
+            Rectangle otherPositionRectangle = new Rectangle(other.GlobalPosition.ToPoint() + other.HitBox.Location, other.HitBox.Size);
             
-            int horizontalCenter = other.BoundingBox.X + other.BoundingBox.Width / 2;
-            int verticalCenter = other.BoundingBox.Y + other.BoundingBox.Height / 2;
-            float width = other.BoundingBox.Width * tolerance;
-            float height = other.BoundingBox.Height * tolerance;
-            float x = horizontalCenter-width/2;
-            float y = verticalCenter-width/2;
-
-            Rectangle otherBoundingBox = new Rectangle((int)x, (int)y, (int)width, (int)height);
-            Rectangle b = CollisionDetection.CalculateIntersection(BoundingBox, otherBoundingBox);
-            
-            //Return false if width and height is 0, else return true
-            return b is not { Width: 0, Height: 0 };
+            return CollisionDetection.ShapesIntersect(positionRectangle, otherPositionRectangle);
         }
     }
 }

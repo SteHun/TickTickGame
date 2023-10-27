@@ -34,6 +34,10 @@ class Rocket : AnimatedGameObject
             velocity.X = speed;
             this.startPosition = startPosition - new Vector2(2 * speed, 0);
         }
+
+        //Really weird location, is offset from GlobalPosition (which is somewhere around bottom right for some reason)
+        HitBox = new Rectangle(-18, -24, 73, 40);
+
         Reset();
     }
 
@@ -76,14 +80,11 @@ class Rocket : AnimatedGameObject
                     level.Player.Jump(600f);
                 }
             }
-
-            return;
-        }
-
-        // if the rocket touches the player, the player dies
-        if (level.Player.CanCollideWithObjects && ForgivingHitboxCollision(level.Player, 0.45f))
-        {
-            level.Player.Die();
+            // if the rocket touches the player, the player dies
+            else if (level.Player.CanCollideWithObjects && HitBoxCollision(level.Player))
+            {
+                level.Player.Die();
+            }
         }
     }
 

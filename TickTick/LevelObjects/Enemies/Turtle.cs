@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// Represents a turtle enemy that sneezes periodically.
@@ -19,6 +20,9 @@ class Turtle : AnimatedGameObject
         this.level = level;
         LoadAnimation("Sprites/LevelObjects/Turtle/spr_sneeze@9", "sneeze", false, 0.2f);
         LoadAnimation("Sprites/LevelObjects/Turtle/spr_idle", "idle", true, 0.1f);
+
+        HitBox = new Rectangle(-70, -100, 140, 100);
+        
         Reset();
     }
 
@@ -51,10 +55,10 @@ class Turtle : AnimatedGameObject
         if (level.Player.CanCollideWithObjects)
         {
             // when spikes are out, a collision with the player causes the player to die
-            if (HasSpikesOut && HasPixelPreciseCollision(level.Player))
+            if (HasSpikesOut && HitBoxCollision(level.Player))
                 level.Player.Die();
             // otherwise, the player gets launched up if it touches the turtle while falling
-            else if (level.Player.IsFalling && ForgivingHitboxCollision(level.Player,0.45f))
+            else if (level.Player.IsFalling && HasPixelPreciseCollision(level.Player))
                 level.Player.Jump(launchSpeed);
         }
     }

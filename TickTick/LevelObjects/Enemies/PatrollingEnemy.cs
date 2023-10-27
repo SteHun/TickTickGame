@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// An enemy that patrols back and forth on a platform.<br/>
@@ -20,6 +21,8 @@ class PatrollingEnemy : AnimatedGameObject
 
         LoadAnimation("Sprites/LevelObjects/Flame/spr_flame@9", "default", true, 0.1f);
 
+        HitBox = new Rectangle(-38, -86, 76, 74);
+        
         Reset();
     }
 
@@ -56,7 +59,7 @@ class PatrollingEnemy : AnimatedGameObject
         }
 
         // a collision with the player causes the player to die
-        if (level.Player.CanCollideWithObjects && ForgivingHitboxCollision(level.Player, 0.4f))
+        if (level.Player.CanCollideWithObjects && HitBoxCollision(level.Player))
             level.Player.Die();
     }
 

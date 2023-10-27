@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Engine
 {
@@ -46,6 +47,11 @@ namespace Engine
         /// The object that manages all game states, one of which is the active state.
         /// </summary>
         public static GameStateManager GameStateManager { get; private set; }
+        
+        /// <summary>
+        /// A white square for easy drawing on screen, mostly used for debugging.
+        /// </summary>
+        public static Texture2D blankSquare { get; private set; }
 
         public static string ContentRootDirectory => "Content";
 
@@ -83,6 +89,8 @@ namespace Engine
 
             // by default, we're not running in full-screen mode
             FullScreen = false;
+
+            blankSquare = Content.Load<Texture2D>("Sprites/Blank square");
         }
 
         /// <summary>

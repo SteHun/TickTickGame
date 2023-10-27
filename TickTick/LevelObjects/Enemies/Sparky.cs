@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// Represents the "Sparky" enemy that can drop down and electrocute the player.<br/>
@@ -22,6 +23,9 @@ class Sparky : AnimatedGameObject
 
         LoadAnimation("Sprites/LevelObjects/Sparky/spr_electrocute@6x5", "electrocute", false, 0.1f);
         LoadAnimation("Sprites/LevelObjects/Sparky/spr_idle", "idle", true, 0.1f);
+        
+        HitBox = new Rectangle(-55, -115, 113, 115);
+        
         Reset();
     }
 
@@ -69,7 +73,7 @@ class Sparky : AnimatedGameObject
                 Reset();
 
             // electrocute the player?
-            if (IsDeadly && level.Player.CanCollideWithObjects && ForgivingHitboxCollision(level.Player, 0.45f))
+            if (IsDeadly && level.Player.CanCollideWithObjects && HitBoxCollision(level.Player))
                 level.Player.Die();
         }
     }

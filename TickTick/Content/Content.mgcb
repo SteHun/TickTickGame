@@ -207,6 +207,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Backgrounds/spr_title.jpg
 
+#begin Sprites/Blank square.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Blank square.png
+
 #begin Sprites/LevelObjects/Flame/spr_flame@9.png
 /importer:TextureImporter
 /processor:TextureProcessor

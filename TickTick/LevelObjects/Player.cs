@@ -57,7 +57,10 @@ class Player : AnimatedGameObject
         LoadAnimation("Sprites/LevelObjects/Player/spr_celebrate@14", "celebrate", false, 0.05f);
         LoadAnimation("Sprites/LevelObjects/Player/spr_die@5", "die", true, 0.1f);
         LoadAnimation("Sprites/LevelObjects/Player/spr_explode@6x3", "explode", false, 0.04f, 3);
-
+        
+        //Really weird location, is offset from GlobalPosition (which is somewhere around bottom right for some reason)
+        HitBox = new Rectangle(-38, -80, 76, 80);
+        
         Reset();
     }
 
