@@ -20,7 +20,7 @@ class Player : AnimatedGameObject
     const float airFriction = 10; // Friction factor that determines how much (horizontal) air resistance there is.
 
     private const double coyoteTime = 150; // Milliseconds of coyote time
-    private const double jumpBufferTime = 120; // Milliseconds of jump buffer
+    public readonly double jumpBufferTime = 120; // Milliseconds of jump buffer
 
     bool facingLeft; // Whether or not the character is currently looking to the left.
 
@@ -30,7 +30,7 @@ class Player : AnimatedGameObject
     float desiredHorizontalSpeed; // The horizontal speed at which the character would like to move.
     private double timeSinceLastGrounded = 0;
     private bool canJump => !isJumping && timeSinceLastGrounded < coyoteTime && IsAlive;
-    private double timeSinceLastAirborneJumpPress = 100000; // any large enough number
+    public double timeSinceLastAirborneJumpPress = 100000; // any large enough number
 
     Level level;
     Vector2 startPosition;

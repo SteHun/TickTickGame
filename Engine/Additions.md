@@ -8,3 +8,4 @@
 * Added an editor.
 * Added parallax.
 * Cloud count is now based on level width.
+* Can jump on rockets to destroy them, holding space gives a bigger bounce.
