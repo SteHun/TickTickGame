@@ -2,6 +2,7 @@ using Engine;
 using Microsoft.Xna.Framework;
 using System;
 using System.Diagnostics;
+using GameStates;
 using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
@@ -52,6 +53,7 @@ class TickTick : ExtendedGameWithLevels
         GameStateManager.AddGameState(StateName_Help, new HelpState());
         GameStateManager.AddGameState(StateName_Playing, new PlayingState());
         GameStateManager.AddGameState(StateName_Pause, new PauseState());
+        GameStateManager.AddGameState(StateName_Editor, new LevelEditorState());
 
         // start at the title screen
         GameStateManager.SwitchTo(StateName_Title);

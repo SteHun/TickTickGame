@@ -36,6 +36,8 @@ class TitleMenuState : GameState
         base.HandleInput(inputHelper);
         if (playButton.Pressed)
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_LevelSelect);
+        else if (editorButton.Pressed)
+            ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Editor);
         else if (helpButton.Pressed)
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Help);
     }
