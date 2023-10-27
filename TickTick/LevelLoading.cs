@@ -1,34 +1,26 @@
-﻿using Engine;
+﻿using System;
+using Engine;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
 
 partial class Level : GameObjectList
 {
-    void LoadLevelFromFile(string filename)
+    void LoadLevelFromString(string level)
     {
-        // open the file
-        StreamReader reader = new StreamReader(filename);
-
+        string[] levelArray = level.Replace("\r", "").Split('\n');
         // read the description
-        string description = reader.ReadLine();
+        string description = levelArray[0];
 
         // read the rows of the grid; keep track of the longest row
         int gridWidth = 0;
 
-        List<string> gridRows = new List<string>();
-        string line = reader.ReadLine();
-        while (line != null)
+        List<string> gridRows = new List<string>(levelArray[1..]);
+        foreach (string row in gridRows)
         {
-            if (line.Length > gridWidth)
-                gridWidth = line.Length;
-
-            gridRows.Add(line);
-            line = reader.ReadLine();
+            gridWidth = MathHelper.Max(gridWidth, row.Length);
         }
-
-        // stop reading the file
-        reader.Close();
+        
         
         // create all game objects for the grid
         AddPlayingField(gridRows, gridWidth, gridRows.Count);
@@ -36,6 +28,17 @@ partial class Level : GameObjectList
         // add game objects to show that general level info
         AddLevelInfoObjects(description);
     }
+    
+    void LoadLevelFromFile(string filename)
+    {
+        // open the file
+        StreamReader reader = new StreamReader(filename);
+
+        string level = reader.ReadToEnd();
+        reader.Close();
+        LoadLevelFromString(level);
+    }
+    
 
     void AddLevelInfoObjects(string description)
     {
