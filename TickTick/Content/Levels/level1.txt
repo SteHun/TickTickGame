@@ -1,4 +1,5 @@
 Pick up all the water drops and reach the exit in time.
+
 ....................
 .................X..
 ..........##########

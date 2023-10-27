@@ -11,22 +11,33 @@ partial class Level : GameObjectList
         string[] levelArray = level.Replace("\r", "").Split('\n');
         // read the description
         string description = levelArray[0];
+        try
+        {
+            maxTime = int.Parse(levelArray[1]);
+        }
+        catch
+        {
+            maxTime = 30;
+        }
+        
 
         // read the rows of the grid; keep track of the longest row
         int gridWidth = 0;
 
-        List<string> gridRows = new List<string>(levelArray[1..]);
+        List<string> gridRows = new List<string>(levelArray[2..]);
         foreach (string row in gridRows)
         {
             gridWidth = MathHelper.Max(gridWidth, row.Length);
         }
         
-        
         // create all game objects for the grid
         AddPlayingField(gridRows, gridWidth, gridRows.Count);
 
         // add game objects to show that general level info
-        AddLevelInfoObjects(description);
+        if (description != "")
+        {
+            AddLevelInfoObjects(description);
+        }
     }
     
     void LoadLevelFromFile(string filename)

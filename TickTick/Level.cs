@@ -13,6 +13,9 @@ partial class Level : GameObjectList
     public const int TileWidth = 72;
     public const int TileHeight = 55;
 
+    //Amount of time the bomb starts with
+    private int maxTime;
+
     Tile[,] tiles;
     List<WaterDrop> waterDrops;
 
@@ -44,12 +47,11 @@ partial class Level : GameObjectList
         LoadLevelFromFile(filename);
 
         // add the timer
-        timer = new BombTimer();
+        timer = new BombTimer(maxTime);
         AddChild(timer);
         
         // add hot overlay
         hotOverlay = new UISpriteGameObject("Sprites/UI/spr_hot_overlay", 0.75f);
-        
         
         // add mountains in the background
         for (int i = 0; i < 4; i++)

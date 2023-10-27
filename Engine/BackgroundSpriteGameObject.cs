@@ -5,7 +5,7 @@ namespace Engine;
 
 public class BackgroundSpriteGameObject : SpriteGameObject
 {
-    private float parallaxStrength;
+    private  readonly float parallaxStrength;
     
     public BackgroundSpriteGameObject(string spriteName, float depth, float parallaxStrength = 5f) : base(spriteName, depth)
     {
@@ -19,6 +19,7 @@ public class BackgroundSpriteGameObject : SpriteGameObject
     /// </summary>
     /// <param name="gameTime">An object containing information about the time that has passed in the game.</param>
     /// <param name="spriteBatch">A sprite batch object used for drawing sprites.</param>
+    /// <param name="opacity">The opacity of a sprite.</param>
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
         if (!Visible)

@@ -8,6 +8,7 @@ using System;
 class BombTimer : GameObjectList
 {
     double timeLeft;
+    private int maxTime;
 
     public bool Running { get; set; }
     public float Multiplier { get; set; }
@@ -16,9 +17,10 @@ class BombTimer : GameObjectList
 
     public bool HasPassed { get { return timeLeft <= 0; } }
 
-    public BombTimer()
+    public BombTimer(int maxTime = 30)
     {
         localPosition = new Vector2(20, 20);
+        this.maxTime = maxTime;
         
         // add a background image
         SpriteGameObject background = new UISpriteGameObject("Sprites/UI/spr_timer", TickTick.Depth_UIBackground);
@@ -65,7 +67,7 @@ class BombTimer : GameObjectList
     public override void Reset()
     {
         base.Reset();
-        timeLeft = 30;
+        timeLeft = maxTime;
         Running = true;
         Multiplier = 1;
     }
