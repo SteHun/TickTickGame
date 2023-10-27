@@ -16,8 +16,6 @@ class TickTick : ExtendedGameWithLevels
     public const float Depth_LevelObjects = 0.6f; // for all game objects except the player
     public const float Depth_LevelPlayer = 0.7f; // for the player
 
-    private SpriteFont spriteFont;
-
 
     [STAThread]
     static void Main()
@@ -34,8 +32,6 @@ class TickTick : ExtendedGameWithLevels
     protected override void LoadContent()
     {
         base.LoadContent();
-
-        spriteFont = Content.Load<SpriteFont>("Fonts/HintFont");
 
         // set a custom world and window size
         worldSize = new Point(1440, 825);

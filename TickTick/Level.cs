@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
@@ -33,7 +34,7 @@ partial class Level : GameObjectList
 
         // load the background
         GameObjectList backgrounds = new GameObjectList();
-        SpriteGameObject backgroundSky = new SpriteGameObject("Sprites/Backgrounds/spr_sky", TickTick.Depth_Background);
+        UISpriteGameObject backgroundSky = new UISpriteGameObject("Sprites/Backgrounds/spr_sky", TickTick.Depth_Background);
         backgroundSky.LocalPosition = new Vector2(0, 825 - backgroundSky.Height);
         backgrounds.AddChild(backgroundSky);
 
@@ -53,7 +54,7 @@ partial class Level : GameObjectList
         // add mountains in the background
         for (int i = 0; i < 4; i++)
         {
-            SpriteGameObject mountain = new SpriteGameObject(
+            BackgroundSpriteGameObject mountain = new BackgroundSpriteGameObject(
                 "Sprites/Backgrounds/spr_mountain_" + (ExtendedGame.Random.Next(2) + 1),
                 TickTick.Depth_Background + 0.01f * (float)ExtendedGame.Random.NextDouble());
 
@@ -64,7 +65,7 @@ partial class Level : GameObjectList
         }
 
         // add clouds
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < BoundingBox.Width/820; i++)
             backgrounds.AddChild(new Cloud(this));
     }
 
@@ -110,7 +111,7 @@ partial class Level : GameObjectList
         // If the tile with these coordinates doesn't exist, return the normal surface type.
         if (x < 0 || x >= tiles.GetLength(0) || y < 0 || y >= tiles.GetLength(1))
             return Tile.SurfaceType.Normal;
-
+        
         // Otherwise, return the actual surface type of the tile.
         return tiles[x, y].Surface;
     }
