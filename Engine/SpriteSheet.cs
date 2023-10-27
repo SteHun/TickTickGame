@@ -22,6 +22,8 @@ namespace Engine
 
         float depth;
 
+        public float Scale = 1;
+
         bool[,] pixelTransparency;
 
         /// <summary>
@@ -78,9 +80,9 @@ namespace Engine
             SpriteEffects spriteEffects = SpriteEffects.None;
             if (Mirror)
                 spriteEffects = SpriteEffects.FlipHorizontally;
-
-            spriteBatch.Draw(sprite, position, spriteRectangle, Color.White * opacity,
-                0.0f, origin, 1.0f, spriteEffects, depth);
+            Vector2 tempPosition = position + new Vector2(((Width * Scale) - Width) / 2, ((Height * Scale) - Height) / 2);
+            spriteBatch.Draw(sprite, tempPosition, spriteRectangle, Color.White * opacity,
+                0.0f, origin, Scale, spriteEffects, depth);
         }
 
         /// <summary>

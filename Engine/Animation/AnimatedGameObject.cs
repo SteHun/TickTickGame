@@ -17,9 +17,10 @@ namespace Engine
         }
 
         public void LoadAnimation(string assetName, string id,
-            bool looping, float frameTime)
+            bool looping, float frameTime, float scale = 1)
         {
             Animation anim = new Animation(assetName, depth, looping, frameTime);
+            anim.Scale = scale;
             animations[id] = anim;
         }
 

@@ -243,7 +243,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/LevelObjects/Player/spr_die@5.png
 
-#begin Sprites/LevelObjects/Player/spr_explode@5x5.png
+#begin Sprites/LevelObjects/Player/spr_explode@6x3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -253,7 +253,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/LevelObjects/Player/spr_explode@5x5.png
+/build:Sprites/LevelObjects/Player/spr_explode@6x3.png
 
 #begin Sprites/LevelObjects/Player/spr_idle.png
 /importer:TextureImporter

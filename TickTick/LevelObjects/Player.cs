@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// IGameLoopObject -> GameObject -> SpriteGameObject -> AnimatedGameObject -> Player
@@ -55,7 +56,7 @@ class Player : AnimatedGameObject
         LoadAnimation("Sprites/LevelObjects/Player/spr_jump@14", "jump", false, 0.08f);
         LoadAnimation("Sprites/LevelObjects/Player/spr_celebrate@14", "celebrate", false, 0.05f);
         LoadAnimation("Sprites/LevelObjects/Player/spr_die@5", "die", true, 0.1f);
-        LoadAnimation("Sprites/LevelObjects/Player/spr_explode@5x5", "explode", false, 0.04f);
+        LoadAnimation("Sprites/LevelObjects/Player/spr_explode@6x3", "explode", false, 0.04f, 3);
 
         Reset();
     }
@@ -335,7 +336,6 @@ class Player : AnimatedGameObject
         isExploding = true;
         PlayAnimation("explode");
         velocity = Vector2.Zero;
-
         ExtendedGame.AssetManager.PlaySoundEffect("Sounds/snd_player_explode");
     }
 
