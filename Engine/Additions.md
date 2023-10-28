@@ -12,3 +12,4 @@
 * 2nd line in level data is now reserved for time the player has to complete the level.
 * Made a different collision detection, where you can decide how forgiving it should be (implemented on enemies).
 * Buttons can now have custom text and dynamically resize.
+* Textboxes can now dynamically resize.

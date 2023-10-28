@@ -28,8 +28,12 @@ class PauseState : GameState
         gameObjects.AddChild(hintText);
 
         Button testButton = new Button("Sprites/UI/spr_frame_text", TickTick.Depth_UIForeground, "test", "Fonts/HintFont");
-        testButton.LocalPosition = new Vector2(720, 500);
+        testButton.LocalPosition = new Vector2(720, 450);
         gameObjects.AddChild(testButton);
+        
+        TextBox testText = new TextBox("Sprites/UI/spr_frame_text", TickTick.Depth_UIForeground, "test textbox", "Fonts/HintFont");
+        testText.LocalPosition = new Vector2(720, 500);
+        gameObjects.AddChild(testText);
         
         // add a "resume" button
         resumeButton = new Button("Sprites/UI/spr_button_quit", TickTick.Depth_UIForeground);
