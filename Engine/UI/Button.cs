@@ -16,6 +16,7 @@ namespace Engine.UI
         /// Whether this button has been pressed (clicked) in the current frame.
         /// </summary>
         public bool Pressed { get; protected set; }
+        public bool Hovered { get; protected set; }
 
         private string text = "";
         private SpriteFont font;
@@ -54,11 +55,13 @@ namespace Engine.UI
             if (text == "")
             {
                 Pressed = Visible && inputHelper.MouseLeftButtonPressed() && BoundingBox.Contains(inputHelper.MousePositionWorld);
+                Hovered = Visible && BoundingBox.Contains(inputHelper.MousePositionWorld);
                 return;
             }
 
             //Detection for dynamic buttons
             Pressed = Visible && inputHelper.MouseLeftButtonPressed() && HitBox.Contains(inputHelper.MousePositionWorld);
+            Hovered = Visible && HitBox.Contains(inputHelper.MousePositionWorld);
         }
 
         public override void Reset()

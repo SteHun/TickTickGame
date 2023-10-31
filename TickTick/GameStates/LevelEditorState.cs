@@ -18,6 +18,7 @@ public class LevelEditorState : GameState
     private Vector2 relativeHoveredTilePosition;
     private readonly Point defaultLevelSize = new Point(20, 15);
     private bool drawingBlocks;
+    private bool hoveringAnyButton;
 
     private Texture2D wallTexture;
 
@@ -47,31 +48,46 @@ public class LevelEditorState : GameState
         wallTexture = ExtendedGame.AssetManager.LoadSprite("Sprites/Tiles/spr_wall");
     }
 
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+
+    }
+
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
         Vector2 mousePos = inputHelper.MousePositionWorld;
         
         Vector2 absoluteMousePos = mousePos + offset;
-        if (inputHelper.MouseLeftButtonPressed())
+        
+
+        hoveringAnyButton = false;
+        if (quitButton.Hovered || saveButton.Hovered)
+            hoveringAnyButton = true;
+        
+        if (inputHelper.MouseLeftButtonPressed() && !hoveringAnyButton)
             drawingBlocks = true;
         else if (!inputHelper.MouseLeftButtonDown())
             drawingBlocks = false;
+        
         hoveredTile = new Point((int)MathF.Floor(absoluteMousePos.X / Level.TileWidth), 
             (int)MathF.Floor(absoluteMousePos.Y / Level.TileHeight));
 
         relativeHoveredTilePosition = new Vector2(
             MathF.Floor((mousePos.X + offset.X) / Level.TileWidth) * Level.TileWidth,
             MathF.Floor((mousePos.Y + offset.Y) / Level.TileHeight) * Level.TileHeight);
-        Debug.WriteLine(relativeHoveredTilePosition);
-        if (drawingBlocks)
+        if (drawingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, '#');
+        
+        if (quitButton.Pressed)
+            TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
         base.Draw(gameTime, spriteBatch, opacity);
-        
+
         for (int x = 0; x < level.GetLength(0); x++)
         {
             for (int y = 0; y < level.GetLength(1); y++)
@@ -89,7 +105,10 @@ public class LevelEditorState : GameState
                     spriteBatch.Draw(textureToDraw, destRectangle, Color.White);
             }
         }
-        
+
+        if (hoveringAnyButton)
+            return;
+        // draw preview of curren item at cursor
         Rectangle uiDestRectangle = new Rectangle((int)MathF.Round(relativeHoveredTilePosition.X),
             (int)MathF.Round(relativeHoveredTilePosition.Y), Level.TileWidth, Level.TileHeight);
         spriteBatch.Draw(wallTexture, uiDestRectangle, Color.White);
