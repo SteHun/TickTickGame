@@ -127,7 +127,7 @@ namespace Engine
         /// <param name="gameTime">An object containing information about the time that has passed.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(new Color(0.67f, 0.8f, 0.97f));
 
             // start drawing sprites, applying the scaling matrix
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, null, null, spriteScale);
