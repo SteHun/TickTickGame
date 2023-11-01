@@ -97,6 +97,19 @@ class PlayingState : GameState, IPlayingState
         gameOverOverlay.Visible = false;
     }
 
+    public void LoadLevelFromString(string levelString)
+    {
+        level = new Level(levelString);
+                
+        //Pass the size of the level so the camera knows where the edges are
+        Camera.levelSize.X = level.BoundingBox.Width;
+        Camera.levelSize.Y = level.BoundingBox.Height;
+
+        // hide the overlay images
+        completedOverlay.Visible = false;
+        gameOverOverlay.Visible = false;
+    }
+
     public void LevelCompleted(int levelIndex)
     {
         // show an overlay image
@@ -104,8 +117,9 @@ class PlayingState : GameState, IPlayingState
 
         // play a sound
         ExtendedGame.AssetManager.PlaySoundEffect("Sounds/snd_won");
-
-        // mark the level as solved, and unlock the next level
-        ExtendedGameWithLevels.MarkLevelAsSolved(levelIndex);
+        
+        // mark the level as solved, and unlock the next level (-1 means it is a custom level
+        if (levelIndex != -1)
+            ExtendedGameWithLevels.MarkLevelAsSolved(levelIndex);
     }
 }

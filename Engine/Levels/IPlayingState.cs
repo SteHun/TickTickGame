@@ -7,6 +7,7 @@
     public interface IPlayingState
     {
         void LoadLevel(int levelIndex);
+        void LoadLevelFromString(string levelString);
         void LevelCompleted(int levelIndex);
     }
 }
