@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 class Player : AnimatedGameObject
 {
     const float walkingSpeed = 400; // Standard walking speed, in game units per second.
-    const float jumpSpeed = 900; // Lift-off speed when the character jumps.
+    const float jumpSpeed = 700; // Lift-off speed when the character jumps.
     const float gravity = 2300; // Strength of the gravity force that pulls the character down.
     const float maxFallSpeed = 1200; // The maximum vertical speed at which the character can fall.
     
@@ -21,6 +21,8 @@ class Player : AnimatedGameObject
 
     private const double coyoteTime = 150; // Milliseconds of coyote time
     public readonly double jumpBufferTime = 120; // Milliseconds of jump buffer
+    private const double maxJumpTime = 200; //Milliseconds of holding down space to increase jump height
+    private const double maxJumpStartTime = 50; //Milliseconds of holding down space before jump is increased
 
     bool facingLeft; // Whether or not the character is currently looking to the left.
 
@@ -29,6 +31,7 @@ class Player : AnimatedGameObject
     bool standingOnIceTile, standingOnHotTile; // Whether or not the character is standing on an ice tile or a hot tile.
     float desiredHorizontalSpeed; // The horizontal speed at which the character would like to move.
     private double timeSinceLastGrounded = 0;
+    private double timeSinceJumpStart = 0;
     private bool canJump => !isJumping && timeSinceLastGrounded < coyoteTime && IsAlive;
     public double timeSinceLastAirborneJumpPress = 100000; // any large enough number
 
@@ -125,6 +128,12 @@ class Player : AnimatedGameObject
             else
                 timeSinceLastAirborneJumpPress = 0;
         }
+        else
+        {
+            //If not pressed on first frame
+            if(Keyboard.GetState().IsKeyDown(Keys.Space) && timeSinceJumpStart is > maxJumpStartTime and < maxJumpTime)
+                JumpHold();
+        }
 
         // falling?
         if (!isGrounded && !canJump && !isJumping)
@@ -141,10 +150,19 @@ class Player : AnimatedGameObject
     {
         isJumping = true;
         velocity.Y = -speed;
+        timeSinceJumpStart = 0;
         // play the jump animation; always make sure that the animation restarts
         PlayAnimation("jump", true, 0);
         // play a sound
         ExtendedGame.AssetManager.PlaySoundEffect("Sounds/snd_player_jump");
+    }
+
+    private void JumpHold(float speed = jumpSpeed)
+    {
+        isJumping = true;
+        
+        //Jump strength is decreased by how long the jump is held, to get a more smooth jump curve
+        velocity.Y = -speed + (float)timeSinceJumpStart/2;
     }
 
     /// <summary>
@@ -195,6 +213,8 @@ class Player : AnimatedGameObject
                 timeSinceLastGrounded = 0;
             else
                 timeSinceLastGrounded += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            timeSinceJumpStart += gameTime.ElapsedGameTime.TotalMilliseconds;
             
             // jump buffer
             timeSinceLastAirborneJumpPress += gameTime.ElapsedGameTime.TotalMilliseconds;
