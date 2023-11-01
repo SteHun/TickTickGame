@@ -29,6 +29,7 @@ public class EditorUI
 
     public void HandleInput()
     {
+        return; // prevent crashing of incomplete class
         dock.HandleInput();
     }
     

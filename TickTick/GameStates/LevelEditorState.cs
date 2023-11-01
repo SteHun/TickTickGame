@@ -21,9 +21,11 @@ public class LevelEditorState : GameState
     private Vector2 HoveredTilePixelPosition;
     private readonly Point defaultLevelSize = new Point(20, 15);
     private bool drawingBlocks;
+    private bool ereasingBlocks;
     private bool hoveringAnyButton;
     private Vector2 toMove;
     private const float scrollSpeed = 500;
+    private char selectedTile = '#';
 
     private Texture2D wallTexture;
 
@@ -80,10 +82,20 @@ public class LevelEditorState : GameState
         if (quitButton.Hovered || saveButton.Hovered)
             hoveringAnyButton = true;
         
+        if (inputHelper.MouseRightButtonPressed() && !hoveringAnyButton)
+            ereasingBlocks = true;
+        else if (!inputHelper.MouseRightButtonDown())
+            ereasingBlocks = false;
+
         if (inputHelper.MouseLeftButtonPressed() && !hoveringAnyButton)
+        {
             drawingBlocks = true;
+            ereasingBlocks = false;
+        }
         else if (!inputHelper.MouseLeftButtonDown())
             drawingBlocks = false;
+        
+        
 
         hoveredTile = new Point((int)MathF.Floor(absoluteMousePos.X / Level.TileWidth),
             (int)MathF.Floor(absoluteMousePos.Y / Level.TileHeight));
@@ -91,7 +103,9 @@ public class LevelEditorState : GameState
             hoveredTile.Y * Level.TileHeight + offset.Y);
 
         if (drawingBlocks && !hoveringAnyButton)
-            PlaceTile(hoveredTile, '#');
+            PlaceTile(hoveredTile, selectedTile);
+        else if (ereasingBlocks && !hoveringAnyButton)
+            PlaceTile(hoveredTile, '-');
         
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);

@@ -58,6 +58,11 @@ namespace Engine
             return currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released;
         }
 
+        public bool MouseRightButtonPressed()
+        {
+            return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released;
+        }
+
         /// <summary>
         /// Checks and returns whether the left mouse button is currently being held down.
         /// </summary>
@@ -65,6 +70,11 @@ namespace Engine
         public bool MouseLeftButtonDown()
         {
             return currentMouseState.LeftButton == ButtonState.Pressed;
+        }
+        
+        public bool MouseRightButtonDown()
+        {
+            return currentMouseState.RightButton == ButtonState.Pressed;
         }
 
         /// <summary>
