@@ -1,4 +1,5 @@
-﻿using Engine;
+﻿using System;
+using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,18 +14,22 @@ class PatrollingEnemy : AnimatedGameObject
     protected float waitTime; // The current remaining time before the enemy turns around.
     const float totalWaitTime = 0.5f; // The time it takes before the enemy turns around.
     const float walkSpeed = 120; // The horizontal speed at which the enemy moves.
-
+    
     public PatrollingEnemy(Level level, Vector2 startPosition) : base(TickTick.Depth_LevelObjects)
     {
         this.level = level;
         this.startPosition = startPosition;
-
-        LoadAnimation("Sprites/LevelObjects/Flame/spr_flame@9", "default", true, 0.1f);
-
         HitBox = new Rectangle(-38, -86, 76, 74);
         
+        Load();
         Reset();
     }
+
+    protected virtual void Load()
+    {
+        LoadAnimation("Sprites/LevelObjects/Flame/spr_flame@9", "default", true, 0.1f);
+    }
+    
 
     public override void Reset()
     {

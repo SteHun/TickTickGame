@@ -13,6 +13,11 @@ class UnpredictableEnemy : PatrollingEnemy
     public UnpredictableEnemy(Level level, Vector2 startPosition) 
         : base(level, startPosition) { }
 
+    protected override void Load()
+    {
+        LoadAnimation("Sprites/LevelObjects/Flame/spr_flame_green@9", "default", true, 0.1f);
+    }
+
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
