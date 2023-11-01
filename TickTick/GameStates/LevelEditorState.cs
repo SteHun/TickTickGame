@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Engine;
 using Engine.UI;
 using Microsoft.Xna.Framework;
@@ -26,6 +28,8 @@ public class LevelEditorState : GameState
     private Vector2 toMove;
     private const float scrollSpeed = 500;
     private char selectedTile = '#';
+
+    private Dictionary<char, Texture2D> textures = new Dictionary<char, Texture2D>();
 
     private Texture2D wallTexture;
 
@@ -56,7 +60,28 @@ public class LevelEditorState : GameState
         quitButton.LocalPosition = new Vector2(1290, 20);
         gameObjects.AddChild(quitButton);
 
+        Texture2D GetSprite(string path) => ExtendedGame.AssetManager.LoadSprite(path);
+        
+        textures.Add('-', GetSprite("Sprites/Tiles/spr_platform"));
+        textures.Add('#', GetSprite("Sprites/Tiles/spr_wall"));
+        textures.Add('h', GetSprite("Sprites/Tiles/spr_platform_hot"));
+        textures.Add('H', GetSprite("Sprites/Tiles/spr_wall_hot"));
+        textures.Add('i', GetSprite("Sprites/Tiles/spr_platform_ice"));
+        textures.Add('I', GetSprite("Sprites/Tiles/spr_wall_ice"));
+        textures.Add('d', GetSprite("Sprites/Tiles/spr_platform_speed"));
+        textures.Add('D', GetSprite("Sprites/Tiles/spr_wall_speed"));
+        textures.Add('1', GetSprite("Sprites/LevelObjects/Player/spr_idle"));
+        textures.Add('X', GetSprite("Sprites/LevelObjects/spr_goal"));
+        textures.Add('W', GetSprite("Sprites/LevelObjects/spr_water"));
+        textures.Add('R', GetSprite("Sprites/LevelObjects/Rocket/spr_rocket_editor"));
+        textures.Add('T', GetSprite("Sprites/LevelObjects/Turtle/spr_idle"));
+        textures.Add('S', GetSprite("Sprites/LevelObjects/Sparky/spr_electrocute"));
+
+        
         wallTexture = ExtendedGame.AssetManager.LoadSprite("Sprites/Tiles/spr_wall");
+        return;
+
+        // load textures
     }
 
     public override void Update(GameTime gameTime)
@@ -105,7 +130,7 @@ public class LevelEditorState : GameState
         if (drawingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, selectedTile);
         else if (ereasingBlocks && !hoveringAnyButton)
-            PlaceTile(hoveredTile, '-');
+            PlaceTile(hoveredTile, '.');
         
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
@@ -132,12 +157,8 @@ public class LevelEditorState : GameState
                 Rectangle destRectangle = new Rectangle((int)MathF.Round(x * Level.TileWidth + offset.X),
                     (int)MathF.Round(y * Level.TileHeight + offset.Y), Level.TileWidth, Level.TileHeight);
                 Texture2D textureToDraw = null;
-                switch (level[x, y])
-                {
-                    case '#':
-                        textureToDraw = wallTexture;
-                        break;
-                }
+                if (textures.ContainsKey(level[x,y]))
+                    textureToDraw = textures[level[x,y]];
                 if (textureToDraw != null)
                     spriteBatch.Draw(textureToDraw, destRectangle, Color.White);
             }
@@ -149,7 +170,7 @@ public class LevelEditorState : GameState
         // draw preview of curren item at cursor
         Rectangle uiDestRectangle = new Rectangle((int)MathF.Round(HoveredTilePixelPosition.X),
             (int)MathF.Round(HoveredTilePixelPosition.Y), Level.TileWidth, Level.TileHeight);
-        spriteBatch.Draw(wallTexture, uiDestRectangle, Color.White * 0.5f);
+        spriteBatch.Draw(textures[selectedTile], uiDestRectangle, Color.White * 0.5f);
     }
 
     private void PlaceTile(Point point, char tile)
@@ -238,7 +259,7 @@ public class LevelEditorState : GameState
         {
             for (int y = 0; y < newSize.Y; y++)
             {
-                newLevel[x,y] = '-';
+                newLevel[x,y] = '.';
             }
         }
         
@@ -264,7 +285,7 @@ public class LevelEditorState : GameState
         {
             for (int y = 0; y < difference.Y; y++)
             {
-                newLevel[x,y] = '-';
+                newLevel[x,y] = '.';
             }
         }
         
