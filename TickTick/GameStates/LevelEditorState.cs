@@ -131,15 +131,23 @@ public class LevelEditorState : GameState
 
     private void PlaceTile(Point point, char tile)
     {
-        if (point.X < 0 || point.Y < 0)
-            return;
+        if (point.X < 0)
+        {
+            ResizeLevelTopLeft(new Point(level.GetLength(0) - point.X, level.GetLength(1)));
+            point.X = 0;
+        }
+        if (point.Y < 0)
+        {
+            ResizeLevelTopLeft(new Point(level.GetLength(0), level.GetLength(1) - point.Y));
+            point.Y = 0;
+        }
         if (point.X >= level.GetLength(0))
         {
-            ResizeLevel(new Point(point.X + 1, level.GetLength(1)));
+            ResizeLevelBottomRight(new Point(point.X + 1, level.GetLength(1)));
         }
         if (point.Y >= level.GetLength(1))
         {
-            ResizeLevel(new Point(level.GetLength(0), point.Y + 1));
+            ResizeLevelBottomRight(new Point(level.GetLength(0), point.Y + 1));
         }
 
         level[point.X, point.Y] = tile;
@@ -164,7 +172,7 @@ public class LevelEditorState : GameState
                 break;
         }
         if (newSize != new Point(level.GetLength(0), level.GetLength(1)))
-            ResizeLevel(newSize);
+            ResizeLevelBottomRight(newSize);
     }
 
     private bool RowHasNoItems(int row)
@@ -191,8 +199,9 @@ public class LevelEditorState : GameState
         return true;
     }
 
-    private void ResizeLevel(Point newSize)
+    private void ResizeLevelBottomRight(Point newSize)
     {
+        // copy the old level
         char[,] newLevel = new char[newSize.X, newSize.Y];
         for (int x = 0; x < level.GetLength(0); x++)
         {
@@ -201,12 +210,38 @@ public class LevelEditorState : GameState
                 newLevel[x,y] = level[x, y];
             }
         }
-        
+        // fill the new level with empty space
         for (int x = level.GetLength(0); x < newSize.X; x++)
         {
-            for (int y = level.GetLength(1); y < newSize.Y; y++)
+            for (int y = 0; y < newSize.Y; y++)
             {
-                newLevel[x,y] = level[x, y];
+                newLevel[x,y] = '-';
+            }
+        }
+        
+
+        level = newLevel;
+    }
+    
+    private void ResizeLevelTopLeft(Point newSize)
+    {
+        char[,] newLevel = new char[newSize.X, newSize.Y];
+        Point difference = newSize - new Point(level.GetLength(0), level.GetLength(1));
+        offset -= difference.ToVector2() * new Vector2(Level.TileWidth, Level.TileHeight);
+        // copy the old level to the new level
+        for (int x = difference.X; x < newSize.X; x++)
+        {
+            for (int y = difference.Y; y < newSize.Y; y++)
+            {
+                newLevel[x,y] = level[x - difference.X, y - difference.Y];
+            }
+        }
+        
+        for (int x = 0; x < difference.X; x++)
+        {
+            for (int y = 0; y < difference.Y; y++)
+            {
+                newLevel[x,y] = '-';
             }
         }
         
