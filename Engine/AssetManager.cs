@@ -56,6 +56,7 @@ namespace Engine
         {
             MediaPlayer.IsRepeating = repeat;
             MediaPlayer.Play(contentManager.Load<Song>(assetName));
+            MediaPlayer.Volume = 0.75f;
         }
 
     }
