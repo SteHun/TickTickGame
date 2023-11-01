@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 class Player : AnimatedGameObject
 {
     const float walkingSpeed = 400; // Standard walking speed, in game units per second.
+    const float speedBoostSpeed = 800; // Speed when having stepped on a speed boost tile.
     const float jumpSpeed = 700; // Lift-off speed when the character jumps.
     const float gravity = 2300; // Strength of the gravity force that pulls the character down.
     const float maxFallSpeed = 1200; // The maximum vertical speed at which the character can fall.
@@ -21,17 +22,20 @@ class Player : AnimatedGameObject
 
     private const double coyoteTime = 150; // Milliseconds of coyote time
     public readonly double jumpBufferTime = 120; // Milliseconds of jump buffer
-    private const double maxJumpTime = 200; //Milliseconds of holding down space to increase jump height
-    private const double maxJumpStartTime = 50; //Milliseconds of holding down space before jump is increased
+    private const double increasedJumpTime = 200; //Milliseconds of holding down space to increase jump height
+    private const double increasedJumpStartTime = 50; //Milliseconds of holding down space before jump is increased
+    private const double speedBoostTime = 2000; //Milliseconds of speed boost when standing on boost pad
 
     bool facingLeft; // Whether or not the character is currently looking to the left.
 
+    private float speed = walkingSpeed;
     private bool isJumping;
     bool isGrounded; // Whether or not the character is currently standing on something.
-    bool standingOnIceTile, standingOnHotTile; // Whether or not the character is standing on an ice tile or a hot tile.
+    bool standingOnIceTile, standingOnHotTile, standingOnSpeedTile; // Whether or not the character is standing on an ice tile or a hot tile.
     float desiredHorizontalSpeed; // The horizontal speed at which the character would like to move.
     private double timeSinceLastGrounded = 0;
     private double timeSinceJumpStart = 0;
+    private double timeSinceSpeedBoost = speedBoostTime+1; //Doesn't activate on start
     private bool canJump => !isJumping && timeSinceLastGrounded < coyoteTime && IsAlive;
     public double timeSinceLastAirborneJumpPress = 100000; // any large enough number
 
@@ -97,7 +101,7 @@ class Player : AnimatedGameObject
             if (velocity.X > 0)
                 timeSinceLastGrounded = coyoteTime; // resets the timer
             facingLeft = true;
-            desiredHorizontalSpeed = -walkingSpeed;
+            desiredHorizontalSpeed = -speed;
             if (isGrounded)
                 PlayAnimation("run");
         }
@@ -106,7 +110,7 @@ class Player : AnimatedGameObject
             if (velocity.X < 0)
                 timeSinceLastGrounded = coyoteTime; // resets the timer
             facingLeft = false;
-            desiredHorizontalSpeed = walkingSpeed;
+            desiredHorizontalSpeed = speed;
             if (isGrounded)
                 PlayAnimation("run");
         }
@@ -131,7 +135,7 @@ class Player : AnimatedGameObject
         else
         {
             //If not pressed on first frame
-            if(Keyboard.GetState().IsKeyDown(Keys.Space) && timeSinceJumpStart is > maxJumpStartTime and < maxJumpTime)
+            if(Keyboard.GetState().IsKeyDown(Keys.Space) && timeSinceJumpStart is > increasedJumpStartTime and < increasedJumpTime)
                 JumpHold();
         }
 
@@ -181,8 +185,9 @@ class Player : AnimatedGameObject
     public override void Update(GameTime gameTime)
     {
         Vector2 previousPosition = localPosition;
-        
-        Debug.WriteLine(timeSinceLastAirborneJumpPress);
+
+        //Adjust speed based on if having stood on a speed boost tile recently
+        speed = timeSinceSpeedBoost < speedBoostTime ? speedBoostSpeed : walkingSpeed;
 
         if (CanCollideWithObjects)
             ApplyFriction(gameTime);
@@ -215,6 +220,7 @@ class Player : AnimatedGameObject
                 timeSinceLastGrounded += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             timeSinceJumpStart += gameTime.ElapsedGameTime.TotalMilliseconds;
+            timeSinceSpeedBoost += gameTime.ElapsedGameTime.TotalMilliseconds;
             
             // jump buffer
             timeSinceLastAirborneJumpPress += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -311,10 +317,18 @@ class Player : AnimatedGameObject
 
                         // check the surface type: are we standing on a hot tile or an ice tile?
                         Tile.SurfaceType surface = level.GetSurfaceType(x, y);
-                        if (surface == Tile.SurfaceType.Hot)
-                            standingOnHotTile = true;
-                        else if (surface == Tile.SurfaceType.Ice)
-                            standingOnIceTile = true;
+                        switch (surface)
+                        {
+                            case Tile.SurfaceType.Hot:
+                                standingOnHotTile = true;
+                                break;
+                            case Tile.SurfaceType.Ice:
+                                standingOnIceTile = true;
+                                break;
+                            case Tile.SurfaceType.Speed:
+                                timeSinceSpeedBoost = 0;
+                                break;
+                        }
                     }
                     else if (velocity.Y <= 0 && bbox.Center.Y > tileBounds.Bottom && overlap.Height > 2) // ceiling
                     {

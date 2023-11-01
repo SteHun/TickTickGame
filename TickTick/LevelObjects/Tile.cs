@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 class Tile : GameObject
 {
     public enum Type { Empty, Wall, Platform };
-    public enum SurfaceType { Normal, Hot, Ice };
+    public enum SurfaceType { Normal, Hot, Ice, Speed };
 
     Type type;
     SurfaceType surface;
@@ -22,10 +22,18 @@ class Tile : GameObject
 
         // add an image depending on the type
         string surfaceExtension = "";
-        if (surface == SurfaceType.Hot)
-            surfaceExtension = "_hot";
-        else if (surface == SurfaceType.Ice)
-            surfaceExtension = "_ice";
+        switch (surface)
+        {
+            case SurfaceType.Hot:
+                surfaceExtension = "_hot";
+                break;
+            case SurfaceType.Ice:
+                surfaceExtension = "_ice";
+                break;
+            case SurfaceType.Speed:
+                surfaceExtension = "_speed";
+                break;
+        }
 
         if (type == Type.Wall)
             image = new SpriteGameObject("Sprites/Tiles/spr_wall" + surfaceExtension, TickTick.Depth_LevelTiles);
