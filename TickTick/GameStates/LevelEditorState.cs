@@ -94,7 +94,6 @@ public class LevelEditorState : GameState
         editorUI.Update(gameTime);
         
         offset += toMove * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Debug.WriteLine($"{offset.X}, {offset.Y}");
         
     }
 
@@ -107,6 +106,20 @@ public class LevelEditorState : GameState
             if (currenItemIndexTemp >= textureKeysTemp.Length)
                 currenItemIndexTemp = 0;
             selectedTile = textureKeysTemp[currenItemIndexTemp];
+        }
+        
+        if (inputHelper.KeyPressed(Keys.S))
+        {
+            currenItemIndexTemp--;
+            if (currenItemIndexTemp < 0)
+                currenItemIndexTemp = textureKeysTemp.Length - 1;
+            selectedTile = textureKeysTemp[currenItemIndexTemp];
+        }
+
+        if (inputHelper.KeyPressed(Keys.P))
+        {
+            Play();
+            return;
         }
         
         
@@ -308,4 +321,30 @@ public class LevelEditorState : GameState
 
         level = newLevel;
     }
+
+    private void Play()
+    {
+        TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
+        ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelAsString);
+    }
+
+    private string levelAsString
+    {
+        get
+        {
+            string outString = $"{levelDescription}\n30\n";
+            for (int y = 0; y < level.GetLength(1); y++)
+            {
+                for (int x = 0; x < level.GetLength(0); x++)
+                {
+                    outString += level[x, y];
+                }
+
+                outString += '\n';
+            }
+            Debug.WriteLine(outString);
+            return outString;
+        }
+    }
+
 }

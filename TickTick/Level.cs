@@ -31,6 +31,46 @@ partial class Level : GameObjectList
 
     bool completionDetected;
 
+    public Level(string levelString)
+    {
+        LevelIndex = -1;
+
+        // load the background
+        GameObjectList backgrounds = new GameObjectList();
+        UISpriteGameObject backgroundSky = new UISpriteGameObject("Sprites/Backgrounds/spr_sky", TickTick.Depth_Background);
+        backgroundSky.LocalPosition = new Vector2(0, 825 - backgroundSky.Height);
+        backgrounds.AddChild(backgroundSky);
+
+        AddChild(backgrounds);
+
+        // load the rest of the level
+        LoadLevelFromString(levelString);
+
+        // add the timer
+        timer = new BombTimer(maxTime);
+        AddChild(timer);
+        
+        // add hot overlay
+        hotOverlay = new UISpriteGameObject("Sprites/UI/spr_hot_overlay", 0.75f);
+        
+        // add mountains in the background
+        for (int i = 0; i < 4; i++)
+        {
+            BackgroundSpriteGameObject mountain = new BackgroundSpriteGameObject(
+                "Sprites/Backgrounds/spr_mountain_" + (ExtendedGame.Random.Next(2) + 1),
+                TickTick.Depth_Background + 0.01f * (float)ExtendedGame.Random.NextDouble());
+
+            mountain.LocalPosition = new Vector2(mountain.Width * (i-1) * 0.4f, 
+                BoundingBox.Top + mountain.Height);
+
+            backgrounds.AddChild(mountain);
+        }
+
+        // add clouds
+        for (int i = 0; i < BoundingBox.Width/820; i++)
+            backgrounds.AddChild(new Cloud(this));
+    }
+    
     public Level(int levelIndex, string filename)
     {
         LevelIndex = levelIndex;

@@ -116,10 +116,13 @@ namespace Engine
         /// <param name="levelIndex">The index of the current level.</param>
         public static void GoToNextLevel(int levelIndex)
         {
+            // return to editor if it is a custom level
+            if (levelIndex == -1)
+                GameStateManager.SwitchTo(StateName_Editor);
             // if this is the last level, go back to the level selection menu
-            if (levelIndex == NumberOfLevels)
+            else if (levelIndex == NumberOfLevels)
                 GameStateManager.SwitchTo(StateName_LevelSelect);
-
+            
             // otherwise, go to the next level
             else
                 GetPlayingState().LoadLevel(levelIndex + 1);
