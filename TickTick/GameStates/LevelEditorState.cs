@@ -4,6 +4,7 @@ using Engine;
 using Engine.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameStates;
 
@@ -19,6 +20,8 @@ public class LevelEditorState : GameState
     private readonly Point defaultLevelSize = new Point(20, 15);
     private bool drawingBlocks;
     private bool hoveringAnyButton;
+    private Vector2 toMove;
+    private const float scrollSpeed = 200;
 
     private Texture2D wallTexture;
 
@@ -51,7 +54,9 @@ public class LevelEditorState : GameState
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-
+        offset += toMove * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Debug.WriteLine($"{offset.X}, {offset.Y}");
+        
     }
 
     public override void HandleInput(InputHelper inputHelper)
@@ -82,6 +87,16 @@ public class LevelEditorState : GameState
         
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
+
+        toMove = Vector2.Zero;
+        if (inputHelper.KeyDown(Keys.Left))
+            toMove.X += scrollSpeed;
+        if (inputHelper.KeyDown(Keys.Right))
+            toMove.X += -scrollSpeed;
+        if (inputHelper.KeyDown(Keys.Up))
+            toMove.Y += scrollSpeed;
+        if (inputHelper.KeyDown(Keys.Down))
+            toMove.Y += -scrollSpeed;
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
@@ -108,10 +123,11 @@ public class LevelEditorState : GameState
 
         if (hoveringAnyButton)
             return;
+        
         // draw preview of curren item at cursor
         Rectangle uiDestRectangle = new Rectangle((int)MathF.Round(relativeHoveredTilePosition.X),
             (int)MathF.Round(relativeHoveredTilePosition.Y), Level.TileWidth, Level.TileHeight);
-        spriteBatch.Draw(wallTexture, uiDestRectangle, Color.White);
+        spriteBatch.Draw(wallTexture, uiDestRectangle, Color.White * 0.5f);
     }
 
     private void PlaceTile(Point point, char tile)

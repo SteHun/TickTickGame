@@ -219,6 +219,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Blank square.png
 
+#begin Sprites/LevelObjects/Flame/spr_flame_blue@9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/LevelObjects/Flame/spr_flame_blue@9.png
+
+#begin Sprites/LevelObjects/Flame/spr_flame_green@9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/LevelObjects/Flame/spr_flame_green@9.png
+
 #begin Sprites/LevelObjects/Flame/spr_flame@9.png
 /importer:TextureImporter
 /processor:TextureProcessor
