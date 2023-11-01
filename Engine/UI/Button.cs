@@ -18,7 +18,7 @@ namespace Engine.UI
         public bool Pressed { get; protected set; }
         public bool Hovered { get; protected set; }
 
-        private string text = "";
+        protected string text = "";
         private SpriteFont font;
 
         private Texture2D beginButtonTexture;
