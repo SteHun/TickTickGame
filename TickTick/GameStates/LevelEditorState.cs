@@ -28,6 +28,11 @@ public class LevelEditorState : GameState
     private Vector2 toMove;
     private const float scrollSpeed = 500;
     private char selectedTile = '#';
+    
+    // TEMP!!!
+    private char[] textureKeysTemp;
+    private int currenItemIndexTemp = 0;
+    
 
     private Dictionary<char, Texture2D> textures = new Dictionary<char, Texture2D>();
 
@@ -80,10 +85,7 @@ public class LevelEditorState : GameState
         textures.Add('B', GetSprite("Sprites/LevelObjects/Flame/spr_flame_blue_editor"));
         textures.Add('C', GetSprite("Sprites/LevelObjects/Flame/spr_flame_green_editor"));
 
-        wallTexture = ExtendedGame.AssetManager.LoadSprite("Sprites/Tiles/spr_wall");
-        return;
-
-        // load textures
+        textureKeysTemp = textures.Keys.ToArray();
     }
 
     public override void Update(GameTime gameTime)
@@ -96,6 +98,16 @@ public class LevelEditorState : GameState
 
     public override void HandleInput(InputHelper inputHelper)
     {
+        //TEMP!!!!!
+        if (inputHelper.KeyPressed(Keys.W))
+        {
+            currenItemIndexTemp++;
+            if (currenItemIndexTemp >= textureKeysTemp.Length)
+                currenItemIndexTemp = 0;
+            selectedTile = textureKeysTemp[currenItemIndexTemp];
+        }
+        
+        
         base.HandleInput(inputHelper);
         
         editorUI.HandleInput();
