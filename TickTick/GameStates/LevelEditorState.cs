@@ -10,6 +10,8 @@ namespace GameStates;
 
 public class LevelEditorState : GameState
 {
+    private EditorUI editorUI;
+    
     private Button saveButton;
     private Button quitButton;
     private Vector2 offset = Vector2.Zero;
@@ -27,6 +29,8 @@ public class LevelEditorState : GameState
 
     public LevelEditorState()
     {
+        editorUI = new EditorUI(gameObjects);
+        
         // fill empty level
         levelDescription = "click to change";
         level = new char[defaultLevelSize.X, defaultLevelSize.Y];
@@ -37,6 +41,8 @@ public class LevelEditorState : GameState
                 level[x, y] = '.';
             }
         }
+        
+        
         
         // add a "save" button
         saveButton = new Button("Sprites/UI/spr_button_editor", 1);// temp
@@ -62,6 +68,9 @@ public class LevelEditorState : GameState
     public override void HandleInput(InputHelper inputHelper)
     {
         base.HandleInput(inputHelper);
+        
+        editorUI.HandleInput();
+        
         Vector2 mousePos = inputHelper.MousePositionWorld;
         
         Vector2 absoluteMousePos = mousePos - offset;
