@@ -16,12 +16,12 @@ public class LevelEditorState : GameState
     private string levelDescription;
     private char[,] level;
     private Point hoveredTile;
-    private Vector2 relativeHoveredTilePosition;
+    private Vector2 HoveredTilePixelPosition;
     private readonly Point defaultLevelSize = new Point(20, 15);
     private bool drawingBlocks;
     private bool hoveringAnyButton;
     private Vector2 toMove;
-    private const float scrollSpeed = 200;
+    private const float scrollSpeed = 500;
 
     private Texture2D wallTexture;
 
@@ -64,7 +64,7 @@ public class LevelEditorState : GameState
         base.HandleInput(inputHelper);
         Vector2 mousePos = inputHelper.MousePositionWorld;
         
-        Vector2 absoluteMousePos = mousePos + offset;
+        Vector2 absoluteMousePos = mousePos - offset;
         
 
         hoveringAnyButton = false;
@@ -75,13 +75,12 @@ public class LevelEditorState : GameState
             drawingBlocks = true;
         else if (!inputHelper.MouseLeftButtonDown())
             drawingBlocks = false;
-        
-        hoveredTile = new Point((int)MathF.Floor(absoluteMousePos.X / Level.TileWidth), 
-            (int)MathF.Floor(absoluteMousePos.Y / Level.TileHeight));
 
-        relativeHoveredTilePosition = new Vector2(
-            MathF.Floor((mousePos.X + offset.X) / Level.TileWidth) * Level.TileWidth,
-            MathF.Floor((mousePos.Y + offset.Y) / Level.TileHeight) * Level.TileHeight);
+        hoveredTile = new Point((int)MathF.Floor(absoluteMousePos.X / Level.TileWidth),
+            (int)MathF.Floor(absoluteMousePos.Y / Level.TileHeight));
+        HoveredTilePixelPosition = new Vector2(hoveredTile.X * Level.TileWidth + offset.X,
+            hoveredTile.Y * Level.TileHeight + offset.Y);
+
         if (drawingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, '#');
         
@@ -125,8 +124,8 @@ public class LevelEditorState : GameState
             return;
         
         // draw preview of curren item at cursor
-        Rectangle uiDestRectangle = new Rectangle((int)MathF.Round(relativeHoveredTilePosition.X),
-            (int)MathF.Round(relativeHoveredTilePosition.Y), Level.TileWidth, Level.TileHeight);
+        Rectangle uiDestRectangle = new Rectangle((int)MathF.Round(HoveredTilePixelPosition.X),
+            (int)MathF.Round(HoveredTilePixelPosition.Y), Level.TileWidth, Level.TileHeight);
         spriteBatch.Draw(wallTexture, uiDestRectangle, Color.White * 0.5f);
     }
 
