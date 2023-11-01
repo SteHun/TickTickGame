@@ -5,7 +5,7 @@ namespace Engine.UI;
 
 public class TextBox : UISpriteGameObject
 {
-    private string text = "";
+    public string text = "";
     private SpriteFont font;
 
     private Texture2D beginTextBoxTexture;
@@ -23,6 +23,9 @@ public class TextBox : UISpriteGameObject
     
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
+        if (!Visible)
+            return;
+        
         int stringWidth = (int)font.MeasureString(text).X;
             
         //Draw all 3 parts of button

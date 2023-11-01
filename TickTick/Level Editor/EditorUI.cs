@@ -24,11 +24,11 @@ public class EditorUI
     
     public void Update(GameTime gameTime)
     {
-        
+        dock.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        dock.Draw(spriteBatch);
+        
     }
 }
