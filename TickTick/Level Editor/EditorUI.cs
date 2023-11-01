@@ -16,20 +16,9 @@ public class EditorUI
         this.gameObjects = gameObjects;
         dock = new EditorDock(this);
     }
-    
-    public void Initialize()
-    {
-        
-    }
-    
-    public void Update()
-    {
-        
-    }
 
     public void HandleInput()
     {
-        return; // prevent crashing of incomplete class
         dock.HandleInput();
     }
     
@@ -40,6 +29,6 @@ public class EditorUI
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        
+        dock.Draw(spriteBatch);
     }
 }

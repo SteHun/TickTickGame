@@ -91,6 +91,8 @@ public class LevelEditorState : GameState
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        editorUI.Update(gameTime);
+        
         offset += toMove * (float)gameTime.ElapsedGameTime.TotalSeconds;
         Debug.WriteLine($"{offset.X}, {offset.Y}");
         
@@ -109,7 +111,6 @@ public class LevelEditorState : GameState
         
         
         base.HandleInput(inputHelper);
-        
         editorUI.HandleInput();
         
         Vector2 mousePos = inputHelper.MousePositionWorld;
@@ -163,6 +164,7 @@ public class LevelEditorState : GameState
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
         base.Draw(gameTime, spriteBatch, opacity);
+        editorUI.Draw(spriteBatch);
 
         for (int x = 0; x < level.GetLength(0); x++)
         {
