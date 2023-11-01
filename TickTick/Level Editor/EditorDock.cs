@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Engine;
 using Engine.UI;
+using GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,10 +14,11 @@ using Microsoft.Xna.Framework.Graphics;
 public class EditorDock
 {
     private EditorUI editorUI;
+    private LevelEditorState editor;
     private SelectedTab selectedTab = SelectedTab.None, previousSelectedTab;
 
     //Not an actual textbox, used as a makeshift background for group tabs
-    private TextBox tabBackground;
+    private TextBox tabBackground, groupBackground; //groupBackground is a temp sprite for clarity
     
     //The group buttons
     private Button wallGroupButton;
@@ -29,21 +31,26 @@ public class EditorDock
     private const string wallHotFileName = "Sprites/Tiles/spr_wall_hot";
     private const string wallSpeedFileName = "Sprites/Tiles/spr_wall_speed";
 
-    public EditorDock(EditorUI editorUI)
+    public EditorDock(EditorUI editorUI, LevelEditorState editor)
     {
         this.editorUI = editorUI;
+        this.editor = editor;
         
         //Group buttons
         wallGroupButton = new Button(wallFileName, 1);
         wallGroupButton.LocalPosition = new Vector2(50, 600);
         this.editorUI.gameObjects.AddChild(wallGroupButton);
-        wallGroupButton.Visible = false; //Temp
-        
+
         //Group tab background (doesn't hold text)
         tabBackground = new TextBox("Sprites/UI/spr_frame_text", 0.9f, "", "Fonts/HintFont");
         tabBackground.LocalPosition = new Vector2(30, 495);
         this.editorUI.gameObjects.AddChild(tabBackground);
         tabBackground.Visible = false;
+        
+        groupBackground = new TextBox("Sprites/UI/spr_frame_text", 0.9f, "", "Fonts/HintFont");
+        groupBackground.LocalPosition = new Vector2(30, 595);
+        groupBackground.text = "           ";
+        this.editorUI.gameObjects.AddChild(groupBackground);
 
         int horizontalTabSpacing = 75;
         
@@ -58,7 +65,7 @@ public class EditorDock
     {
         Button button = new Button(fileName, 1);
         button.LocalPosition = position;
-        this.editorUI.gameObjects.AddChild(button);
+        editorUI.gameObjects.AddChild(button);
         button.Visible = false;
 
         return button;
@@ -69,6 +76,28 @@ public class EditorDock
         if (wallGroupButton.Pressed)
         {
             selectedTab = selectedTab != SelectedTab.Walls ? SelectedTab.Walls : SelectedTab.None;
+        }
+
+        if (selectWallButton.Pressed)
+        {
+            editor.selectedTile = '#';
+        }
+        else if (selectIceWallButton.Pressed)
+        {
+            editor.selectedTile = 'I';
+        }
+        else if (selectHotWallButton.Pressed)
+        {
+            editor.selectedTile = 'H';
+        }
+        if (selectSpeedWallButton.Pressed)
+        {
+            editor.selectedTile = 'D';
+        }
+        
+        if(CheckAnyButtonHovered())
+        {
+            editor.hoveringAnyButton = true;
         }
     }
 
@@ -106,6 +135,20 @@ public class EditorDock
         selectIceWallButton.Visible = false;
         selectHotWallButton.Visible = false;
         selectSpeedWallButton.Visible = false;
+    }
+
+    private bool CheckAnyButtonHovered()
+    {
+        //Check group buttons
+        if (wallGroupButton.Hovered)
+            return true;
+
+        //Check wall group tab
+        if (selectWallButton.Hovered || selectIceWallButton.Hovered || selectHotWallButton.Hovered ||
+            selectSpeedWallButton.Hovered)
+            return true;
+
+        return false;
     }
     
     private enum SelectedTab

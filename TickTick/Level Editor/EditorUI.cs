@@ -1,5 +1,6 @@
 
 using Engine;
+using GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,12 +10,14 @@ using Microsoft.Xna.Framework.Graphics;
 public class EditorUI
 {
     private EditorDock dock;
+    private LevelEditorState editor;
     public GameObjectList gameObjects;
 
-    public EditorUI(GameObjectList gameObjects)
+    public EditorUI(GameObjectList gameObjects, LevelEditorState editor)
     {
         this.gameObjects = gameObjects;
-        dock = new EditorDock(this);
+        this.editor = editor;
+        dock = new EditorDock(this, editor);
     }
 
     public void HandleInput()

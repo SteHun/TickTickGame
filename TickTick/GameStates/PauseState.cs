@@ -13,6 +13,8 @@ class PauseState : GameState
 
     public PauseState()
     {
+        Camera.position = Vector2.Zero;
+        
         // add a background
         gameObjects.AddChild(new UISpriteGameObject("Sprites/Backgrounds/spr_help", TickTick.Depth_Background));
 

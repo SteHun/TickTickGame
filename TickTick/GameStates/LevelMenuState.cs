@@ -15,6 +15,8 @@ class LevelMenuState : GameState
 
     public LevelMenuState()
     {
+        Camera.position = Vector2.Zero;
+        
         // add a background
         SpriteGameObject background = new SpriteGameObject("Sprites/Backgrounds/spr_levelselect", TickTick.Depth_Background);
         gameObjects.AddChild(background);

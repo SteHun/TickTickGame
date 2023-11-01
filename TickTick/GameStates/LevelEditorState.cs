@@ -23,11 +23,11 @@ public class LevelEditorState : GameState
     private Vector2 HoveredTilePixelPosition;
     private readonly Point defaultLevelSize = new Point(20, 15);
     private bool drawingBlocks;
-    private bool ereasingBlocks;
-    private bool hoveringAnyButton;
+    private bool erasingBlocks;
+    public bool hoveringAnyButton;
     private Vector2 toMove;
     private const float scrollSpeed = 500;
-    private char selectedTile = '#';
+    public char selectedTile = '#';
     
     // TEMP!!!
     private char[] textureKeysTemp;
@@ -40,7 +40,8 @@ public class LevelEditorState : GameState
 
     public LevelEditorState()
     {
-        editorUI = new EditorUI(gameObjects);
+        Camera.position = Vector2.Zero;
+        editorUI = new EditorUI(gameObjects, this);
         
         // fill empty level
         levelDescription = "click to change";
@@ -121,11 +122,10 @@ public class LevelEditorState : GameState
             Play();
             return;
         }
-        
+        //End temp
         
         base.HandleInput(inputHelper);
-        editorUI.HandleInput();
-        
+
         Vector2 mousePos = inputHelper.MousePositionWorld;
         
         Vector2 absoluteMousePos = mousePos - offset;
@@ -136,19 +136,19 @@ public class LevelEditorState : GameState
             hoveringAnyButton = true;
         
         if (inputHelper.MouseRightButtonPressed() && !hoveringAnyButton)
-            ereasingBlocks = true;
+            erasingBlocks = true;
         else if (!inputHelper.MouseRightButtonDown())
-            ereasingBlocks = false;
+            erasingBlocks = false;
 
         if (inputHelper.MouseLeftButtonPressed() && !hoveringAnyButton)
         {
             drawingBlocks = true;
-            ereasingBlocks = false;
+            erasingBlocks = false;
         }
         else if (!inputHelper.MouseLeftButtonDown())
             drawingBlocks = false;
         
-        
+        editorUI.HandleInput(); //Important: place this after hoveringAnyButton has been set to false
 
         hoveredTile = new Point((int)MathF.Floor(absoluteMousePos.X / Level.TileWidth),
             (int)MathF.Floor(absoluteMousePos.Y / Level.TileHeight));
@@ -157,7 +157,7 @@ public class LevelEditorState : GameState
 
         if (drawingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, selectedTile);
-        else if (ereasingBlocks && !hoveringAnyButton)
+        else if (erasingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, '.');
         
         if (quitButton.Pressed)

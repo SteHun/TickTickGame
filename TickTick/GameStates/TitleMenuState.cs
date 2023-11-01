@@ -11,6 +11,8 @@ class TitleMenuState : GameState
 
     public TitleMenuState()
     {
+        Camera.position = Vector2.Zero;
+
         // load the title screen
         SpriteGameObject titleScreen = new SpriteGameObject("Sprites/Backgrounds/spr_title", TickTick.Depth_Background);
         gameObjects.AddChild(titleScreen);

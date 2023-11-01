@@ -11,6 +11,8 @@ class HelpState : GameState
 
     public HelpState()
     {
+        Camera.position = Vector2.Zero;
+        
         // add a background
         gameObjects.AddChild(new SpriteGameObject("Sprites/Backgrounds/spr_help", 1));
 
