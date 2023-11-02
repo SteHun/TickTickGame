@@ -232,31 +232,89 @@ public class LevelEditorState : GameState
 
     private void TrimLevel()
     {
-        Point newSize = new Point(level.GetLength(0), level.GetLength(1));
-        for (int x = defaultLevelSize.X; x < level.GetLength(0); x++)
-        {
-            if (ColumnHasNoItems(x))
-                newSize.X = x;
-            else
-                break;
-        }
-        
-        for (int y = defaultLevelSize.Y; y < level.GetLength(1); y++)
-        {
-            if (RowHasNoItems(y))
-                newSize.Y = y;
-            else
-                break;
-        }
-        if (newSize != new Point(level.GetLength(0), level.GetLength(1)))
-            ResizeLevelBottomRight(newSize);
+        // check from the left
+        if (level.GetLength(0) > defaultLevelSize.X)
+            TrimInXDirection();
+
     }
 
-    private bool RowHasNoItems(int row)
+    private void TrimInXDirection()
+    {
+        // check from the left
+        for (int x = 0; x < level.GetLength(0) - defaultLevelSize.X; x++)
+        {
+            if (ColumnHasNoItems(x))
+            {
+                RemoveColumn(x);
+                // the level won't be trimmed further
+                if (level.GetLength(0) <= defaultLevelSize.X)
+                    return;
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        // check from the right
+        // check from the left
+        for (int x = level.GetLength(0) - 1; x >= defaultLevelSize.X; x--)
+        {
+            if (ColumnHasNoItems(x))
+            {
+                RemoveColumn(x);
+                // the level won't be trimmed further
+                if (level.GetLength(0) <= defaultLevelSize.X)
+                    return;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    private void RemoveColumn(int columnToRemove)
+    {
+        char[,] newLevel = new char[level.GetLength(0) - 1, level.GetLength(1)];
+        int newLevelColumn = 0;
+        for (int oldLevelColumn = 0; oldLevelColumn < level.GetLength(0); oldLevelColumn++)
+        {
+            if (oldLevelColumn == columnToRemove)
+                continue;
+            for (int y = 0; y < level.GetLength(1); y++)
+            {
+                newLevel[newLevelColumn, y] = level[oldLevelColumn, y];
+            }
+
+            newLevelColumn++;
+        }
+
+        level = newLevel;
+    }
+
+    private void RemoveRow(int rowToRemove)
+    {
+        char[,] newLevel = new char[level.GetLength(0), level.GetLength(1) - 1];
+        int newLevelRow = 0;
+        for (int oldLevelRow = 0; oldLevelRow < level.GetLength(1); oldLevelRow++)
+        {
+            if (oldLevelRow == rowToRemove)
+                continue;
+            for (int x = 0; x < level.GetLength(0); x++)
+            {
+                newLevel[x, newLevelRow] = level[x, oldLevelRow];
+            }
+
+            newLevelRow++;
+        }
+    }
+
+    private bool ColumnHasNoItems(int column)
     {
         for (int y = 0; y < level.GetLength(1); y++)
         {
-            if (level[row, y] is not ' ' or '.')
+            if (!(level[column, y] is ' ' or '.'))
             {
                 return false;
             }
@@ -264,11 +322,11 @@ public class LevelEditorState : GameState
         return true;
     }
     
-    private bool ColumnHasNoItems(int column)
+    private bool RowHasNoItems(int row)
     {
         for (int x = 0; x < level.GetLength(0); x++)
         {
-            if (level[x, column] is not ' ' or '.')
+            if (!(level[x, row] is ' ' or '.'))
             {
                 return false;
             }
@@ -316,7 +374,15 @@ public class LevelEditorState : GameState
         
         for (int x = 0; x < difference.X; x++)
         {
-            for (int y = 0; y < difference.Y; y++)
+            for (int y = 0; y < level.GetLength(1); y++)
+            {
+                newLevel[x,y] = '.';
+            }
+        }
+        
+        for (int y = 0; y < difference.Y; y++)
+        {
+            for (int x = 0; x < level.GetLength(0); x++)
             {
                 newLevel[x,y] = '.';
             }
@@ -328,6 +394,7 @@ public class LevelEditorState : GameState
 
     private void Play()
     {
+        TrimLevel();
         TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
         ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelAsString);
     }
