@@ -183,6 +183,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Backgrounds/spr_mountain_2.png
 
+#begin Sprites/Backgrounds/spr_pause.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Backgrounds/spr_pause.jpg
+
 #begin Sprites/Backgrounds/spr_sky.jpg
 /importer:TextureImporter
 /processor:TextureProcessor

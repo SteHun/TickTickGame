@@ -20,6 +20,7 @@ namespace Engine.UI
 
         protected string text = "";
         private SpriteFont font;
+        public int TextWidth { get; private set; }
 
         private Texture2D beginButtonTexture;
         private Texture2D middleButtonTexture;
@@ -44,9 +45,9 @@ namespace Engine.UI
             endButtonTexture = ExtendedGame.AssetManager.LoadSprite("Sprites/UI/spr_button_end");
             font = ExtendedGame.AssetManager.LoadFont(fontAssetName);
             
-            int stringWidth = (int)font.MeasureString(text).X;
+            TextWidth = (int)font.MeasureString(text).X;
             HitBox = new Rectangle(GlobalPosition.ToPoint(),
-                new Point(beginButtonTexture.Width + endButtonTexture.Width + stringWidth + 8,
+                new Point(beginButtonTexture.Width + endButtonTexture.Width + TextWidth + 8,
                     beginButtonTexture.Height));
         }
 
@@ -59,6 +60,7 @@ namespace Engine.UI
                 return;
             }
 
+
             //Detection for dynamic buttons
             Pressed = Visible && inputHelper.MouseLeftButtonPressed() && HitBox.Contains(inputHelper.MousePositionWorld);
             Hovered = Visible && HitBox.Contains(inputHelper.MousePositionWorld);
@@ -68,6 +70,10 @@ namespace Engine.UI
         {
             base.Reset();
             Pressed = false;
+            int stringWidth = (int)font.MeasureString(text).X;
+            HitBox = new Rectangle(GlobalPosition.ToPoint(),
+                new Point(beginButtonTexture.Width + endButtonTexture.Width + stringWidth + 8,
+                    beginButtonTexture.Height));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
