@@ -77,6 +77,7 @@ class Player : AnimatedGameObject
         localPosition = startPosition;
         velocity = Vector2.Zero;
         desiredHorizontalSpeed = 0;
+        timeSinceJumpStart = 999; // this is jank but it works haha
 
         // start with the idle sprite
         PlayAnimation("idle", true);
@@ -102,7 +103,7 @@ class Player : AnimatedGameObject
                 timeSinceLastGrounded = coyoteTime; // resets the timer
             facingLeft = true;
             desiredHorizontalSpeed = -speed;
-            if (isGrounded)
+            if (isGrounded && !isJumping)
                 PlayAnimation("run");
         }
         else if (inputHelper.KeyDown(Keys.Right))
@@ -111,7 +112,7 @@ class Player : AnimatedGameObject
                 timeSinceLastGrounded = coyoteTime; // resets the timer
             facingLeft = false;
             desiredHorizontalSpeed = speed;
-            if (isGrounded)
+            if (isGrounded && !isJumping)
                 PlayAnimation("run");
         }
 
