@@ -76,6 +76,7 @@ class Player : AnimatedGameObject
         // go back to the starting position
         localPosition = startPosition;
         velocity = Vector2.Zero;
+        speed = walkingSpeed;
         desiredHorizontalSpeed = 0;
         timeSinceJumpStart = 999; // this is jank but it works haha
 
