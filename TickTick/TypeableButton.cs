@@ -68,7 +68,8 @@ public class TypeableButton : Button
 
             if (allowedKeys.Contains(key))
             {
-                if(Text.Length == 0)
+                //First letter is uppercase, rest is lowercase, also checks for CapsLock and shift
+                if(Text.Length == 0 || Keyboard.GetState().CapsLock || Keyboard.GetState().IsKeyDown(Keys.LeftShift))
                     SetText(Text + key.ToString().ToUpper());
                 else
                     SetText(Text + key.ToString().ToLower());
