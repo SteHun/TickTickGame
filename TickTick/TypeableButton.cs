@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 /// <summary>
 /// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> Button -> TypableButton
 /// </summary>
-public class TypableButton : Button
+public class TypeableButton : Button
 {
     private readonly Keys[] allowedKeys = new Keys[] {Keys.Q, Keys.W, Keys.E, Keys.R, Keys.T, Keys.Y, Keys.U, Keys.I, Keys.O, 
         Keys.P, Keys.A, Keys.S, Keys.D, Keys.F, Keys.G, Keys.H, Keys.J, Keys.K, Keys.K, Keys.L, Keys.Z, Keys.X, Keys.C, 
@@ -17,9 +17,10 @@ public class TypableButton : Button
     };
 
     public bool isTypable { get; private set; }
-    public TypableButton(string assetName, float depth, string text, string fontAssetName)
+    public TypeableButton(string assetName, float depth, string text, string fontAssetName)
         : base(assetName, depth, text, fontAssetName)
     {
+        SetText("ENTER TEXT");
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
@@ -27,9 +28,9 @@ public class TypableButton : Button
         // This is kind of jank but whatever
         if (isTypable)
         {
-            text += '_';
+            SetText(Text + '_');
             base.Draw(gameTime, spriteBatch, opacity);
-            text = text[..^1];
+            SetText(Text[..^1]);
             return;
         }
         base.Draw(gameTime, spriteBatch, opacity);
@@ -49,20 +50,28 @@ public class TypableButton : Button
                 continue;
             if (key == Keys.Back)
             {
-                if (text.Length > 0)
-                    text = text[..^1]; // delete last character
+                if (Text.Length > 0)
+                    SetText(Text[..^1]); // delete last character
                 continue;
             }
 
-            if (key == Keys.Enter)
+            if (key == Keys.Enter && Text.Length > 0)
             {
                 isTypable = false;
                 continue;
             }
 
+            if (key == Keys.Space)
+            {
+                SetText(Text + " ");
+            }
+
             if (allowedKeys.Contains(key))
             {
-                text += key.ToString();
+                if(Text.Length == 0)
+                    SetText(Text + key.ToString().ToUpper());
+                else
+                    SetText(Text + key.ToString().ToLower());
             }
         }
     }

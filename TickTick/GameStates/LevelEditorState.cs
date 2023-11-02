@@ -28,6 +28,8 @@ public class LevelEditorState : GameState
     private Vector2 toMove;
     private const float scrollSpeed = 500;
     public char selectedTile = '#';
+
+    private TypeableButton test;
     
     // TEMP!!!
     private char[] textureKeysTemp;
@@ -54,7 +56,9 @@ public class LevelEditorState : GameState
             }
         }
         
-        
+        test = new TypeableButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/HintFont");
+        test.LocalPosition = new Vector2(300, 50);
+        gameObjects.AddChild(test);
         
         // add a "save" button
         saveButton = new Button("Sprites/UI/spr_button_editor", 1);// temp
@@ -132,6 +136,8 @@ public class LevelEditorState : GameState
         
 
         hoveringAnyButton = false;
+        editorUI.HandleInput();
+        
         if (quitButton.Hovered || saveButton.Hovered)
             hoveringAnyButton = true;
         
@@ -147,8 +153,6 @@ public class LevelEditorState : GameState
         }
         else if (!inputHelper.MouseLeftButtonDown())
             drawingBlocks = false;
-        
-        editorUI.HandleInput(); //Important: place this after hoveringAnyButton has been set to false
 
         hoveredTile = new Point((int)MathF.Floor(absoluteMousePos.X / Level.TileWidth),
             (int)MathF.Floor(absoluteMousePos.Y / Level.TileHeight));

@@ -18,7 +18,8 @@ namespace Engine.UI
         public bool Pressed { get; protected set; }
         public bool Hovered { get; protected set; }
 
-        protected string text = "";
+        private string text = "";
+        protected string Text => text;
         private SpriteFont font;
         public int TextWidth { get; private set; }
 
@@ -64,6 +65,15 @@ namespace Engine.UI
             //Detection for dynamic buttons
             Pressed = Visible && inputHelper.MouseLeftButtonPressed() && HitBox.Contains(inputHelper.MousePositionWorld);
             Hovered = Visible && HitBox.Contains(inputHelper.MousePositionWorld);
+        }
+
+        protected void SetText(string text)
+        {
+            this.text = text;
+            //Update hitbox
+            HitBox = new Rectangle(GlobalPosition.ToPoint(),
+                new Point(beginButtonTexture.Width + endButtonTexture.Width + TextWidth + 8,
+                    beginButtonTexture.Height));
         }
 
         public override void Reset()

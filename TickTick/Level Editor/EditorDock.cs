@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Engine;
 using Engine.UI;
 using GameStates;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// EditorUI -> EditorDock
@@ -91,6 +87,11 @@ public class EditorDock
     
     public void HandleInput()
     {
+        if(CheckAnyButtonHovered())
+        {
+            editor.hoveringAnyButton = true;
+        }
+        
         #region Group buttons check
         if (wallGroupButton.Pressed)
             selectedTab = selectedTab != SelectedTab.Walls ? SelectedTab.Walls : SelectedTab.None;
@@ -122,13 +123,14 @@ public class EditorDock
             editor.selectedTile = 'd';
         #endregion
 
-        #endregion
-        
-        
-        if(CheckAnyButtonHovered())
+        foreach (var button in hideableButtons)
         {
-            editor.hoveringAnyButton = true;
+            if (button.Pressed)
+            {
+                CloseTabAfterSelecting();
+            }
         }
+        #endregion
     }
 
     public void Update(GameTime gameTime)
@@ -169,6 +171,12 @@ public class EditorDock
         previousSelectedTab = selectedTab;
     }
 
+    private void CloseTabAfterSelecting()
+    {
+        selectedTab = SelectedTab.None;
+        MakeAllTabsInvisible();
+    }
+    
     private void MakeAllTabsInvisible()
     {
         tabBackground.Visible = false;
