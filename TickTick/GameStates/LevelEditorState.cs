@@ -232,46 +232,31 @@ public class LevelEditorState : GameState
 
     private void TrimLevel()
     {
-        // check from the left
-        if (level.GetLength(0) > defaultLevelSize.X)
-            TrimInXDirection();
+        TrimInXDirection();
+        TrimInYDirection();
 
     }
 
+    private void TrimInYDirection()
+    {
+        // check from the top
+        while (RowHasNoItems(0))
+            RemoveRow(0);
+        
+        // check from the bottom
+        while (RowHasNoItems(level.GetLength(1) - 1))
+            RemoveRow(level.GetLength(1) - 1);
+    }
+    
     private void TrimInXDirection()
     {
         // check from the left
-        for (int x = 0; x < level.GetLength(0) - defaultLevelSize.X; x++)
-        {
-            if (ColumnHasNoItems(x))
-            {
-                RemoveColumn(x);
-                // the level won't be trimmed further
-                if (level.GetLength(0) <= defaultLevelSize.X)
-                    return;
-            }
-            else
-            {
-                break;
-            }
-        }
+        while (ColumnHasNoItems(0))
+            RemoveColumn(0);
         
         // check from the right
-        // check from the left
-        for (int x = level.GetLength(0) - 1; x >= defaultLevelSize.X; x--)
-        {
-            if (ColumnHasNoItems(x))
-            {
-                RemoveColumn(x);
-                // the level won't be trimmed further
-                if (level.GetLength(0) <= defaultLevelSize.X)
-                    return;
-            }
-            else
-            {
-                break;
-            }
-        }
+        while (ColumnHasNoItems(level.GetLength(0) - 1))
+            RemoveColumn(level.GetLength(0) - 1);
     }
 
     private void RemoveColumn(int columnToRemove)
@@ -307,7 +292,10 @@ public class LevelEditorState : GameState
             }
 
             newLevelRow++;
+
         }
+        
+        level = newLevel;
     }
 
     private bool ColumnHasNoItems(int column)
