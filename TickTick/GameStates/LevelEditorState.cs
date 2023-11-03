@@ -14,8 +14,6 @@ public class LevelEditorState : GameState
 {
     private EditorUI editorUI;
     
-    private Button saveButton;
-    private Button quitButton;
     private Vector2 offset = Vector2.Zero;
     private string levelDescription;
     private int levelTimer = 30;
@@ -62,16 +60,6 @@ public class LevelEditorState : GameState
         test.fixedWidth = 500;
         test.Reset();
         gameObjects.AddChild(test);
-        
-        // add a "save" button
-        saveButton = new Button("Sprites/UI/spr_button_editor", 1);// temp
-        saveButton.LocalPosition = new Vector2(20, 20);
-        gameObjects.AddChild(saveButton);
-        
-        // add a "quit" button
-        quitButton = new Button("Sprites/UI/spr_button_quit", 1);
-        quitButton.LocalPosition = new Vector2(1290, 20);
-        gameObjects.AddChild(quitButton);
 
         Texture2D GetSprite(string path) => ExtendedGame.AssetManager.LoadSprite(path);
         
@@ -141,9 +129,6 @@ public class LevelEditorState : GameState
         hoveringAnyButton = false;
         editorUI.HandleInput();
         
-        if (quitButton.Hovered || saveButton.Hovered)
-            hoveringAnyButton = true;
-        
         if (inputHelper.MouseRightButtonPressed() && !hoveringAnyButton)
             erasingBlocks = true;
         else if (!inputHelper.MouseRightButtonDown())
@@ -166,9 +151,6 @@ public class LevelEditorState : GameState
             PlaceTile(hoveredTile, selectedTile);
         else if (erasingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, '.');
-        
-        if (quitButton.Pressed)
-            TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
 
         toMove = Vector2.Zero;
         if (inputHelper.KeyDown(Keys.Left))

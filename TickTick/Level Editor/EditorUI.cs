@@ -10,19 +10,20 @@ using Microsoft.Xna.Framework.Graphics;
 public class EditorUI
 {
     private EditorDock dock;
-    private LevelEditorState editor;
+    private EditorHUD hud;
     public GameObjectList gameObjects;
 
     public EditorUI(GameObjectList gameObjects, LevelEditorState editor)
     {
         this.gameObjects = gameObjects;
-        this.editor = editor;
         dock = new EditorDock(this, editor);
+        hud = new EditorHUD(this, editor);
     }
 
     public void HandleInput()
     {
         dock.HandleInput();
+        hud.HandleInput();
     }
     
     public void Update(GameTime gameTime)
