@@ -27,6 +27,8 @@ namespace Engine.UI
         private Texture2D middleButtonTexture;
         private Texture2D endButtonTexture;
 
+        public int fixedWidth = 0; // 0 means auto. only works with custom strings
+
         /// <summary>
         /// Creates a new <see cref="Button"/> with the given sprite name and depth.
         /// </summary>
@@ -56,6 +58,7 @@ namespace Engine.UI
         {
             if (text == "")
             {
+                
                 Pressed = Visible && inputHelper.MouseLeftButtonPressed() && BoundingBox.Contains(inputHelper.MousePositionWorld);
                 Hovered = Visible && BoundingBox.Contains(inputHelper.MousePositionWorld);
                 return;
@@ -70,6 +73,13 @@ namespace Engine.UI
         protected void SetText(string text)
         {
             this.text = text;
+
+            if (fixedWidth != 0)
+            {
+                if (font.MeasureString(text).X > fixedWidth)
+                    this.text = this.text[..^1];
+                return;
+            }
             //Update hitbox
             HitBox = new Rectangle(GlobalPosition.ToPoint(),
                 new Point(beginButtonTexture.Width + endButtonTexture.Width + TextWidth + 8,
@@ -81,9 +91,18 @@ namespace Engine.UI
             base.Reset();
             Pressed = false;
             int stringWidth = (int)font.MeasureString(text).X;
-            HitBox = new Rectangle(GlobalPosition.ToPoint(),
-                new Point(beginButtonTexture.Width + endButtonTexture.Width + stringWidth + 8,
-                    beginButtonTexture.Height));
+            if (fixedWidth == 0)
+            {
+                HitBox = new Rectangle(GlobalPosition.ToPoint(),
+                    new Point(beginButtonTexture.Width + endButtonTexture.Width + stringWidth + 8,
+                        beginButtonTexture.Height));
+            }
+            else
+            {
+                HitBox = new Rectangle(GlobalPosition.ToPoint(),
+                    new Point(beginButtonTexture.Width + endButtonTexture.Width + fixedWidth + 8,
+                        beginButtonTexture.Height));
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
@@ -94,7 +113,11 @@ namespace Engine.UI
                 return;
             }
 
-            int stringWidth = (int)font.MeasureString(text).X;
+            int stringWidth;
+            if (fixedWidth == 0)
+                stringWidth = (int)font.MeasureString(text).X;
+            else
+                stringWidth = fixedWidth;
             
             //Draw all 3 parts of button
             spriteBatch.Draw(beginButtonTexture, new Rectangle(GlobalPosition.ToPoint(), beginButtonTexture.Bounds.Size), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.999f);

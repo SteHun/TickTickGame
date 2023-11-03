@@ -56,8 +56,9 @@ public class LevelEditorState : GameState
             }
         }
         
-        test = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/HintFont");
+        test = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/MainFont");
         test.LocalPosition = new Vector2(300, 50);
+        test.fixedWidth = 500;
         test.Reset();
         gameObjects.AddChild(test);
         
