@@ -96,6 +96,7 @@ namespace Engine
             {
                 // get the sprite's bounds
                 Rectangle spriteBounds = sprite.Bounds;
+                spriteBounds.Size = (spriteBounds.Size.ToVector2() * sprite.Scale).ToPoint();
                 // add the object's position to it as an offset
                 spriteBounds.Offset(GlobalPosition - Origin);
                 return spriteBounds;

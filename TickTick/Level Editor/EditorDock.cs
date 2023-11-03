@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Transactions;
 using Engine.UI;
 using GameStates;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// EditorUI -> EditorDock
@@ -64,8 +66,8 @@ public class EditorDock
         //Group buttons
         wallGroupButton = CreateButton(wallFileName, new Vector2(50, 600), true);
         platformGroupButton = CreateButton(platformFileName, new Vector2(120, 600), true);
-        playerGroupButton = CreateButton(playerFileName, new Vector2(190, 600), true);
-        enemyGroupButton = CreateButton(flameFileName, new Vector2(260, 600), true);
+        playerGroupButton = CreateButton(playerFileName, new Vector2(210, 610), true);
+        enemyGroupButton = CreateButton(flameFileName, new Vector2(290, 610), true);
 
         //Group tab background (doesn't hold text)
         tabBackground = new TextBox("Sprites/UI/spr_frame_text", 0.9f, "", "Fonts/HintFont");
@@ -111,6 +113,8 @@ public class EditorDock
     {
         Button button = new Button(fileName, 1);
         button.LocalPosition = position;
+        float largestSize = MathF.Max(button.sprite.Width, button.sprite.Height);
+        button.sprite.Scale = Level.TileWidth/largestSize;
         editorUI.gameObjects.AddChild(button);
         if (!visible)
         {
@@ -274,7 +278,7 @@ public class EditorDock
     private bool CheckAnyButtonHovered()
     {
         //Check group buttons
-        if (wallGroupButton.Hovered || platformGroupButton.Hovered)
+        if (wallGroupButton.Hovered || platformGroupButton.Hovered || playerGroupButton.Hovered || enemyGroupButton.Hovered)
             return true;
 
         //Check wall group tab
