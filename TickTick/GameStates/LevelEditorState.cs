@@ -326,21 +326,21 @@ public class LevelEditorState : GameState
 
     private void ResizeLevelBottomRight(Point newSize)
     {
-        // copy the old level
         char[,] newLevel = new char[newSize.X, newSize.Y];
+        for (int x = 0; x < newSize.X; x++)
+        {
+            for (int y = 0; y < newSize.Y; y++)
+            {
+                newLevel[x,y] = '.';
+            }
+        }
+        
+        // copy the old level
         for (int x = 0; x < level.GetLength(0); x++)
         {
             for (int y = 0; y < level.GetLength(1); y++)
             {
                 newLevel[x,y] = level[x, y];
-            }
-        }
-        // fill the new level with empty space
-        for (int x = level.GetLength(0); x < newSize.X; x++)
-        {
-            for (int y = 0; y < newSize.Y; y++)
-            {
-                newLevel[x,y] = '.';
             }
         }
         
@@ -351,6 +351,15 @@ public class LevelEditorState : GameState
     private void ResizeLevelTopLeft(Point newSize)
     {
         char[,] newLevel = new char[newSize.X, newSize.Y];
+        
+        for (int x = 0; x < newSize.X; x++)
+        {
+            for (int y = 0; y < newSize.Y; y++)
+            {
+                newLevel[x,y] = '.';
+            }
+        }
+        
         Point difference = newSize - new Point(level.GetLength(0), level.GetLength(1));
         offset -= difference.ToVector2() * new Vector2(Level.TileWidth, Level.TileHeight);
         // copy the old level to the new level
@@ -362,50 +371,61 @@ public class LevelEditorState : GameState
             }
         }
         
-        for (int x = 0; x < difference.X; x++)
-        {
-            for (int y = 0; y < level.GetLength(1); y++)
-            {
-                newLevel[x,y] = '.';
-            }
-        }
-        
-        for (int y = 0; y < difference.Y; y++)
-        {
-            for (int x = 0; x < level.GetLength(0); x++)
-            {
-                newLevel[x,y] = '.';
-            }
-        }
-        
 
         level = newLevel;
     }
 
     private void Play()
     {
+        if (!LevelIsValid(level))
+            return;
         TrimLevel();
+        string levelString = GetLevelAsString();
         TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
-        ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelAsString);
+        ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelString);
     }
 
-    private string levelAsString
+    private static bool LevelIsValid(char[,] level)
     {
-        get
+        bool onePlayerFound = false;
+        bool oneGoalFound = false;
+        foreach (char item in level)
         {
-            string outString = $"{levelDescription}\n30\n";
-            for (int y = 0; y < level.GetLength(1); y++)
+            if (item == '1')
             {
-                for (int x = 0; x < level.GetLength(0); x++)
-                {
-                    outString += level[x, y];
-                }
-
-                outString += '\n';
+                if (onePlayerFound)
+                    return false;
+                onePlayerFound = true;
+                continue;
             }
-            Debug.WriteLine(outString);
-            return outString;
+
+            if (item == 'X')
+            {
+                if (oneGoalFound)
+                    return false;
+                oneGoalFound = true;
+            }
         }
+
+        return oneGoalFound && onePlayerFound;
     }
+
+    private string GetLevelAsString()
+    {
+        string outString = $"{levelDescription}\n30\n";
+        for (int y = 0; y < level.GetLength(1); y++)
+        {
+            for (int x = 0; x < level.GetLength(0); x++)
+            {
+                outString += level[x, y];
+            }
+
+            outString += '\n';
+        }
+        Debug.WriteLine(outString);
+        return outString;
+    }
+    
+
 
 }
