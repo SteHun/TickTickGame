@@ -74,7 +74,7 @@ public class LevelEditorState : GameState
         test.fixedWidth = 500;
         test.Reset();
         gameObjects.AddChild(test);
-
+        
         Texture2D GetSprite(string path) => ExtendedGame.AssetManager.LoadSprite(path);
         
         textures.Add('-', GetSprite("Sprites/Tiles/spr_platform"));
@@ -164,7 +164,8 @@ public class LevelEditorState : GameState
         if (drawingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, selectedTile);
         else if (erasingBlocks && !hoveringAnyButton)
-            PlaceTile(hoveredTile, '.');
+            if(level[hoveredTile.X, hoveredTile.Y] is not ('1' or 'X'))
+                PlaceTile(hoveredTile, '.');
 
         toMove = Vector2.Zero;
         if (inputHelper.KeyDown(Keys.Left))
@@ -229,6 +230,11 @@ public class LevelEditorState : GameState
         if (tile is '1' or 'X') //Player
         {
             RemoveDuplicates(tile);
+        }
+
+        if (level[point.X, point.Y] is '1' or 'X')
+        {
+            PlaceTile(new Point(point.X, point.Y-1), level[point.X, point.Y]);
         }
         level[point.X, point.Y] = tile;
     }
