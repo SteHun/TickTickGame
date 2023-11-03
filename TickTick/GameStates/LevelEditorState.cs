@@ -216,7 +216,25 @@ public class LevelEditorState : GameState
             ResizeLevelBottomRight(new Point(level.GetLength(0), point.Y + 1));
         }
 
+        if (tile is '1' or 'X') //Player
+        {
+            RemoveDuplicates(tile);
+        }
         level[point.X, point.Y] = tile;
+    }
+
+    private void RemoveDuplicates(char tile)
+    {
+        for (int i = 0; i < level.GetLength(0); i++)
+        {
+            for (int j = 0; j < level.GetLength(1); j++)
+            {
+                if (level[i, j] == tile)
+                {
+                    level[i, j] = '.';
+                }
+            }
+        }
     }
 
     private void TrimLevel()
