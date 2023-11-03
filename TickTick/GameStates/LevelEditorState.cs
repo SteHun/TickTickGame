@@ -18,6 +18,7 @@ public class LevelEditorState : GameState
     private Button quitButton;
     private Vector2 offset = Vector2.Zero;
     private string levelDescription;
+    private int levelTimer = 30;
     private char[,] level;
     private Point hoveredTile;
     private Vector2 HoveredTilePixelPosition;
@@ -412,7 +413,7 @@ public class LevelEditorState : GameState
 
     private string GetLevelAsString()
     {
-        string outString = $"{levelDescription}\n30\n";
+        string outString = $"{levelDescription}\n{levelTimer}\n";
         for (int y = 0; y < level.GetLength(1); y++)
         {
             for (int x = 0; x < level.GetLength(0); x++)
