@@ -29,7 +29,7 @@ public class LevelEditorState : GameState
     private const float scrollSpeed = 500;
     public char selectedTile = '#';
 
-    private TypeableButton test;
+    private TypebleButton test;
     
     // TEMP!!!
     private char[] textureKeysTemp;
@@ -56,8 +56,9 @@ public class LevelEditorState : GameState
             }
         }
         
-        test = new TypeableButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/HintFont");
+        test = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/HintFont");
         test.LocalPosition = new Vector2(300, 50);
+        test.Reset();
         gameObjects.AddChild(test);
         
         // add a "save" button

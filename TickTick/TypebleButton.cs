@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 /// <summary>
 /// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> Button -> TypableButton
 /// </summary>
-public class TypeableButton : Button
+public class TypebleButton : Button
 {
     private readonly Keys[] allowedKeys = new Keys[] {Keys.Q, Keys.W, Keys.E, Keys.R, Keys.T, Keys.Y, Keys.U, Keys.I, Keys.O, 
         Keys.P, Keys.A, Keys.S, Keys.D, Keys.F, Keys.G, Keys.H, Keys.J, Keys.K, Keys.K, Keys.L, Keys.Z, Keys.X, Keys.C, 
@@ -17,7 +17,7 @@ public class TypeableButton : Button
     };
 
     public bool isTypable { get; private set; }
-    public TypeableButton(string assetName, float depth, string text, string fontAssetName)
+    public TypebleButton(string assetName, float depth, string text, string fontAssetName)
         : base(assetName, depth, text, fontAssetName)
     {
         SetText("ENTER TEXT");
