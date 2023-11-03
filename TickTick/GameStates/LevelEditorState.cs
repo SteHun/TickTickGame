@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using Engine;
 using Engine.UI;
 using Microsoft.Xna.Framework;
@@ -12,6 +14,8 @@ namespace GameStates;
 
 public class LevelEditorState : GameState
 {
+    private const string customLevelPath = "Content/CustomLevels";
+    
     private EditorUI editorUI;
     
     private Vector2 offset = Vector2.Zero;
@@ -391,6 +395,38 @@ public class LevelEditorState : GameState
         }
 
         return oneGoalFound && onePlayerFound;
+    }
+
+
+    private void LoadLevelFromFile(string name)
+    {
+        string[] levelAsText = File.ReadAllLines($"{customLevelPath}/{name}");
+        
+        // find the longest row
+        int longestRow = 0;
+        foreach (string row in levelAsText)
+        {
+            longestRow = MathHelper.Max(longestRow, row.Length);
+        }
+
+        char[,] newLevel = new char[longestRow, levelAsText.Length];
+        for (int y = 0; y < levelAsText.Length; y++)
+        {
+            for (int x = 0; x < longestRow; x++)
+            {
+                if (x >= levelAsText[y].Length)
+                    newLevel[x, y] = '.';
+                else
+                    newLevel[x, y] = levelAsText[y][x];
+            }
+        }
+
+        level = newLevel;
+    }
+    
+    private static void SaveLevelToFile(string level, string name)
+    {
+        File.WriteAllText($"{customLevelPath}/{name}", level);
     }
 
     private string GetLevelAsString()
