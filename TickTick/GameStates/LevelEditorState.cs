@@ -55,9 +55,19 @@ public class LevelEditorState : GameState
         {
             for (int y = 0; y < level.GetLength(1); y++)
             {
-                level[x, y] = '.';
+                if (y == level.GetLength(1) - 1)
+                {
+                    level[x, y] = '#';
+                }
+                else
+                {
+                    level[x, y] = '.';
+                }
             }
         }
+
+        level[0, defaultLevelSize.Y - 2] = '1';
+        level[defaultLevelSize.X - 1, defaultLevelSize.Y - 2] = 'X';
         
         test = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/MainFont");
         test.LocalPosition = new Vector2(300, 50);
