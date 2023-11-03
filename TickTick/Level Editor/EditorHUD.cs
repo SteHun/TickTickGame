@@ -37,5 +37,8 @@ public class EditorHUD
 
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
+        
+        if (saveButton.Pressed)
+            editor.SaveLevelToFile("test");
     }
 }

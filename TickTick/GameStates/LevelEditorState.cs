@@ -424,12 +424,18 @@ public class LevelEditorState : GameState
         level = newLevel;
     }
     
-    private static void SaveLevelToFile(string level, string name)
+    public void SaveLevelToFile(string name)
     {
-        File.WriteAllText($"{customLevelPath}/{name}", level);
+        TrimLevel();
+        if (!LevelIsValid(level))
+            return;
+        offset = Vector2.Zero;
+        if (!Directory.Exists(customLevelPath))
+            Directory.CreateDirectory(customLevelPath);
+        File.WriteAllText($"{customLevelPath}/{name}", GetLevelAsString());
     }
 
-    private string GetLevelAsString()
+    public string GetLevelAsString()
     {
         string outString = $"{levelDescription}\n{levelTimer}\n";
         for (int y = 0; y < level.GetLength(1); y++)
