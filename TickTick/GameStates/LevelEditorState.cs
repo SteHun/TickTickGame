@@ -466,7 +466,7 @@ public class LevelEditorState : GameState
         offset = Vector2.Zero;
         if (!Directory.Exists(customLevelPath))
             Directory.CreateDirectory(customLevelPath);
-        File.WriteAllText($"{customLevelPath}/{name}", GetLevelAsString());
+        File.WriteAllText($"{customLevelPath}/{name}.txt", GetLevelAsString());
     }
 
     public string GetLevelAsString()
