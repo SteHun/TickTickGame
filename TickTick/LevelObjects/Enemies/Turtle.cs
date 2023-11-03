@@ -58,7 +58,7 @@ class Turtle : AnimatedGameObject
             if (HasSpikesOut && HitBoxCollision(level.Player))
                 level.Player.Die();
             // otherwise, the player gets launched up if it touches the turtle while falling
-            else if (level.Player.IsFalling && HasPixelPreciseCollision(level.Player))
+            else if (level.Player.IsFalling && HitBoxCollision(level.Player))
                 level.Player.Jump(launchSpeed);
         }
     }
