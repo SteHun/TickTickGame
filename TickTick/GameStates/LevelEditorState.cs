@@ -257,7 +257,6 @@ public class LevelEditorState : GameState
     {
         TrimInXDirection();
         TrimInYDirection();
-
     }
 
     private void TrimInYDirection()
@@ -402,6 +401,7 @@ public class LevelEditorState : GameState
             return;
         TrimLevel();
         string levelString = GetLevelAsString();
+        TickTick.previousStatePlaying = ExtendedGameWithLevels.StateName_Editor;
         TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
         ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelString);
     }

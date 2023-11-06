@@ -70,6 +70,7 @@ class LevelMenuState : GameState
             if (button.Pressed && button.Status != LevelStatus.Locked)
             {
                 // go to the playing state
+                TickTick.previousStatePlaying = ExtendedGameWithLevels.StateName_LevelSelect;
                 ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
 
                 // load the correct level

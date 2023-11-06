@@ -17,7 +17,9 @@ class TickTick : ExtendedGameWithLevels
     public const float Depth_LevelObjects = 0.6f; // for all game objects except the player
     public const float Depth_LevelPlayer = 0.7f; // for the player
 
-
+    //Used to check if the back button send the player to level select or the editor
+    public static string previousStatePlaying;
+    
     [STAThread]
     static void Main()
     {
@@ -54,6 +56,8 @@ class TickTick : ExtendedGameWithLevels
         GameStateManager.AddGameState(StateName_Playing, new PlayingState());
         GameStateManager.AddGameState(StateName_Pause, new PauseState());
         GameStateManager.AddGameState(StateName_Editor, new LevelEditorState());
+
+        previousStatePlaying = StateName_Title;
 
         // start at the title screen
         GameStateManager.SwitchTo(StateName_Title);

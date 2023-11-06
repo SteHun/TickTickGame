@@ -52,7 +52,7 @@ class PauseState : GameState
         }
         else if (quitButton.Pressed)
         {
-            ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_LevelSelect);
+            ExtendedGame.GameStateManager.SwitchTo(TickTick.previousStatePlaying);
         }
     }
 }
