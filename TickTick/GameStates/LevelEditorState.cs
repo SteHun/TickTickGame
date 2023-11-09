@@ -2,10 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
 using Engine;
-using Engine.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,8 +28,6 @@ public class LevelEditorState : GameState
     private Vector2 toMove;
     private const float scrollSpeed = 500;
     public char selectedTile = '#';
-
-    private TypebleButton test;
     
     
 
@@ -63,12 +58,6 @@ public class LevelEditorState : GameState
 
         level[0, defaultLevelSize.Y - 2] = '1';
         level[defaultLevelSize.X - 1, defaultLevelSize.Y - 2] = 'X';
-        
-        test = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/MainFont");
-        test.LocalPosition = new Vector2(300, 50);
-        test.fixedWidth = 500;
-        test.Reset();
-        gameObjects.AddChild(test);
         
         Texture2D GetSprite(string path) => ExtendedGame.AssetManager.LoadSprite(path);
         

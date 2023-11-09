@@ -16,7 +16,9 @@ public class TypebleButton : Button
         Keys.V, Keys.B, Keys.N, Keys.M
     };
 
-    public bool isTypable { get; private set; }
+    public bool IsTyping { get; private set; }
+    public string TypedText => Text;
+
     public TypebleButton(string assetName, float depth, string text, string fontAssetName)
         : base(assetName, depth, text, fontAssetName)
     {
@@ -26,7 +28,7 @@ public class TypebleButton : Button
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
         // This is kind of jank but whatever
-        if (isTypable)
+        if (IsTyping)
         {
             SetText(Text + '_');
             base.Draw(gameTime, spriteBatch, opacity);
@@ -40,8 +42,8 @@ public class TypebleButton : Button
     {
         base.HandleInput(inputHelper);
         if (Pressed)
-            isTypable = !isTypable;
-        if (!isTypable)
+            IsTyping = !IsTyping;
+        if (!IsTyping)
             return;
 
         foreach (Keys key in Keyboard.GetState().GetPressedKeys())
@@ -57,7 +59,7 @@ public class TypebleButton : Button
 
             if (key == Keys.Enter && Text.Length > 0)
             {
-                isTypable = false;
+                IsTyping = false;
                 continue;
             }
 
@@ -69,7 +71,8 @@ public class TypebleButton : Button
             if (allowedKeys.Contains(key))
             {
                 //First letter is uppercase, rest is lowercase, also checks for CapsLock and shift
-                if(Text.Length == 0 || Keyboard.GetState().CapsLock || Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+                if(Text.Length == 0 || Keyboard.GetState().CapsLock || Keyboard.GetState().IsKeyDown(Keys.LeftShift)
+                   || Keyboard.GetState().IsKeyDown(Keys.RightShift))
                     SetText(Text + key.ToString().ToUpper());
                 else
                     SetText(Text + key.ToString().ToLower());
