@@ -435,6 +435,12 @@ public class LevelEditorState : GameState
     private void LoadLevelFromFile(string name)
     {
         string[] levelAsText = File.ReadAllLines($"{customLevelPath}/{name}");
+        levelDescription = levelAsText[0];
+        if (!int.TryParse(levelAsText[1], out levelTimer))
+        {
+            Debug.WriteLine("Error: invalid level file");
+            return;
+        }
         
         // find the longest row
         int longestRow = 0;
@@ -444,7 +450,7 @@ public class LevelEditorState : GameState
         }
 
         char[,] newLevel = new char[longestRow, levelAsText.Length];
-        for (int y = 0; y < levelAsText.Length; y++)
+        for (int y = 2; y < levelAsText.Length; y++)
         {
             for (int x = 0; x < longestRow; x++)
             {
