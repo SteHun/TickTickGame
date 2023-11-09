@@ -34,9 +34,6 @@ public class LevelEditorState : GameState
 
     private TypebleButton test;
     
-    // TEMP!!!
-    private char[] textureKeysTemp;
-    private int currenItemIndexTemp = 0;
     
 
     private Dictionary<char, Texture2D> textures = new Dictionary<char, Texture2D>();
@@ -93,7 +90,6 @@ public class LevelEditorState : GameState
         textures.Add('B', GetSprite("Sprites/LevelObjects/Flame/spr_flame_blue_editor"));
         textures.Add('C', GetSprite("Sprites/LevelObjects/Flame/spr_flame_green_editor"));
 
-        textureKeysTemp = textures.Keys.ToArray();
     }
 
     public override void Update(GameTime gameTime)
@@ -108,22 +104,6 @@ public class LevelEditorState : GameState
     public override void HandleInput(InputHelper inputHelper)
     {
         //TEMP!!!!!
-        if (inputHelper.KeyPressed(Keys.W))
-        {
-            currenItemIndexTemp++;
-            if (currenItemIndexTemp >= textureKeysTemp.Length)
-                currenItemIndexTemp = 0;
-            selectedTile = textureKeysTemp[currenItemIndexTemp];
-        }
-        
-        if (inputHelper.KeyPressed(Keys.S))
-        {
-            currenItemIndexTemp--;
-            if (currenItemIndexTemp < 0)
-                currenItemIndexTemp = textureKeysTemp.Length - 1;
-            selectedTile = textureKeysTemp[currenItemIndexTemp];
-        }
-
         if (inputHelper.KeyPressed(Keys.P))
         {
             Play();
