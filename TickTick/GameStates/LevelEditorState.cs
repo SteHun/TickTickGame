@@ -17,7 +17,7 @@ public class LevelEditorState : GameState
     
     private Vector2 offset = Vector2.Zero;
     public string levelDescription;
-    private int levelTimer = 30;
+    public int LevelTimer = 30;
     private char[,] level;
     private Point hoveredTile;
     private Vector2 HoveredTilePixelPosition;
@@ -395,7 +395,7 @@ public class LevelEditorState : GameState
     {
         string[] levelAsText = File.ReadAllLines($"{customLevelPath}/{name}");
         levelDescription = levelAsText[0];
-        if (!int.TryParse(levelAsText[1], out levelTimer))
+        if (!int.TryParse(levelAsText[1], out LevelTimer))
         {
             Debug.WriteLine("Error: invalid level file");
             return;
@@ -436,7 +436,7 @@ public class LevelEditorState : GameState
 
     public string GetLevelAsString()
     {
-        string outString = $"{levelDescription}\n{levelTimer}\n";
+        string outString = $"{levelDescription}\n{LevelTimer}\n";
         for (int y = 0; y < level.GetLength(1); y++)
         {
             for (int x = 0; x < level.GetLength(0); x++)

@@ -18,6 +18,7 @@ public class EditorHUD
     private Button visibilityButton;
     private TypebleButton nameButton;
     private TypebleButton levelDescriptionInputField;
+    private BombTimer timer;
     
     public EditorHUD(EditorUI editorUI, LevelEditorState editor)
     {
@@ -57,6 +58,12 @@ public class EditorHUD
         levelDescriptionInputField.fixedWidth = 500;
         levelDescriptionInputField.Reset();
         editorUI.gameObjects.AddChild(levelDescriptionInputField);
+        
+        // add timer settings
+        timer = new BombTimer(editor.LevelTimer);
+        timer.LocalPosition = new Vector2(100, 20);
+        timer.Running = false;
+        editorUI.gameObjects.AddChild(timer);
     }
 
     public void HandleInput()

@@ -31,7 +31,20 @@ class BombTimer : GameObjectList
         label.LocalPosition = new Vector2(50,25);
         AddChild(label);
 
+        timeLeft = this.maxTime;
+        int secondsLeft = (int)Math.Ceiling(timeLeft);
+        label.Text = CreateTimeString(secondsLeft);
+        
+
         Reset();
+    }
+
+
+    public void SetTime(int newTime)
+    {
+        timeLeft = newTime;
+        int secondsLeft = (int)Math.Ceiling(timeLeft);
+        label.Text = CreateTimeString(secondsLeft);
     }
 
     public override void Update(GameTime gameTime)
