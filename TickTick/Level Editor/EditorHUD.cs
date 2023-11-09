@@ -79,7 +79,8 @@ public class EditorHUD
     public void HandleInput()
     {
         if (quitButton.Hovered || saveButton.Hovered || visibilityButton.Hovered || nameButton.Hovered || nameButton.IsTyping || 
-            playButton.Hovered || levelDescriptionInputField.Hovered || levelDescriptionInputField.IsTyping)
+            playButton.Hovered || levelDescriptionInputField.Hovered || levelDescriptionInputField.IsTyping || 
+            timerUpButton.Hovered || timerDownButton.Hovered)
             editor.hoveringAnyButton = true;
 
         if(playButton.Pressed)
@@ -99,6 +100,32 @@ public class EditorHUD
             //Update level name
             editor.SaveLevelToFile(nameButton.Text);
         }
+
+        if (timerUpButton.Pressed)
+        {
+            if (editor.LevelTimer >= 10)
+            {
+                editor.LevelTimer += 10;
+            }
+            else
+            {
+                editor.LevelTimer += 1;
+            }
+            timer.SetTime(editor.LevelTimer);
+        }
+        
+        if (timerDownButton.Pressed)
+        {
+            if (editor.LevelTimer > 10)
+            {
+                editor.LevelTimer -= 10;
+            }
+            else
+            {
+                editor.LevelTimer = MathHelper.Max(1, editor.LevelTimer - 1);
+            }
+            timer.SetTime(editor.LevelTimer);
+        }
     }
 
     private void ToggleVisibility()
@@ -110,5 +137,8 @@ public class EditorHUD
         quitButton.Visible = oppositeState;
         nameButton.Visible = oppositeState;
         levelDescriptionInputField.Visible = oppositeState;
+        timer.Visible = oppositeState;
+        timerUpButton.Visible = oppositeState;
+        timerDownButton.Visible = oppositeState;
     }
 }
