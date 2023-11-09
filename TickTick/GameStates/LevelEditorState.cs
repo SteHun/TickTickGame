@@ -29,7 +29,6 @@ public class LevelEditorState : GameState
     private const float scrollSpeed = 500;
     public char selectedTile = '#';
     
-    
     private Dictionary<char, Texture2D> textures = new Dictionary<char, Texture2D>();
     
     public LevelEditorState()

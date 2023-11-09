@@ -22,11 +22,14 @@ public class TypebleButton : Button
     public TypebleButton(string assetName, float depth, string text, string fontAssetName)
         : base(assetName, depth, text, fontAssetName)
     {
-        SetText("ENTER TEXT");
+        SetText(text);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
     {
+        if (!Visible)
+            return;
+        
         // This is kind of jank but whatever
         if (IsTyping)
         {
