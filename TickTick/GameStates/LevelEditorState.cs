@@ -19,7 +19,7 @@ public class LevelEditorState : GameState
     private EditorUI editorUI;
     
     private Vector2 offset = Vector2.Zero;
-    private string levelDescription;
+    public string levelDescription;
     private int levelTimer = 30;
     private char[,] level;
     private Point hoveredTile;
@@ -31,10 +31,6 @@ public class LevelEditorState : GameState
     private Vector2 toMove;
     private const float scrollSpeed = 500;
     public char selectedTile = '#';
-
-    private TypebleButton test;
-    
-    
 
     private Dictionary<char, Texture2D> textures = new Dictionary<char, Texture2D>();
     
@@ -63,12 +59,6 @@ public class LevelEditorState : GameState
 
         level[0, defaultLevelSize.Y - 2] = '1';
         level[defaultLevelSize.X - 1, defaultLevelSize.Y - 2] = 'X';
-        
-        test = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/MainFont");
-        test.LocalPosition = new Vector2(300, 50);
-        test.fixedWidth = 500;
-        test.Reset();
-        gameObjects.AddChild(test);
         
         Texture2D GetSprite(string path) => ExtendedGame.AssetManager.LoadSprite(path);
         

@@ -15,6 +15,7 @@ public class EditorHUD
     private Button playButton;
     private Button saveButton;
     private Button quitButton;
+    private TypebleButton levelDescriptionInputField;
     public EditorHUD(EditorUI editorUI, LevelEditorState editor)
     {
         this.editorUI = editorUI;
@@ -34,11 +35,18 @@ public class EditorHUD
         quitButton = new Button("Sprites/UI/spr_button_quit", 1);
         quitButton.LocalPosition = new Vector2(1290, 20);
         editorUI.gameObjects.AddChild(quitButton);
+        
+        // add a "level description" typeble button (aka input field)
+        levelDescriptionInputField = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "test", "Fonts/MainFont");
+        levelDescriptionInputField.LocalPosition = new Vector2(520, 20);
+        levelDescriptionInputField.fixedWidth = 500;
+        levelDescriptionInputField.Reset();
+        editorUI.gameObjects.AddChild(levelDescriptionInputField);
     }
 
     public void HandleInput()
     {
-        if (quitButton.Hovered || saveButton.Hovered || playButton.Hovered)
+        if (quitButton.Hovered || saveButton.Hovered || playButton.Hovered || levelDescriptionInputField.Hovered)
             editor.hoveringAnyButton = true;
 
         if(playButton.Pressed)
@@ -46,8 +54,12 @@ public class EditorHUD
         
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
-        
+
         if (saveButton.Pressed)
+        {
+            editor.levelDescription = levelDescriptionInputField.Text;
             editor.SaveLevelToFile("test");
+        }
+            
     }
 }
