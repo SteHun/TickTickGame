@@ -67,7 +67,7 @@ public class EditorHUD
 
         if (saveButton.Pressed)
         {
-            editor.levelDescription = levelDescriptionInputField.Text;
+            editor.levelDescription = levelDescriptionInputField.TypedText;
             editor.SaveLevelToFile("test");
         }
             
