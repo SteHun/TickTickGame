@@ -12,6 +12,7 @@ public class EditorHUD
     private EditorUI editorUI;
     private LevelEditorState editor;
 
+    private Button playButton;
     private Button saveButton;
     private Button quitButton;
     private TypebleButton nameButton;
@@ -21,6 +22,11 @@ public class EditorHUD
     {
         this.editorUI = editorUI;
         this.editor = editor;
+        
+        // add a "play" button
+        playButton = new Button("Sprites/UI/spr_button_play", 1);
+        playButton.LocalPosition = new Vector2(270, 20);
+        editorUI.gameObjects.AddChild(playButton);
         
         // add a "save" button
         saveButton = new Button("Sprites/UI/spr_button_editor", 1);// temp
@@ -42,15 +48,16 @@ public class EditorHUD
 
     public void HandleInput()
     {
-        if (quitButton.Hovered || saveButton.Hovered || nameButton.Hovered || nameButton.IsTyping)
+        if (quitButton.Hovered || saveButton.Hovered || nameButton.Hovered || nameButton.IsTyping || playButton.Hovered)
             editor.hoveringAnyButton = true;
 
+        if(playButton.Pressed)
+            editor.Play();
+        
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
         
         if (saveButton.Pressed)
             editor.SaveLevelToFile("test");
-        
-        //nameButton.HandleInput(inputHelper);
     }
 }

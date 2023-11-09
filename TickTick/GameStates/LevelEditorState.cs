@@ -92,14 +92,6 @@ public class LevelEditorState : GameState
 
     public override void HandleInput(InputHelper inputHelper)
     {
-        //TEMP!!!!!
-        if (inputHelper.KeyPressed(Keys.P))
-        {
-            Play();
-            return;
-        }
-        //End temp
-        
         base.HandleInput(inputHelper);
 
         Vector2 mousePos = inputHelper.MousePositionWorld;
@@ -362,7 +354,7 @@ public class LevelEditorState : GameState
         level = newLevel;
     }
 
-    private void Play()
+    public void Play()
     {
         if (!LevelIsValid(level))
             return;
