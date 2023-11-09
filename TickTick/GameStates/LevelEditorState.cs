@@ -121,7 +121,9 @@ public class LevelEditorState : GameState
         if (drawingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, selectedTile);
         else if (erasingBlocks && !hoveringAnyButton)
-            if(level[hoveredTile.X, hoveredTile.Y] is not ('1' or 'X'))
+            if(hoveredTile.X >= 0 && hoveredTile.X < level.GetLength(0) && hoveredTile.Y >= 0 
+               && hoveredTile.Y < level.GetLength(1) 
+               && level[hoveredTile.X, hoveredTile.Y] is not ('1' or 'X'))
                 PlaceTile(hoveredTile, '.');
 
         toMove = Vector2.Zero;
