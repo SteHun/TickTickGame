@@ -79,6 +79,7 @@ class Player : AnimatedGameObject
         speed = walkingSpeed;
         desiredHorizontalSpeed = 0;
         timeSinceJumpStart = 999; // this is jank but it works haha
+        timeSinceSpeedBoost = 999;
 
         // start with the idle sprite
         PlayAnimation("idle", true);

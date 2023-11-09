@@ -40,9 +40,7 @@ public class LevelEditorState : GameState
     
 
     private Dictionary<char, Texture2D> textures = new Dictionary<char, Texture2D>();
-
-    private Texture2D wallTexture;
-
+    
     public LevelEditorState()
     {
         Camera.position = Vector2.Zero;

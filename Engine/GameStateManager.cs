@@ -54,6 +54,7 @@ namespace Engine
         /// <param name="name">The name of the game state to set as the new active one.</param>
         public void SwitchTo(string name)
         {
+            Camera.position = new Vector2(0, 0);
             if (gameStates.ContainsKey(name))
                 currentGameState = gameStates[name];
         }
