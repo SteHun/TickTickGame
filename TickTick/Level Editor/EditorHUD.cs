@@ -19,6 +19,8 @@ public class EditorHUD
     private TypebleButton nameButton;
     private TypebleButton levelDescriptionInputField;
     private BombTimer timer;
+    private Button timerUpButton;
+    private Button timerDownButton;
     
     public EditorHUD(EditorUI editorUI, LevelEditorState editor)
     {
@@ -64,6 +66,14 @@ public class EditorHUD
         timer.LocalPosition = new Vector2(100, 20);
         timer.Running = false;
         editorUI.gameObjects.AddChild(timer);
+
+        timerUpButton = new Button("Sprites/UI/spr_button_timer_up", 1);
+        timerUpButton.LocalPosition = new Vector2(198, 20);
+        editorUI.gameObjects.AddChild(timerUpButton);
+        
+        timerDownButton = new Button("Sprites/UI/spr_button_timer_down", 1);
+        timerDownButton.LocalPosition = new Vector2(198, 60);
+        editorUI.gameObjects.AddChild(timerDownButton);
     }
 
     public void HandleInput()

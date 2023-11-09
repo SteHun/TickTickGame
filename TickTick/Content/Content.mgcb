@@ -687,6 +687,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/UI/spr_button_quit.png
 
+#begin Sprites/UI/spr_button_timer_down.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/UI/spr_button_timer_down.png
+
+#begin Sprites/UI/spr_button_timer_up.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/UI/spr_button_timer_up.png
+
 #begin Sprites/UI/spr_button_visibility.png
 /importer:TextureImporter
 /processor:TextureProcessor
