@@ -16,7 +16,7 @@ public class LevelEditorState : GameState
     private EditorUI editorUI;
     
     private Vector2 offset = Vector2.Zero;
-    private string levelDescription;
+    public string levelDescription;
     private int levelTimer = 30;
     private char[,] level;
     private Point hoveredTile;
@@ -30,7 +30,6 @@ public class LevelEditorState : GameState
     public char selectedTile = '#';
     
     
-
     private Dictionary<char, Texture2D> textures = new Dictionary<char, Texture2D>();
     
     public LevelEditorState()

@@ -19,7 +19,7 @@ namespace Engine.UI
         public bool Hovered { get; protected set; }
 
         private string text = "";
-        protected string Text => text;
+        public string Text => text;
         private SpriteFont font;
         public int TextWidth { get; private set; }
 
