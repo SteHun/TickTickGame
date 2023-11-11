@@ -67,14 +67,15 @@ namespace Engine.UI
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            if (!Visible)
+                return;
+            
             if (text == "")
             {
-                
                 Pressed = Visible && inputHelper.MouseLeftButtonPressed() && BoundingBox.Contains(inputHelper.MousePositionWorld);
                 Hovered = Visible && BoundingBox.Contains(inputHelper.MousePositionWorld);
                 return;
             }
-
 
             //Detection for dynamic buttons
             Pressed = Visible && inputHelper.MouseLeftButtonPressed() && HitBox.Contains(inputHelper.MousePositionWorld);
@@ -118,6 +119,9 @@ namespace Engine.UI
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
         {
+            if (!Visible)
+                return;
+            
             if (text == "")
             {
                 base.Draw(gameTime, spriteBatch);

@@ -12,12 +12,14 @@ using Microsoft.Xna.Framework;
 /// </summary>
 class CustomLevelMenuState : GameState
 {
-    Button backButton, officialLevelButton;
+    Button backButton, officialLevelButton, nextPageButton, previousPageButton;
 
     // An array of extra references to the level buttons. 
     // This makes it easier to check if a level button has been pressed.
     Button[] customLevelButtons, editCustomLevelButtons, deleteCustomLevelButtons;
     private bool[] markedForDeletion; //All true are deleted from list when going back to home screen
+    private int page = 0;
+    private const int levelsPerPage = 7;
 
     public CustomLevelMenuState()
     {
@@ -38,6 +40,18 @@ class CustomLevelMenuState : GameState
         officialLevelButton.LocalPosition = new Vector2(740, 690);
         gameObjects.AddChild(officialLevelButton);
         officialLevelButton.Reset();
+        
+        // add a next page button
+        nextPageButton = new Button("Sprites/UI/spr_button_back", TickTick.Depth_UIForeground, "Next page", "Fonts/MainFont");
+        nextPageButton.LocalPosition = new Vector2(880, 175);
+        gameObjects.AddChild(nextPageButton);
+        nextPageButton.Reset();
+        
+        // add a previous page button
+        previousPageButton = new Button("Sprites/UI/spr_button_back", TickTick.Depth_UIForeground, "Prev page", "Fonts/MainFont");
+        previousPageButton.LocalPosition = new Vector2(880, 225);
+        gameObjects.AddChild(previousPageButton);
+        previousPageButton.Reset();
 
         // Get all custom level files in the folder
         string [] arrays;
@@ -62,7 +76,7 @@ class CustomLevelMenuState : GameState
             Button deleteButton = new Button("Sprites/UI/spr_button_back", TickTick.Depth_UIForeground, "Delete","Fonts/MainFont");
             
             // give it the correct position
-            levelButton.LocalPosition = gridOffset + new Vector2(0, (levelButton.Height + verticalSpace) * i);
+            levelButton.LocalPosition = gridOffset + new Vector2(0, (levelButton.Height + verticalSpace) * (i%levelsPerPage));
             editButton.LocalPosition = levelButton.LocalPosition + new Vector2(320, 0);
             deleteButton.LocalPosition = levelButton.LocalPosition + new Vector2(380, 0);
             
@@ -80,6 +94,18 @@ class CustomLevelMenuState : GameState
             customLevelButtons[i] = levelButton;
             editCustomLevelButtons[i] = editButton;
             deleteCustomLevelButtons[i] = deleteButton;
+        }
+
+        //Hide all levels not on the main page
+        if (customLevelButtons.Length <= 6)
+            return;
+        
+        for (int i = 0; i < customLevelButtons.Length; i++)
+        {
+            if (i < 7) continue;
+            customLevelButtons[i].Visible = false;
+            editCustomLevelButtons[i].Visible = false;
+            deleteCustomLevelButtons[i].Visible = false;
         }
     }
 
@@ -114,7 +140,21 @@ class CustomLevelMenuState : GameState
             }
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_LevelSelect);
         }
-            
+
+
+        if (nextPageButton.Pressed)
+        {
+            page++;
+            page = MathHelper.Clamp(page, 0, customLevelButtons.Length / levelsPerPage);
+            UpdatePage();
+        }
+
+        if (previousPageButton.Pressed)
+        {
+            page--;
+            page = MathHelper.Clamp(page, 0, customLevelButtons.Length / levelsPerPage);
+            UpdatePage();
+        }
 
         // if a (non-locked) level button has been pressed, go to that level
         foreach (Button button in customLevelButtons)
@@ -151,6 +191,25 @@ class CustomLevelMenuState : GameState
                 markedForDeletion[i] = !markedForDeletion[i];
                 customLevelButtons[i].Color = markedForDeletion[i] ? Color.Red : Color.White;
                 deleteCustomLevelButtons[i].SetText(markedForDeletion[i] ? "Keep" : "Delete");
+            }
+        }
+    }
+
+    private void UpdatePage()
+    {
+        for (int i = 0; i < customLevelButtons.Length; i++)
+        {
+            if (i / levelsPerPage == page)
+            {
+                customLevelButtons[i].Visible = true;
+                editCustomLevelButtons[i].Visible = true;
+                deleteCustomLevelButtons[i].Visible = true;
+            }
+            else
+            {
+                customLevelButtons[i].Visible = false;
+                editCustomLevelButtons[i].Visible = false;
+                deleteCustomLevelButtons[i].Visible = false;
             }
         }
     }
