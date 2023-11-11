@@ -364,39 +364,49 @@ public class LevelEditorState : GameState
         TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
         ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelString);
     }
-
+    
+    /// <summary>
+    ///  UNTESTED, EXPECT DEBUGGING!
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
     private static bool LevelIsValid(string level)
     {
-        int newLines = 0;
-        foreach (char item in level)
-        {
-            if (item == '\n')
-            {
-                newLines++;
-            }
-        }
+        // check if the level has at least three newlines
+        string[] lines = level.Split('\n');
+        
 
-        if (newLines > 3)
+        if (lines.Length < 3)
             return false;
         
+        // check if time is parsable
+        if (!int.TryParse(lines[1], out _)) // discard the result, we only need to know is it is parsable
+        {
+            return false;
+        }
         
+        
+        // check if there is exactly one player and one goal
         bool onePlayerFound = false;
         bool oneGoalFound = false;
-        foreach (char item in level)
+        for (int y = 2; y < lines.Length; y++)
         {
-            if (item == '1')
+            for (int x = 0; x < lines[y].Length; y++)
             {
-                if (onePlayerFound)
-                    return false;
-                onePlayerFound = true;
-                continue;
-            }
+                if (lines[y][x] == '1')
+                {
+                    if (onePlayerFound)
+                        return false;
+                    onePlayerFound = true;
+                    continue;
+                }
 
-            if (item == 'X')
-            {
-                if (oneGoalFound)
-                    return false;
-                oneGoalFound = true;
+                if (lines[y][x] == 'X')
+                {
+                    if (oneGoalFound)
+                        return false;
+                    oneGoalFound = true;
+                }
             }
         }
 
