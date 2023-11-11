@@ -127,6 +127,16 @@ public class EditorHUD
             }
             timer.SetTime(editor.LevelTimer);
         }
+
+        if (nameButton.Pressed)
+        {
+            levelDescriptionInputField.IsTyping = false;
+        }
+
+        if (levelDescriptionInputField.Pressed)
+        {
+            nameButton.IsTyping = false;
+        }
     }
 
     private void ToggleVisibility()

@@ -16,7 +16,7 @@ public class TypebleButton : Button
         Keys.V, Keys.B, Keys.N, Keys.M
     };
 
-    public bool IsTyping { get; private set; }
+    public bool IsTyping;
     public string TypedText => Text;
 
     public TypebleButton(string assetName, float depth, string text, string fontAssetName)
