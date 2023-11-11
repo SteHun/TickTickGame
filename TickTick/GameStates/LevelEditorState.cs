@@ -443,6 +443,7 @@ public class LevelEditorState : GameState
     {
         string[] levelAsText = File.ReadAllLines($"{customLevelPath}/{name}");
         levelDescription = levelAsText[0];
+        editorUI.hud.nameButton.SetText(name.Remove(name.Length-4,4));
         if (!int.TryParse(levelAsText[1], out LevelTimer))
         {
             Debug.WriteLine("Error: invalid level file");

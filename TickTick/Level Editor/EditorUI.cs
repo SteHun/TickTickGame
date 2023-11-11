@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class EditorUI
 {
     private EditorDock dock;
-    private EditorHUD hud;
+    public EditorHUD hud;
     public GameObjectList gameObjects;
 
     public EditorUI(GameObjectList gameObjects, LevelEditorState editor)

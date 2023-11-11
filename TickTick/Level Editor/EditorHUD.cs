@@ -16,7 +16,7 @@ public class EditorHUD
     private Button saveButton;
     private Button quitButton;
     private Button visibilityButton;
-    private TypebleButton nameButton;
+    public TypebleButton nameButton;
     private TypebleButton levelDescriptionInputField;
     private BombTimer timer;
     private Button timerUpButton;
