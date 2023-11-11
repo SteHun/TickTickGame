@@ -33,6 +33,8 @@ namespace Engine
         /// </summary>
         Matrix spriteScale;
 
+        public static ExtendedGame Instance;
+        
         /// <summary>
         /// An object for generating random numbers throughout the game.
         /// </summary>
@@ -60,6 +62,9 @@ namespace Engine
         /// </summary>
         protected ExtendedGame()
         {
+            //Singleton behaviour
+            Instance = this;
+            
             // MonoGame preparations
             Content.RootDirectory = ContentRootDirectory;
             graphics = new GraphicsDeviceManager(this);
