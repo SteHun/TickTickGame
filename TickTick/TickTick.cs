@@ -66,5 +66,4 @@ class TickTick : ExtendedGameWithLevels
         // play background music
         AssetManager.PlaySong("Sounds/snd_music", true);
     }
-    
 }

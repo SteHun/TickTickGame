@@ -37,7 +37,15 @@ class TitleMenuState : GameState
     {
         base.HandleInput(inputHelper);
         if (playButton.Pressed)
+        {
+            //Remove and add custom levels to update custom level list
+            ExtendedGame.GameStateManager.RemoveGameState(ExtendedGameWithLevels.StateName_CustomLevelSelect);
+            ExtendedGame.GameStateManager.AddGameState(ExtendedGameWithLevels.StateName_CustomLevelSelect, new CustomLevelMenuState());
+            
+            //Actually move to menu
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_LevelSelect);
+        }
+            
         else if (editorButton.Pressed)
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Editor);
         else if (helpButton.Pressed)

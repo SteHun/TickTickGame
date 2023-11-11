@@ -36,6 +36,12 @@ namespace Engine
             gameStates[name] = state;
         }
 
+        //Used for restarting custom levels
+        public void RemoveGameState(string name)
+        {
+            gameStates.Remove(name);
+        }
+
         /// <summary>
         /// Gets the game state with the given name, if it exists.
         /// </summary>

@@ -97,6 +97,20 @@ class PlayingState : GameState, IPlayingState
         gameOverOverlay.Visible = false;
     }
 
+    public void LoadCustomLevel(string levelName)
+    {
+        //-1 Avoids the unlocking of new levels (which isn't relevant with custom levels)
+        level = new Level(-1, "Content/CustomLevels/" + levelName);
+        
+        //Pass the size of the level so the camera knows where the edges are
+        Camera.levelSize.X = level.BoundingBox.Width;
+        Camera.levelSize.Y = level.BoundingBox.Height;
+
+        // hide the overlay images
+        completedOverlay.Visible = false;
+        gameOverOverlay.Visible = false;
+    }
+
     public void LoadLevelFromString(string levelString)
     {
         level = new Level(levelString);

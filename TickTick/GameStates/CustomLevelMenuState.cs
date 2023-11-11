@@ -38,22 +38,25 @@ class CustomLevelMenuState : GameState
         // Get all custom level files in the folder
         string [] arrays;
         string sdira= "Content/CustomLevels/";
-
         arrays =  Directory.GetFiles(sdira, "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
 
-        customLevelButtons = new LevelButton[arrays.Length];
-
+        //Set array size
+        customLevelButtons = new Button[arrays.Length];
         Vector2 gridOffset = new Vector2(395, 175);
         const int verticalSpace = 20;
 
+        //Place all buttons and give them the correct names
         for (int i = 0; i < arrays.Length; i++)
         {
-            // create the button
-            LevelButton levelButton = new LevelButton(i + 1, ExtendedGameWithLevels.GetLevelStatus(i + 1));
+            // create the button (and give it the correct name)
+            Button levelButton = new Button("Sprites/UI/spr_button_back", TickTick.Depth_UIForeground, arrays[i], "Fonts/MainFont");
 
             // give it the correct position
             levelButton.LocalPosition = gridOffset + new Vector2(0, (levelButton.Height + verticalSpace) * i);
-
+            
+            //Reset tu update button hitbox
+            levelButton.Reset();
+            
             // add the button as a child object
             gameObjects.AddChild(levelButton);
             // also store it in the array of level buttons
@@ -73,29 +76,19 @@ class CustomLevelMenuState : GameState
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_LevelSelect);
 
         // if a (non-locked) level button has been pressed, go to that level
-        foreach (LevelButton button in customLevelButtons)
+        foreach (Button button in customLevelButtons)
         {
-            if (button.Pressed && button.Status != LevelStatus.Locked)
+            if (button.Pressed)
             {
                 // go to the playing state
                 TickTick.previousStatePlaying = ExtendedGameWithLevels.StateName_CustomLevelSelect;
                 ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
 
                 // load the correct level
-                ExtendedGameWithLevels.GetPlayingState().LoadLevel(button.LevelIndex);
+                ExtendedGameWithLevels.GetPlayingState().LoadCustomLevel(button.Text);
 
                 return;
             }
-        }
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        base.Update(gameTime);
-        foreach (LevelButton button in customLevelButtons)
-        {
-            if (button.Status != ExtendedGameWithLevels.GetLevelStatus(button.LevelIndex))
-                button.Status = ExtendedGameWithLevels.GetLevelStatus(button.LevelIndex);
         }
     }
 }
