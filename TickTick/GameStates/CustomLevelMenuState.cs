@@ -1,19 +1,21 @@
-﻿using Engine;
+﻿using System.IO;
+using System.Linq;
+using Engine;
 using Engine.UI;
 using Microsoft.Xna.Framework;
 
 /// <summary>
 /// IGameLoopObject -> GameState -> LevelMenuState
 /// </summary>
-class LevelMenuState : GameState
+class CustomLevelMenuState : GameState
 {
-    Button backButton, customLevelButton;
+    Button backButton, officialLevelButton;
 
     // An array of extra references to the level buttons. 
     // This makes it easier to check if a level button has been pressed.
-    LevelButton[] levelButtons;
+    Button[] customLevelButtons;
 
-    public LevelMenuState()
+    public CustomLevelMenuState()
     {
         Camera.position = Vector2.Zero;
         
@@ -27,38 +29,35 @@ class LevelMenuState : GameState
         gameObjects.AddChild(backButton);
         backButton.Reset();
         
-        // add a custom level button
-        customLevelButton = new Button("Sprites/UI/spr_button_back", TickTick.Depth_UIForeground, "CUSTOM LEVELS", "Fonts/MainFont");
-        customLevelButton.LocalPosition = new Vector2(740, 690);
-        gameObjects.AddChild(customLevelButton);
-        customLevelButton.Reset();
+        // add a to official/standard level button
+        officialLevelButton = new Button("Sprites/UI/spr_button_back", TickTick.Depth_UIForeground, "OFFICIAL LEVELS", "Fonts/MainFont");
+        officialLevelButton.LocalPosition = new Vector2(740, 690);
+        gameObjects.AddChild(officialLevelButton);
+        officialLevelButton.Reset();
 
-        // Add a level button for each level.
-        levelButtons = new LevelButton[ExtendedGameWithLevels.NumberOfLevels];
+        // Get all custom level files in the folder
+        string [] arrays;
+        string sdira= "Content/CustomLevels/";
+
+        arrays =  Directory.GetFiles(sdira, "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
+
+        customLevelButtons = new LevelButton[arrays.Length];
 
         Vector2 gridOffset = new Vector2(395, 175);
-        const int buttonsPerRow = 4;
-        const int spaceBetweenColumns = 20;
-        const int spaceBetweenRows = 20;
+        const int verticalSpace = 20;
 
-        for (int i = 0; i < ExtendedGameWithLevels.NumberOfLevels; i++)
+        for (int i = 0; i < arrays.Length; i++)
         {
             // create the button
             LevelButton levelButton = new LevelButton(i + 1, ExtendedGameWithLevels.GetLevelStatus(i + 1));
 
             // give it the correct position
-            int row = i / buttonsPerRow;
-            int column = i % buttonsPerRow;
-
-            levelButton.LocalPosition = gridOffset + new Vector2(
-                column * (levelButton.Width + spaceBetweenColumns),
-                row * (levelButton.Height + spaceBetweenRows)
-            );
+            levelButton.LocalPosition = gridOffset + new Vector2(0, (levelButton.Height + verticalSpace) * i);
 
             // add the button as a child object
             gameObjects.AddChild(levelButton);
             // also store it in the array of level buttons
-            levelButtons[i] = levelButton;
+            customLevelButtons[i] = levelButton;
         }
     }
 
@@ -70,16 +69,16 @@ class LevelMenuState : GameState
         if (backButton.Pressed)
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
         
-        if(customLevelButton.Pressed)
-            ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_CustomLevelSelect);
+        if (officialLevelButton.Pressed)
+            ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_LevelSelect);
 
         // if a (non-locked) level button has been pressed, go to that level
-        foreach (LevelButton button in levelButtons)
+        foreach (LevelButton button in customLevelButtons)
         {
             if (button.Pressed && button.Status != LevelStatus.Locked)
             {
                 // go to the playing state
-                TickTick.previousStatePlaying = ExtendedGameWithLevels.StateName_LevelSelect;
+                TickTick.previousStatePlaying = ExtendedGameWithLevels.StateName_CustomLevelSelect;
                 ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);
 
                 // load the correct level
@@ -93,7 +92,7 @@ class LevelMenuState : GameState
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        foreach (LevelButton button in levelButtons)
+        foreach (LevelButton button in customLevelButtons)
         {
             if (button.Status != ExtendedGameWithLevels.GetLevelStatus(button.LevelIndex))
                 button.Status = ExtendedGameWithLevels.GetLevelStatus(button.LevelIndex);

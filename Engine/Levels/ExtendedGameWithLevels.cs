@@ -12,6 +12,7 @@ namespace Engine
         public static string StateName_Title = "title";
         public static string StateName_Help = "help";
         public static string StateName_LevelSelect = "levelselect";
+        public static string StateName_CustomLevelSelect = "customlevelselect";
         public static string StateName_Playing = "playing";
         public static string StateName_Pause = "pause";
         public static string StateName_Editor = "editor";

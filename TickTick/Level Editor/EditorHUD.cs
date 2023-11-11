@@ -33,8 +33,9 @@ public class EditorHUD
         editorUI.gameObjects.AddChild(playButton);
         
         // add a "save" button
-        saveButton = new Button("Sprites/UI/spr_button_editor", 1, "Save", "Fonts/MainFont");// temp
+        saveButton = new Button("Sprites/UI/spr_button_editor", 1, "Save", "Fonts/MainFont");
         saveButton.LocalPosition = new Vector2(20, 20);
+        saveButton.Reset();
         editorUI.gameObjects.AddChild(saveButton);
         
         // add a "quit" button

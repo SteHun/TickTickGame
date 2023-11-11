@@ -52,6 +52,7 @@ class TickTick : ExtendedGameWithLevels
         // add the game states
         GameStateManager.AddGameState(StateName_Title, new TitleMenuState());
         GameStateManager.AddGameState(StateName_LevelSelect, new LevelMenuState());
+        GameStateManager.AddGameState(StateName_CustomLevelSelect, new CustomLevelMenuState());
         GameStateManager.AddGameState(StateName_Help, new HelpState());
         GameStateManager.AddGameState(StateName_Playing, new PlayingState());
         GameStateManager.AddGameState(StateName_Pause, new PauseState());
