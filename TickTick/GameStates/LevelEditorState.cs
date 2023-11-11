@@ -365,6 +365,44 @@ public class LevelEditorState : GameState
         ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelString);
     }
 
+    private static bool LevelIsValid(string level)
+    {
+        int newLines = 0;
+        foreach (char item in level)
+        {
+            if (item == '\n')
+            {
+                newLines++;
+            }
+        }
+
+        if (newLines > 3)
+            return false;
+        
+        
+        bool onePlayerFound = false;
+        bool oneGoalFound = false;
+        foreach (char item in level)
+        {
+            if (item == '1')
+            {
+                if (onePlayerFound)
+                    return false;
+                onePlayerFound = true;
+                continue;
+            }
+
+            if (item == 'X')
+            {
+                if (oneGoalFound)
+                    return false;
+                oneGoalFound = true;
+            }
+        }
+
+        return oneGoalFound && onePlayerFound;
+    }
+    
     private static bool LevelIsValid(char[,] level)
     {
         bool onePlayerFound = false;
