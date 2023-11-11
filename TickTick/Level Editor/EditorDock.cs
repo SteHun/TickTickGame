@@ -55,8 +55,8 @@ public class EditorDock
     private const string blueFlameFileName = "Sprites/LevelObjects/Flame/spr_flame_blue_editor";
     private const string greenFlameFileName = "Sprites/LevelObjects/Flame/spr_flame_green_editor";
     private const string rocketFileName = "Sprites/LevelObjects/Rocket/spr_rocket_editor";
-    private const string sparkyFileName = "Sprites/LevelObjects/Sparky/spr_electrocute";
-    private const string turtleFileName = "Sprites/LevelObjects/Turtle/spr_idle";
+    private const string sparkyFileName = "Sprites/LevelObjects/Sparky/spr_editor";
+    private const string turtleFileName = "Sprites/LevelObjects/Turtle/spr_editor";
 
     public EditorDock(EditorUI editorUI, LevelEditorState editor)
     {
@@ -101,12 +101,12 @@ public class EditorDock
         selectGoalButton = CreateButton(goalFileName, new Vector2(190+horizontalTabSpacing*2, 500));
         
         //Enemy group
-        selectFlameButton = CreateButton(flameFileName, new Vector2(260, 500));
-        selectBlueFlameButton = CreateButton(blueFlameFileName, new Vector2(260+horizontalTabSpacing, 500));
-        selectGreenFlameButton = CreateButton(greenFlameFileName, new Vector2(260+horizontalTabSpacing*2, 500));
-        selectRocketButton = CreateButton(rocketFileName, new Vector2(260+horizontalTabSpacing*3, 500));
-        selectSparkyButton = CreateButton(sparkyFileName, new Vector2(260+horizontalTabSpacing*4, 500));
-        selectTurtleButton = CreateButton(turtleFileName, new Vector2(260+horizontalTabSpacing*5, 500));
+        selectFlameButton = CreateButton(flameFileName, new Vector2(200, 500));
+        selectBlueFlameButton = CreateButton(blueFlameFileName, new Vector2(200+horizontalTabSpacing, 500));
+        selectGreenFlameButton = CreateButton(greenFlameFileName, new Vector2(200+horizontalTabSpacing*2, 500));
+        selectRocketButton = CreateButton(rocketFileName, new Vector2(200+horizontalTabSpacing*3, 500));
+        selectSparkyButton = CreateButton(sparkyFileName, new Vector2(200+horizontalTabSpacing*4, 500));
+        selectTurtleButton = CreateButton(turtleFileName, new Vector2(200+horizontalTabSpacing*5, 520));
     }
 
     private Button CreateButton(string fileName, Vector2 position, bool visible = false)

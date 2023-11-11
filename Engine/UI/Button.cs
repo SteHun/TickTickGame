@@ -68,7 +68,11 @@ namespace Engine.UI
         public override void HandleInput(InputHelper inputHelper)
         {
             if (!Visible)
+            {
+                Pressed = false;
+                Hovered = false;
                 return;
+            }
             
             if (text == "")
             {

@@ -399,6 +399,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/LevelObjects/Rocket/spr_rocket@3.png
 
+#begin Sprites/LevelObjects/Sparky/spr_editor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/LevelObjects/Sparky/spr_editor.png
+
 #begin Sprites/LevelObjects/Sparky/spr_electrocute.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -458,6 +470,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/LevelObjects/spr_water.png
+
+#begin Sprites/LevelObjects/Turtle/spr_editor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/LevelObjects/Turtle/spr_editor.png
 
 #begin Sprites/LevelObjects/Turtle/spr_idle.png
 /importer:TextureImporter

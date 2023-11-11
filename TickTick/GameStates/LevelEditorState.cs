@@ -71,8 +71,8 @@ public class LevelEditorState : GameState
         textures.Add('X', GetSprite("Sprites/LevelObjects/spr_goal"));
         textures.Add('W', GetSprite("Sprites/LevelObjects/spr_water"));
         textures.Add('R', GetSprite("Sprites/LevelObjects/Rocket/spr_rocket_editor"));
-        textures.Add('T', GetSprite("Sprites/LevelObjects/Turtle/spr_idle"));
-        textures.Add('S', GetSprite("Sprites/LevelObjects/Sparky/spr_electrocute"));
+        textures.Add('T', GetSprite("Sprites/LevelObjects/Turtle/spr_editor"));
+        textures.Add('S', GetSprite("Sprites/LevelObjects/Sparky/spr_editor"));
         textures.Add('A', GetSprite("Sprites/LevelObjects/Flame/spr_flame_editor"));
         textures.Add('B', GetSprite("Sprites/LevelObjects/Flame/spr_flame_blue_editor"));
         textures.Add('C', GetSprite("Sprites/LevelObjects/Flame/spr_flame_green_editor"));
