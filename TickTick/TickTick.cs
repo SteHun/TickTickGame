@@ -66,4 +66,10 @@ class TickTick : ExtendedGameWithLevels
         // play background music
         AssetManager.PlaySong("Sounds/snd_music", true);
     }
+
+    //Returns the level editor state
+    public static LevelEditorState GetEditor()
+    {
+        return (LevelEditorState)GameStateManager.gameStates[StateName_Editor];
+    }
 }

@@ -439,7 +439,7 @@ public class LevelEditorState : GameState
     }
 
 
-    private void LoadLevelFromFile(string name)
+    public void LoadLevelFromFile(string name)
     {
         string[] levelAsText = File.ReadAllLines($"{customLevelPath}/{name}");
         levelDescription = levelAsText[0];

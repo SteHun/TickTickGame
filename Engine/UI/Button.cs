@@ -22,6 +22,8 @@ namespace Engine.UI
         private string text = "";
         public string Text => text;
         private SpriteFont font;
+        public Color Color { get; set; }
+        
         public int TextWidth { get; private set; }
 
         private Texture2D beginButtonTexture;
@@ -40,7 +42,7 @@ namespace Engine.UI
             Pressed = false;
         }
         
-        public Button(string assetName, float depth, string text, string fontAssetName) : base(assetName, depth)
+        public Button(string assetName, float depth, string text, string fontAssetName, Color? color = null) : base(assetName, depth)
         {
             Pressed = false;
             this.text = text;
@@ -48,6 +50,14 @@ namespace Engine.UI
             middleButtonTexture = ExtendedGame.AssetManager.LoadSprite("Sprites/UI/spr_button_middle");
             endButtonTexture = ExtendedGame.AssetManager.LoadSprite("Sprites/UI/spr_button_end");
             font = ExtendedGame.AssetManager.LoadFont(fontAssetName);
+            if (color != null)
+            {
+                this.Color = color.Value;
+            }
+            else
+            {
+                this.Color = Color.White;
+            }
             
             TextWidth = (int)font.MeasureString(text).X;
             HitBox = new Rectangle(GlobalPosition.ToPoint(),
@@ -71,7 +81,7 @@ namespace Engine.UI
             Hovered = Visible && HitBox.Contains(inputHelper.MousePositionWorld);
         }
 
-        protected void SetText(string text)
+        public void SetText(string text)
         {
             this.text = text;
 
@@ -121,9 +131,9 @@ namespace Engine.UI
                 stringWidth = fixedWidth;
             
             //Draw all 3 parts of button
-            spriteBatch.Draw(beginButtonTexture, new Rectangle(GlobalPosition.ToPoint(), beginButtonTexture.Bounds.Size), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.999f);
-            spriteBatch.Draw(middleButtonTexture, new Rectangle(GlobalPosition.ToPoint() + new Point(beginButtonTexture.Width, 0), new Point(stringWidth + 8, middleButtonTexture.Height)), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.999f);
-            spriteBatch.Draw(endButtonTexture, new Rectangle(GlobalPosition.ToPoint() + new Point(beginButtonTexture.Width + stringWidth + 8, 0), endButtonTexture.Bounds.Size), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.999f);
+            spriteBatch.Draw(beginButtonTexture, new Rectangle(GlobalPosition.ToPoint(), beginButtonTexture.Bounds.Size), null, Color, 0f, Vector2.Zero, SpriteEffects.None, 0.999f);
+            spriteBatch.Draw(middleButtonTexture, new Rectangle(GlobalPosition.ToPoint() + new Point(beginButtonTexture.Width, 0), new Point(stringWidth + 8, middleButtonTexture.Height)), null, Color, 0f, Vector2.Zero, SpriteEffects.None, 0.999f);
+            spriteBatch.Draw(endButtonTexture, new Rectangle(GlobalPosition.ToPoint() + new Point(beginButtonTexture.Width + stringWidth + 8, 0), endButtonTexture.Bounds.Size), null, Color, 0f, Vector2.Zero, SpriteEffects.None, 0.999f);
             
             //Draw string
             spriteBatch.DrawString(font, text, localPosition + new Vector2(beginButtonTexture.Width + 4, 10), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
