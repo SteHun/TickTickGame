@@ -9,7 +9,7 @@ using GameStates;
 using Microsoft.Xna.Framework;
 
 /// <summary>
-/// IGameLoopObject -> GameState -> LevelMenuState
+/// IGameLoopObject -> GameState -> CustomLevelMenuState
 /// </summary>
 class CustomLevelMenuState : GameState
 {
@@ -78,9 +78,8 @@ class CustomLevelMenuState : GameState
             }
         }
 
+        //List of names of all custom levels found in CustomLevels folder
         string[] arrays = directory.ToArray();
-        
-        
 
         //Set array size
         customLevelButtons = new Button[arrays.Length];
@@ -124,6 +123,7 @@ class CustomLevelMenuState : GameState
         if (customLevelButtons.Length <= 6)
             return;
         
+        //Make everything not on the first page invisible
         for (int i = 0; i < customLevelButtons.Length; i++)
         {
             if (i < 7) continue;
@@ -150,11 +150,11 @@ class CustomLevelMenuState : GameState
                 }
             }
             
-            //Go back to title screen
+            //Actually go back to title screen
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
         }
 
-
+        //Switch back to the page with official levels
         if (officialLevelButton.Pressed)
         {
             //Don't delete anything if going back to normal levels
@@ -164,8 +164,7 @@ class CustomLevelMenuState : GameState
             }
             ExtendedGame.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_LevelSelect);
         }
-
-
+        
         if (nextPageButton.Pressed)
         {
             page++;
@@ -219,6 +218,7 @@ class CustomLevelMenuState : GameState
         }
     }
 
+    //Change what is and isn't visible
     private void UpdatePage()
     {
         for (int i = 0; i < customLevelButtons.Length; i++)

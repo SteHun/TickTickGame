@@ -10,6 +10,8 @@ namespace Engine.UI
     /// <summary>
     /// A class that can represent a UI button in the game.<br/>
     /// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> Button
+    /// There are 2 types of buttons, one where you pass a sprite and when clicked on an event triggers,
+    /// the other
     /// </summary>
     public class Button : UISpriteGameObject
     {
