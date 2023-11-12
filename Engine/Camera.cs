@@ -12,6 +12,7 @@ public static class Camera
     
     public static void Update(Vector2 playerPosition)
     {
+        //Follows player
         //Offset by half of cameraSize to get player in the middle (and not top left)
         position = playerPosition - cameraSize.ToVector2()/2;
 

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine;
 /// <summary>
 /// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject
+/// Same as SpriteGameObject, but they are not affected by the camera
 /// </summary>
 public class UISpriteGameObject : SpriteGameObject
 {

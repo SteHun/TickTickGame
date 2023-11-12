@@ -110,37 +110,6 @@ namespace Engine
         }
 
         /// <summary>
-        /// Checks and returns if this <see cref="SpriteGameObject"/> 
-        /// has at least one non-transparent pixel inside the given rectangle.
-        /// </summary>
-        /// <param name="other">A rectangle in the game world.</param>
-        /// <returns>true if this object overlaps with the given rectangle 
-        /// and that intersection contains at least one non-transparent pixel.
-        /// Returns false otherwise.</returns>
-        public bool HasPixelPreciseCollision(Rectangle other)
-        {
-            // calculate the intersection between the two bounding boxes
-            Rectangle b = CollisionDetection.CalculateIntersection(BoundingBox, other);
-
-            // if at least one pixel in this part is not transparent, then there's a collision
-            for (int x = 0; x < b.Width; x++)
-            {
-                for (int y = 0; y < b.Height; y++)
-                {
-                    // get the correct pixel coordinates of both sprites
-                    int thisX = b.X - (int)(GlobalPosition.X - Origin.X) + x;
-                    int thisY = b.Y - (int)(GlobalPosition.Y - Origin.Y) + y;
-
-                    if (!sprite.IsPixelTransparent(thisX, thisY))
-                        return true;
-                }
-            }
-
-            // otherwise, there is no collision
-            return false;
-        }
-
-        /// <summary>
         /// Checks and returns if this <see cref="SpriteGameObject"/> has at least one
         /// overlapping non-transparent pixel with another <see cref="SpriteGameObject"/>.
         /// </summary>
@@ -173,6 +142,7 @@ namespace Engine
             return false;
         }
 
+        //Check for a collision with a rectangle hitbox (used for enemy collision detection, because that needed to be a little more forgiving to make the game more fun)
         public bool HitBoxCollision(SpriteGameObject other)
         {
             Rectangle positionRectangle = new Rectangle(GlobalPosition.ToPoint() + HitBox.Location, HitBox.Size);
