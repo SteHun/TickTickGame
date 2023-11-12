@@ -496,6 +496,8 @@ public class LevelEditorState : GameState
 
             outString += '\n';
         }
+
+        outString = outString[..^1]; // removes the last \n characer
         Debug.WriteLine(outString);
         return outString;
     }

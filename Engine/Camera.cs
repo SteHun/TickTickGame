@@ -17,6 +17,13 @@ public static class Camera
 
         //Bounding box (camera can't show outside of level)
         position.X = MathHelper.Clamp(position.X, 0, levelSize.X - cameraSize.X);
-        position.Y = MathHelper.Clamp(position.Y, 0, levelSize.Y - cameraSize.Y);
+        if (levelSize.Y < cameraSize.Y)
+        {
+            position.Y = levelSize.Y - cameraSize.Y;
+        }
+        else
+        {
+            position.Y = MathHelper.Clamp(position.Y, 0, levelSize.Y - cameraSize.Y);            
+        }
     }
 }
