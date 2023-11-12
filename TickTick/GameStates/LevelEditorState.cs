@@ -37,7 +37,7 @@ public class LevelEditorState : GameState
         editorUI = new EditorUI(gameObjects, this);
         
         // fill empty level
-        levelDescription = "click to change";
+        levelDescription = EditorHUD.DefaultDescription;
         level = new char[defaultLevelSize.X, defaultLevelSize.Y];
         for (int x = 0; x < level.GetLength(0); x++)
         {

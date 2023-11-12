@@ -3,12 +3,13 @@ using Engine.UI;
 using GameStates;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// The general buttons in the editor, not linked to the dock
+/// </summary>
 public class EditorHUD
 {
-    /// <summary>
-    /// The general buttons in the editor, not linked to the dock
-    /// </summary>
-    
+    const string DefaultName = "Name";
+    public const string DefaultDescription = "Description";
     private EditorUI editorUI;
     private LevelEditorState editor;
 
@@ -49,14 +50,14 @@ public class EditorHUD
         editorUI.gameObjects.AddChild(visibilityButton);
         
         // add a name button
-        nameButton = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "Level name", "Fonts/MainFont");
+        nameButton = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, DefaultName, "Fonts/MainFont");
         nameButton.LocalPosition = new Vector2(520, 20);
         nameButton.fixedWidth = 300;
         nameButton.Reset();
         editorUI.gameObjects.AddChild(nameButton);
         
         // add a "level description" typeble button (aka input field)
-        levelDescriptionInputField = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, "Description", "Fonts/MainFont");
+        levelDescriptionInputField = new TypebleButton("Sprites/UI/spr_frame_text", 0.9f, DefaultDescription, "Fonts/MainFont");
         levelDescriptionInputField.LocalPosition = new Vector2(520, 80);
         levelDescriptionInputField.fixedWidth = 500;
         levelDescriptionInputField.Reset();

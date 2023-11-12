@@ -78,8 +78,8 @@ class Player : AnimatedGameObject
         velocity = Vector2.Zero;
         speed = walkingSpeed;
         desiredHorizontalSpeed = 0;
-        timeSinceJumpStart = 999; // this is jank but it works haha
-        timeSinceSpeedBoost = 999;
+        timeSinceJumpStart = 9999; // this is jank but it works haha
+        timeSinceSpeedBoost = 9999;
 
         // start with the idle sprite
         PlayAnimation("idle", true);
