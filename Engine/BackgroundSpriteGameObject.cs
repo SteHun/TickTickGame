@@ -26,6 +26,7 @@ public class BackgroundSpriteGameObject : SpriteGameObject
             return;
 
         // draw the sprite at its *global* position in the game world
+        // affected by parallax
         if (sprite != null)
             sprite.Draw(spriteBatch,  GlobalPosition - Camera.position/parallaxStrength, Origin, opacity);
     }

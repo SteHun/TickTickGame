@@ -13,6 +13,7 @@ partial class Level : GameObjectList
         string description = levelArray[0];
         try
         {
+            //Second line in text file is amount of time the player has to complete the level
             maxTime = int.Parse(levelArray[1]);
         }
         catch

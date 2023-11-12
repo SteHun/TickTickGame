@@ -67,6 +67,7 @@ partial class Level : GameObjectList
         }
 
         // add clouds
+        // Adds more clouds if the level is bigger
         for (int i = 0; i < BoundingBox.Width/820; i++)
             backgrounds.AddChild(new Cloud(this));
     }

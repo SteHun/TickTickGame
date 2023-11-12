@@ -11,7 +11,7 @@ namespace Engine.UI
     /// A class that can represent a UI button in the game.<br/>
     /// IGameLoopObject -> GameObject -> SpriteGameObject -> UISpriteGameObject -> Button
     /// There are 2 types of buttons, one where you pass a sprite and when clicked on an event triggers,
-    /// the other
+    /// the other requires passing a text and font and a custom sized button will be made.
     /// </summary>
     public class Button : UISpriteGameObject
     {
@@ -44,6 +44,17 @@ namespace Engine.UI
             Pressed = false;
         }
         
+        /// <summary>
+        /// Creates a button with custom size (based on text size in selected font)
+        /// string assetName is not used, only passed to base because it is required
+        /// Can select font and text can be changed later
+        /// Also allows for changing color
+        /// </summary>
+        /// <param name="assetName"/>Not used, only passed to satisfy base
+        /// <param name="depth"></param>
+        /// <param name="text"></param>
+        /// <param name="fontAssetName"></param>
+        /// <param name="color">Background color of button</param>
         public Button(string assetName, float depth, string text, string fontAssetName, Color? color = null) : base(assetName, depth)
         {
             Pressed = false;
@@ -61,6 +72,7 @@ namespace Engine.UI
                 this.Color = Color.White;
             }
             
+            //Hitbox is dynamically generated (doesn't use standard BoundingBox, because that is based on a Texture2D from assetName)
             TextWidth = (int)font.MeasureString(text).X;
             HitBox = new Rectangle(GlobalPosition.ToPoint(),
                 new Point(beginButtonTexture.Width + endButtonTexture.Width + TextWidth + 8,
@@ -69,6 +81,7 @@ namespace Engine.UI
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            //Can't be clicked if invisible
             if (!Visible)
             {
                 Pressed = false;
@@ -76,6 +89,7 @@ namespace Engine.UI
                 return;
             }
             
+            //If text is not set (meaning it's a sprite based button, use the BoundingBox for detecting being pressed)
             if (text == "")
             {
                 Pressed = Visible && inputHelper.MouseLeftButtonPressed() && BoundingBox.Contains(inputHelper.MousePositionWorld);
@@ -88,16 +102,19 @@ namespace Engine.UI
             Hovered = Visible && HitBox.Contains(inputHelper.MousePositionWorld);
         }
 
+        //Edit text with this function
         public void SetText(string text)
         {
             this.text = text;
 
+            //Fixed with is used when the size of the button is not based on the text it contains (for input fields)
             if (fixedWidth != 0)
             {
                 if (font.MeasureString(text).X > fixedWidth)
                     this.text = this.text[..^1];
                 return;
             }
+            
             //Update hitbox
             HitBox = new Rectangle(GlobalPosition.ToPoint(),
                 new Point(beginButtonTexture.Width + endButtonTexture.Width + TextWidth + 8,
@@ -109,18 +126,16 @@ namespace Engine.UI
             base.Reset();
             Pressed = false;
             int stringWidth = (int)font.MeasureString(text).X;
-            if (fixedWidth == 0)
+            
+            //If fixedWidth is used then use that system
+            if (fixedWidth != 0)
             {
-                HitBox = new Rectangle(GlobalPosition.ToPoint(),
-                    new Point(beginButtonTexture.Width + endButtonTexture.Width + stringWidth + 8,
-                        beginButtonTexture.Height));
+                stringWidth = fixedWidth;
             }
-            else
-            {
-                HitBox = new Rectangle(GlobalPosition.ToPoint(),
-                    new Point(beginButtonTexture.Width + endButtonTexture.Width + fixedWidth + 8,
-                        beginButtonTexture.Height));
-            }
+            
+            HitBox = new Rectangle(GlobalPosition.ToPoint(),
+                new Point(beginButtonTexture.Width + endButtonTexture.Width + stringWidth + 8,
+                    beginButtonTexture.Height));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, float opacity = 1)
@@ -128,12 +143,14 @@ namespace Engine.UI
             if (!Visible)
                 return;
             
+            //Draw normally if a sprite based button
             if (text == "")
             {
-                base.Draw(gameTime, spriteBatch);
+                base.Draw(gameTime, spriteBatch, opacity);
                 return;
             }
 
+            //Get string width
             int stringWidth;
             if (fixedWidth == 0)
                 stringWidth = (int)font.MeasureString(text).X;
