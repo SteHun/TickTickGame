@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
-/// Contains all UI elements
+/// Contains all UI elements for the editor
 /// </summary>
 public class EditorUI
 {

@@ -58,6 +58,7 @@ public class EditorDock
     private const string sparkyFileName = "Sprites/LevelObjects/Sparky/spr_editor";
     private const string turtleFileName = "Sprites/LevelObjects/Turtle/spr_editor";
 
+    //Setup everything
     public EditorDock(EditorUI editorUI, LevelEditorState editor)
     {
         this.editorUI = editorUI;
@@ -109,6 +110,7 @@ public class EditorDock
         selectTurtleButton = CreateButton(turtleFileName, new Vector2(200+horizontalTabSpacing*5, 520));
     }
 
+    //All buttons have same values, so this makes it easier
     private Button CreateButton(string fileName, Vector2 position, bool visible = false)
     {
         Button button = new Button(fileName, 1);
@@ -132,6 +134,7 @@ public class EditorDock
             editor.hoveringAnyButton = true;
         }
         
+        //Change selected tab
         #region Group buttons check
         if (wallGroupButton.Pressed)
             selectedTab = selectedTab != SelectedTab.Walls ? SelectedTab.Walls : SelectedTab.None;
@@ -143,6 +146,7 @@ public class EditorDock
             selectedTab = selectedTab != SelectedTab.Enemies ? SelectedTab.Enemies : SelectedTab.None;
         #endregion
 
+        //Change selected block
         #region Groups
 
         #region Wall group
@@ -260,6 +264,7 @@ public class EditorDock
         previousSelectedTab = selectedTab;
     }
 
+    //Close all tabs
     private void CloseTabAfterSelecting()
     {
         selectedTab = SelectedTab.None;

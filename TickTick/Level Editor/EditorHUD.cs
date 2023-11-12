@@ -4,13 +4,13 @@ using GameStates;
 using Microsoft.Xna.Framework;
 
 /// <summary>
+/// EditorUI -> EditorHUD
 /// The general buttons in the editor, not linked to the dock
 /// </summary>
 public class EditorHUD
 {
     const string DefaultName = "Name";
     public const string DefaultDescription = "Description";
-    private EditorUI editorUI;
     private LevelEditorState editor;
 
     private Button playButton;
@@ -23,9 +23,13 @@ public class EditorHUD
     private Button timerUpButton;
     private Button timerDownButton;
     
+    /// <summary>
+    /// Primary setup and creates all buttons
+    /// </summary>
+    /// <param name="editorUI"></param>
+    /// <param name="editor"></param>
     public EditorHUD(EditorUI editorUI, LevelEditorState editor)
     {
-        this.editorUI = editorUI;
         this.editor = editor;
         
         // add a "play" button
@@ -80,6 +84,7 @@ public class EditorHUD
 
     public void HandleInput()
     {
+        //editor.hoveringAnyButton blocks placing of blocks (because player is trying to click on button)
         if (quitButton.Hovered || saveButton.Hovered || visibilityButton.Hovered || nameButton.Hovered || nameButton.IsTyping || 
             playButton.Hovered || levelDescriptionInputField.Hovered || levelDescriptionInputField.IsTyping || 
             timerUpButton.Hovered || timerDownButton.Hovered)
@@ -94,6 +99,7 @@ public class EditorHUD
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
 
+        //Hide/show all buttons
         if (visibilityButton.Pressed)
             ToggleVisibility();
 
@@ -132,6 +138,7 @@ public class EditorHUD
             timer.SetTime(editor.LevelTimer);
         }
 
+        //IsTyping allows for keyboard input to be sent to input field
         if (nameButton.Pressed)
         {
             levelDescriptionInputField.IsTyping = false;
@@ -143,6 +150,7 @@ public class EditorHUD
         }
     }
 
+    //Hide/show all buttons
     private void ToggleVisibility()
     {
         bool oppositeState = !playButton.Visible;
