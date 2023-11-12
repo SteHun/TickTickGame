@@ -359,6 +359,7 @@ public class LevelEditorState : GameState
         if (!LevelIsValid(level))
             return;
         TrimLevel();
+        
         string levelString = GetLevelAsString();
         TickTick.previousStatePlaying = ExtendedGameWithLevels.StateName_Editor;
         TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Playing);

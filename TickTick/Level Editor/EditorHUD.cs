@@ -85,8 +85,11 @@ public class EditorHUD
             timerUpButton.Hovered || timerDownButton.Hovered)
             editor.hoveringAnyButton = true;
 
-        if(playButton.Pressed)
+        if (playButton.Pressed)
+        {
+            editor.levelDescription = levelDescriptionInputField.TypedText;
             editor.Play();
+        }
         
         if (quitButton.Pressed)
             TickTick.GameStateManager.SwitchTo(ExtendedGameWithLevels.StateName_Title);
