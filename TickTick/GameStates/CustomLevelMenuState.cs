@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -54,9 +55,32 @@ class CustomLevelMenuState : GameState
         previousPageButton.Reset();
 
         // Get all custom level files in the folder
-        string [] arrays;
+        List<string> directory;
         string sdira= "Content/CustomLevels/";
-        arrays =  Directory.GetFiles(sdira, "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToArray();
+        directory = Directory.GetFiles(sdira, "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToList();
+        
+        // check if levels are valid
+        for (int i = 0; i < directory.Count; i++)
+        {
+            try
+            {
+                string levelContent = File.ReadAllText(sdira + directory[i]);
+                if (!LevelEditorState.LevelIsValid(levelContent))
+                {
+                    directory.RemoveAt(i);
+                    i--;
+                }
+            }
+            catch (IOException _)
+            {// The files exist, but they could theoretically not have read privileges
+                directory.RemoveAt(i);
+                i--;
+            }
+        }
+
+        string[] arrays = directory.ToArray();
+        
+        
 
         //Set array size
         customLevelButtons = new Button[arrays.Length];

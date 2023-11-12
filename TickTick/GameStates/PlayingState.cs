@@ -100,7 +100,7 @@ class PlayingState : GameState, IPlayingState
     public void LoadCustomLevel(string levelName)
     {
         //-1 Avoids the unlocking of new levels (which isn't relevant with custom levels)
-        level = new Level(-1, "Content/CustomLevels/" + levelName);
+        level = new Level(-1, "Content/CustomLevels/" + levelName + ".txt");
         
         //Pass the size of the level so the camera knows where the edges are
         Camera.levelSize.X = level.BoundingBox.Width;

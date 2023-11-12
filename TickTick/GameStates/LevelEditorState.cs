@@ -370,7 +370,7 @@ public class LevelEditorState : GameState
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    private static bool LevelIsValid(string level)
+    public static bool LevelIsValid(string level)
     {
         // check if the level has at least three newlines
         string[] lines = level.Split('\n');
@@ -391,7 +391,7 @@ public class LevelEditorState : GameState
         bool oneGoalFound = false;
         for (int y = 2; y < lines.Length; y++)
         {
-            for (int x = 0; x < lines[y].Length; y++)
+            for (int x = 0; x < lines[y].Length; x++)
             {
                 if (lines[y][x] == '1')
                 {
