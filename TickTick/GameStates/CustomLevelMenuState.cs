@@ -57,6 +57,8 @@ class CustomLevelMenuState : GameState
         // Get all custom level files in the folder
         List<string> directory;
         string sdira= "Content/CustomLevels/";
+        if (!Directory.Exists(sdira))
+            Directory.CreateDirectory(sdira);
         directory = Directory.GetFiles(sdira, "*", SearchOption.AllDirectories).Select(Path.GetFileName).ToList();
         
         // check if levels are valid
