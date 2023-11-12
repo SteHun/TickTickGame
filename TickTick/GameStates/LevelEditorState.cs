@@ -366,11 +366,6 @@ public class LevelEditorState : GameState
         ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelString);
     }
     
-    /// <summary>
-    ///  UNTESTED, EXPECT DEBUGGING!
-    /// </summary>
-    /// <param name="level"></param>
-    /// <returns></returns>
     public static bool LevelIsValid(string level)
     {
         // check if the level has at least three newlines
