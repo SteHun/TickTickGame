@@ -36,7 +36,7 @@ public class LevelEditorState : GameState
         Camera.position = Vector2.Zero;
         editorUI = new EditorUI(gameObjects, this);
         
-        // fill empty level
+        // Build the default level
         levelDescription = EditorHUD.DefaultDescription;
         level = new char[defaultLevelSize.X, defaultLevelSize.Y];
         for (int x = 0; x < level.GetLength(0); x++)
@@ -57,6 +57,9 @@ public class LevelEditorState : GameState
         level[0, defaultLevelSize.Y - 2] = '1';
         level[defaultLevelSize.X - 1, defaultLevelSize.Y - 2] = 'X';
         
+        // Load textures
+        
+        // This abbreviates the long method call for better readability 
         Texture2D GetSprite(string path) => ExtendedGame.AssetManager.LoadSprite(path);
         
         textures.Add('-', GetSprite("Sprites/Tiles/spr_platform"));
@@ -84,6 +87,7 @@ public class LevelEditorState : GameState
         base.Update(gameTime);
         editorUI.Update(gameTime);
         
+        // Moves the window, as gameTime wasn't in scope at HandleInput
         offset += toMove * (float)gameTime.ElapsedGameTime.TotalSeconds;
         
     }
@@ -93,13 +97,13 @@ public class LevelEditorState : GameState
         base.HandleInput(inputHelper);
 
         Vector2 mousePos = inputHelper.MousePositionWorld;
-        
         Vector2 absoluteMousePos = mousePos - offset;
         
-
-        hoveringAnyButton = false;
-        editorUI.HandleInput();
         
+        hoveringAnyButton = false;
+        editorUI.HandleInput(); // This method will mutate hoveringAnyButton
+        
+        // Handle drawing and deleting blocks
         if (inputHelper.MouseRightButtonPressed() && !hoveringAnyButton)
             erasingBlocks = true;
         else if (!inputHelper.MouseRightButtonDown())
@@ -112,12 +116,15 @@ public class LevelEditorState : GameState
         }
         else if (!inputHelper.MouseLeftButtonDown())
             drawingBlocks = false;
-
+        
+        // Calculate the tile of the hovered position 
         hoveredTile = new Point((int)MathF.Floor(absoluteMousePos.X / Level.TileWidth),
             (int)MathF.Floor(absoluteMousePos.Y / Level.TileHeight));
+        // This is used to draw the preview 
         HoveredTilePixelPosition = new Vector2(hoveredTile.X * Level.TileWidth + offset.X,
             hoveredTile.Y * Level.TileHeight + offset.Y);
-
+        
+        // Actually draw and delete tiles
         if (drawingBlocks && !hoveringAnyButton)
             PlaceTile(hoveredTile, selectedTile);
         else if (erasingBlocks && !hoveringAnyButton)
@@ -125,7 +132,8 @@ public class LevelEditorState : GameState
                && hoveredTile.Y < level.GetLength(1) 
                && level[hoveredTile.X, hoveredTile.Y] is not ('1' or 'X'))
                 PlaceTile(hoveredTile, '.');
-
+        
+        // Detect camera movement, actual movement happens in Update
         toMove = Vector2.Zero;
         if (inputHelper.KeyDown(Keys.Left))
             toMove.X += scrollSpeed;
@@ -141,7 +149,8 @@ public class LevelEditorState : GameState
     {
         base.Draw(gameTime, spriteBatch, opacity);
         editorUI.Draw(spriteBatch);
-
+        
+        // Draw level tiles
         for (int x = 0; x < level.GetLength(0); x++)
         {
             for (int y = 0; y < level.GetLength(1); y++)
@@ -155,11 +164,12 @@ public class LevelEditorState : GameState
                     spriteBatch.Draw(textureToDraw, destRectangle, Color.White);
             }
         }
-
+        
+        // Do not draw the preview if you can't actually draw or remove
         if (hoveringAnyButton)
             return;
         
-        // draw preview of curren item at cursor
+        // Draw preview of current item at cursor
         Rectangle uiDestRectangle = new Rectangle((int)MathF.Round(HoveredTilePixelPosition.X),
             (int)MathF.Round(HoveredTilePixelPosition.Y), Level.TileWidth, Level.TileHeight);
         spriteBatch.Draw(textures[selectedTile], uiDestRectangle, Color.White * 0.5f);
@@ -167,6 +177,7 @@ public class LevelEditorState : GameState
 
     private void PlaceTile(Point point, char tile)
     {
+        // If the placement is out of bounds, extend the level
         if (point.X < 0)
         {
             ResizeLevelTopLeft(new Point(level.GetLength(0) - point.X, level.GetLength(1)));
@@ -185,19 +196,23 @@ public class LevelEditorState : GameState
         {
             ResizeLevelBottomRight(new Point(level.GetLength(0), point.Y + 1));
         }
-
-        if (tile is '1' or 'X') //Player
+        
+        // Make sure the level remains in a valid state
+        if (tile is '1' or 'X') // Player or goal
         {
             RemoveDuplicates(tile);
         }
-
+        // Place player on top of the current tile if it is overwritten
         if (level[point.X, point.Y] is '1' or 'X')
         {
-            PlaceTile(new Point(point.X, point.Y-1), level[point.X, point.Y]);
+            PlaceTile(new Point(point.X, point.Y-1), level[point.X, point.Y]);// Recursion!!!
         }
+        // Actually update the tile
         level[point.X, point.Y] = tile;
     }
-
+    
+    // The method name is a little misleading
+    // It simply removes all instances of a certain tile
     private void RemoveDuplicates(char tile)
     {
         for (int i = 0; i < level.GetLength(0); i++)
@@ -212,6 +227,7 @@ public class LevelEditorState : GameState
         }
     }
 
+    // This function removes empty unises space
     private void TrimLevel()
     {
         TrimInXDirection();
@@ -220,28 +236,29 @@ public class LevelEditorState : GameState
 
     private void TrimInYDirection()
     {
-        // check from the top
+        // Check from the top
         while (RowHasNoItems(0))
             RemoveRow(0);
         
-        // check from the bottom
+        // Check from the bottom
         while (RowHasNoItems(level.GetLength(1) - 1))
             RemoveRow(level.GetLength(1) - 1);
     }
     
     private void TrimInXDirection()
     {
-        // check from the left
+        // Check from the left
         while (ColumnHasNoItems(0))
             RemoveColumn(0);
         
-        // check from the right
+        // Check from the right
         while (ColumnHasNoItems(level.GetLength(0) - 1))
             RemoveColumn(level.GetLength(0) - 1);
     }
 
     private void RemoveColumn(int columnToRemove)
     {
+        // This essentially copies the level, but skips the column to remove
         char[,] newLevel = new char[level.GetLength(0) - 1, level.GetLength(1)];
         int newLevelColumn = 0;
         for (int oldLevelColumn = 0; oldLevelColumn < level.GetLength(0); oldLevelColumn++)
@@ -252,7 +269,6 @@ public class LevelEditorState : GameState
             {
                 newLevel[newLevelColumn, y] = level[oldLevelColumn, y];
             }
-
             newLevelColumn++;
         }
 
@@ -261,6 +277,7 @@ public class LevelEditorState : GameState
 
     private void RemoveRow(int rowToRemove)
     {
+        // This essentially copies the level, but skips the row to remove
         char[,] newLevel = new char[level.GetLength(0), level.GetLength(1) - 1];
         int newLevelRow = 0;
         for (int oldLevelRow = 0; oldLevelRow < level.GetLength(1); oldLevelRow++)
@@ -271,14 +288,13 @@ public class LevelEditorState : GameState
             {
                 newLevel[x, newLevelRow] = level[x, oldLevelRow];
             }
-
             newLevelRow++;
-
         }
         
         level = newLevel;
     }
 
+    // These should be self-explanitory
     private bool ColumnHasNoItems(int column)
     {
         for (int y = 0; y < level.GetLength(1); y++)
@@ -305,6 +321,7 @@ public class LevelEditorState : GameState
 
     private void ResizeLevelBottomRight(Point newSize)
     {
+        // Create and initialize it as completely empty
         char[,] newLevel = new char[newSize.X, newSize.Y];
         for (int x = 0; x < newSize.X; x++)
         {
@@ -322,15 +339,14 @@ public class LevelEditorState : GameState
                 newLevel[x,y] = level[x, y];
             }
         }
-        
 
         level = newLevel;
     }
     
     private void ResizeLevelTopLeft(Point newSize)
     {
+        // Create and initialize it as completely empty
         char[,] newLevel = new char[newSize.X, newSize.Y];
-        
         for (int x = 0; x < newSize.X; x++)
         {
             for (int y = 0; y < newSize.Y; y++)
@@ -340,8 +356,8 @@ public class LevelEditorState : GameState
         }
         
         Point difference = newSize - new Point(level.GetLength(0), level.GetLength(1));
-        offset -= difference.ToVector2() * new Vector2(Level.TileWidth, Level.TileHeight);
-        // copy the old level to the new level
+        offset -= difference.ToVector2() * new Vector2(Level.TileWidth, Level.TileHeight); // update the view
+        // copy the old level to the new level with the offset
         for (int x = difference.X; x < newSize.X; x++)
         {
             for (int y = difference.Y; y < newSize.Y; y++)
@@ -366,23 +382,23 @@ public class LevelEditorState : GameState
         ExtendedGameWithLevels.GetPlayingState().LoadLevelFromString(levelString);
     }
     
+    // This method is used from outside this class to check if files are valid
     public static bool LevelIsValid(string level)
     {
-        // check if the level has at least three newlines
+        // Check if the level has at least three newlines
         string[] lines = level.Split('\n');
-        
 
         if (lines.Length < 3)
             return false;
         
-        // check if time is parsable
-        if (!int.TryParse(lines[1], out _)) // discard the result, we only need to know is it is parsable
+        // Check if time is parsable
+        if (!int.TryParse(lines[1], out _)) // Discard the result, we only need to know is it is parsable
         {
             return false;
         }
         
         
-        // check if there is exactly one player and one goal
+        // Check if there is exactly one player and one goal
         bool onePlayerFound = false;
         bool oneGoalFound = false;
         for (int y = 2; y < lines.Length; y++)
@@ -391,7 +407,7 @@ public class LevelEditorState : GameState
             {
                 if (lines[y][x] == '1')
                 {
-                    if (onePlayerFound)
+                    if (onePlayerFound) // More than one player found
                         return false;
                     onePlayerFound = true;
                     continue;
@@ -399,7 +415,7 @@ public class LevelEditorState : GameState
 
                 if (lines[y][x] == 'X')
                 {
-                    if (oneGoalFound)
+                    if (oneGoalFound) // More than one goals found
                         return false;
                     oneGoalFound = true;
                 }
@@ -409,6 +425,7 @@ public class LevelEditorState : GameState
         return oneGoalFound && onePlayerFound;
     }
     
+    // This method used from within the class to check if a created level is okay to save
     private static bool LevelIsValid(char[,] level)
     {
         bool onePlayerFound = false;
@@ -417,7 +434,7 @@ public class LevelEditorState : GameState
         {
             if (item == '1')
             {
-                if (onePlayerFound)
+                if (onePlayerFound) // More than one player found
                     return false;
                 onePlayerFound = true;
                 continue;
@@ -425,7 +442,7 @@ public class LevelEditorState : GameState
 
             if (item == 'X')
             {
-                if (oneGoalFound)
+                if (oneGoalFound) // More than one goal found
                     return false;
                 oneGoalFound = true;
             }
@@ -437,7 +454,11 @@ public class LevelEditorState : GameState
 
     public void LoadLevelFromFile(string name)
     {
+        // Built-in levels should be fine to trust and custom levels have already been checked
+        // Thus, we don't need to account for IO errors
         string[] levelAsText = File.ReadAllLines($"{customLevelPath}/{name}");
+        
+        // Extract level metadata
         levelDescription = levelAsText[0];
         editorUI.hud.nameButton.SetText(name.Remove(name.Length-4,4));
         if (!int.TryParse(levelAsText[1], out LevelTimer))
@@ -446,13 +467,14 @@ public class LevelEditorState : GameState
             return;
         }
         
-        // find the longest row
+        // Find the longest row
         int longestRow = 0;
         foreach (string row in levelAsText)
         {
             longestRow = MathHelper.Max(longestRow, row.Length);
         }
-
+        
+        // Extract the level
         char[,] newLevel = new char[longestRow, levelAsText.Length];
         for (int y = 2; y < levelAsText.Length; y++)
         {
@@ -473,7 +495,7 @@ public class LevelEditorState : GameState
         TrimLevel();
         if (!LevelIsValid(level))
             return;
-        offset = Vector2.Zero;
+        offset = Vector2.Zero; // Changing the camera view is a hacky way to show the operation is successful
         if (!Directory.Exists(customLevelPath))
             Directory.CreateDirectory(customLevelPath);
         File.WriteAllText($"{customLevelPath}/{name}.txt", GetLevelAsString());
@@ -481,7 +503,10 @@ public class LevelEditorState : GameState
 
     public string GetLevelAsString()
     {
+        // Include the metadata
         string outString = $"{levelDescription}\n{LevelTimer}\n";
+        
+        // Include the level
         for (int y = 0; y < level.GetLength(1); y++)
         {
             for (int x = 0; x < level.GetLength(0); x++)
@@ -492,11 +517,7 @@ public class LevelEditorState : GameState
             outString += '\n';
         }
 
-        outString = outString[..^1]; // removes the last \n characer
-        Debug.WriteLine(outString);
+        outString = outString[..^1]; // Removes the last \n character
         return outString;
     }
-    
-
-
 }
