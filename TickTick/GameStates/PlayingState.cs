@@ -52,7 +52,7 @@ class PlayingState : GameState, IPlayingState
             else if (completedOverlay.Visible)
             {
                 if (inputHelper.KeyPressed(Keys.Space))
-                    ExtendedGameWithLevels.GoToNextLevel(level.LevelIndex);
+                    ExtendedGameWithLevels.GoToNextLevel(level.LevelIndex, TickTick.previousStatePlaying);
             }
 
             // otherwise, update the level itself, and check for button presses
